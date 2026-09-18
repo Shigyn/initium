@@ -97,12 +97,14 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
 .intro-photo-haute { margin: 0 }
 .intro-photo-haute img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover }
 .intro-texte p, .intro-droite p { color: var(--noir) }
+.intro-texte { align-self: center }
 .intro-droite { margin-top: -80px }
 .intro-droite figure { margin: 0 0 clamp(30px, 4vw, 56px) }
 .intro-droite img { width: 100%; aspect-ratio: 8 / 9; object-fit: cover }
 @media (max-width: 900px) {
   .intro-colonnes { grid-template-columns: 1fr; gap: 40px }
   .intro-droite { margin-top: 0 }
+  .intro-texte { align-self: start }
   .intro-titre { text-align: left; max-width: none }
 }
 

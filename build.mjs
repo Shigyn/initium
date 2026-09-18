@@ -225,7 +225,7 @@ ${alternates}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${r}assets/style.css?v=2">
+<link rel="stylesheet" href="${r}assets/style.css?v=3">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 </head>
 <body class="${clair ? 'entete-clair' : ''}">
