@@ -90,21 +90,17 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
 .fleche span::after { content: ''; position: absolute; left: -5px; bottom: 0; width: 10px; height: 10px; border-right: 1px solid #fff; border-bottom: 1px solid #fff; transform: rotate(45deg) }
 @keyframes descend { 0% { transform: scaleY(0); transform-origin: top } 50% { transform: scaleY(1); transform-origin: top } 51% { transform-origin: bottom } 100% { transform: scaleY(0); transform-origin: bottom } }
 
-/* ---------------- intro : titre centre, trois colonnes decalees ---------------- */
+/* ---------------- intro : titre centre, deux colonnes image/texte ---------------- */
 .intro { padding: clamp(70px, 10vw, 150px) var(--marge) clamp(60px, 9vw, 130px) }
 .intro-titre { font-size: clamp(27px, 3vw, 43px); line-height: 1.16; max-width: 780px; margin: 0 auto clamp(48px, 6vw, 96px); text-align: center }
-.intro-colonnes { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gouttiere); align-items: start }
-.intro-photo-haute { margin: 0 }
-.intro-photo-haute img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover }
-.intro-texte p, .intro-droite p { color: var(--noir) }
-.intro-texte { align-self: center }
-.intro-droite { margin-top: -80px }
-.intro-droite figure { margin: 0 0 clamp(30px, 4vw, 56px) }
-.intro-droite img { width: 100%; aspect-ratio: 8 / 9; object-fit: cover }
+.intro-colonnes { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 8vw, 140px); align-items: start; max-width: 1100px; margin: 0 auto }
+.intro-colonnes p { color: var(--noir); margin: 0 }
+.intro-colonnes figure { margin: 0 }
+.intro-colonnes img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block }
+.intro-gauche .lien-maj { display: inline-block; margin: 22px 0 clamp(36px, 4vw, 56px) }
+.intro-droite p { margin-top: clamp(28px, 3vw, 40px) }
 @media (max-width: 900px) {
-  .intro-colonnes { grid-template-columns: 1fr; gap: 40px }
-  .intro-droite { margin-top: 0 }
-  .intro-texte { align-self: start }
+  .intro-colonnes { grid-template-columns: 1fr; gap: 56px }
   .intro-titre { text-align: left; max-width: none }
 }
 

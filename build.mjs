@@ -225,7 +225,7 @@ ${alternates}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${r}assets/style.css?v=3">
+<link rel="stylesheet" href="${r}assets/style.css?v=4">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 </head>
 <body class="${clair ? 'entete-clair' : ''}">
@@ -302,10 +302,10 @@ for (const lg of LANGUES) {
 <section class="intro" id="intro">
   <h2 class="intro-titre reveler">${t.introTitre}</h2>
   <div class="intro-colonnes">
-    <figure class="intro-photo-haute reveler">${img(r, 'v10', '')}</figure>
-    <div class="intro-texte reveler">
+    <div class="intro-gauche reveler">
       <p>${t.introA}</p>
       <a class="lien-maj" href="${lien(lg, 'showroom')}">${t.lireSuite}</a>
+      <figure>${img(r, 'v10', '')}</figure>
     </div>
     <div class="intro-droite reveler">
       <figure>${img(r, 'v02', '')}</figure>
