@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=4">
+<link rel="stylesheet" href="../assets/style.css?v=5">
 
 </head>
 <body class="entete-clair">
@@ -44,23 +44,23 @@
 </div>
 <main id="contenu">
 
-<section class="page-texte">
+<section class="page-texte" data-pro-accueil>
   <h1>Espace professionnel</h1>
   <p class="page-chapo">Réservé aux architectes, décorateurs, revendeurs et professionnels de l’hôtellerie. Vos prix professionnels s’affichent avec votre code d’accès, et vous pouvez nous envoyer vos demandes de commande directement depuis le catalogue.</p>
 </section>
-<section class="pro-grille">
-  <form class="formulaire carte-code" data-apercu>
+<section class="pro-grille" data-pro-accueil>
+  <form class="formulaire carte-code" data-pro-code>
     <h2>Code d’accès</h2>
-    <label>Code d’accès<input name="code" autocomplete="off" required></label>
+    <label>Code d’accès<input name="code" inputmode="numeric" maxlength="9" autocomplete="off" required></label>
     <button class="bouton" type="submit">Voir les prix</button>
-    <p class="note" hidden data-note>Aperçu : l’accès par code sera activé à la mise en ligne.</p>
+    <p class="note" hidden data-note></p>
   </form>
-  <form class="formulaire" data-apercu>
+  <form class="formulaire" data-pro-demande>
     <h2>Demander un code d’accès</h2>
     <p class="aide">Remplissez ce formulaire : nous vérifions votre activité et vous envoyons votre code personnel.</p>
     <div class="deux">
       <label>Société<input name="societe" autocomplete="organization" required></label>
-      <label>Numéro de TVA<input name="tva" placeholder="BE0123456789" required></label>
+      <label>Numéro d’entreprise ou de TVA<input name="numero" placeholder="BE0123456789 · SIREN · KvK" required></label>
     </div>
     <div class="deux">
       <label>Nom<input name="nom" autocomplete="name" required></label>
@@ -70,9 +70,10 @@
     <label>Activité<select name="activite"><option>Architecte</option><option>Décorateur</option><option>Revendeur</option><option>Hôtel, restaurant</option><option>Autre</option></select></label>
     <label>Message<textarea name="message" rows="4"></textarea></label>
     <button class="bouton" type="submit">Envoyer la demande</button>
-    <p class="note" hidden data-note>Aperçu : le formulaire sera relié à votre boîte mail à la mise en ligne.</p>
+    <div class="note" hidden data-note></div>
   </form>
 </section>
+<section class="pro-catalogue" data-pro-catalogue hidden></section>
 </main>
 <footer class="pied">
   <div class="pied-grille">
@@ -95,6 +96,8 @@
   };
 </script>
 <script src="../assets/site.js?v=2" defer></script>
+<script>window.IN_PRO = {"langue":"fr","bonjour":"Connecté :","sortir":"Se déconnecter","chercher":"Rechercher un modèle, une référence…","public":"Prix public HT","pro":"Votre prix HT","ref":"Réf.","ajouter":"Ajouter à ma demande","ajoute":"Ajouté","qte":"Quantité","demande":"Ma demande","vide":"Votre demande est vide.","message":"Un message pour Initium³ (délai, livraison, coloris…)","envoyer":"Envoyer ma demande","envoyee":"Merci, votre demande est envoyée. Initium³ vous recontacte rapidement.","retirer":"Retirer","total":"Total HT","surDemande":"Prix sur demande","aucun":"Aucun modèle ne correspond.","fermer":"Fermer","articles":"article(s)","codeFaux":"Code incorrect. Vérifiez les 8 chiffres.","trop":"Trop d’essais. Réessayez dans quelques minutes.","champs":"Merci de remplir la société, le numéro d’entreprise, le nom et un e-mail valide.","codeOk":"Votre accès est ouvert. Votre code personnel :","codeGarder":"Notez-le : il vous servira à vous reconnecter.","voirCatalogue":"Voir le catalogue","attente":"Merci ! Nous vérifions votre demande et vous envoyons votre code personnel par e-mail très rapidement.","erreur":"Une erreur est survenue. Réessayez dans un instant."};</script>
+<script src="../assets/pro.js?v=1" defer></script>
 <script src="../mesure.js" defer></script>
 </body>
 </html>

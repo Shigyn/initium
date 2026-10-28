@@ -65,7 +65,7 @@ const T = {
     proPageTitre: 'Espace professionnel', proPageIntro: 'Réservé aux architectes, décorateurs, revendeurs et professionnels de l’hôtellerie. Vos prix professionnels s’affichent avec votre code d’accès, et vous pouvez nous envoyer vos demandes de commande directement depuis le catalogue.',
     code: 'Code d’accès', voirPrix: 'Voir les prix', codeNote: 'Aperçu : l’accès par code sera activé à la mise en ligne.',
     demanderCode: 'Demander un code d’accès', demanderCodeTexte: 'Remplissez ce formulaire : nous vérifions votre activité et vous envoyons votre code personnel.',
-    societe: 'Société', tva: 'Numéro de TVA', nom: 'Nom', email: 'E-mail', telephone: 'Téléphone', activite: 'Activité',
+    societe: 'Société', tva: 'Numéro d’entreprise ou de TVA', nom: 'Nom', email: 'E-mail', telephone: 'Téléphone', activite: 'Activité',
     activites: ['Architecte', 'Décorateur', 'Revendeur', 'Hôtel, restaurant', 'Autre'], message: 'Message', envoyer: 'Envoyer la demande',
     formNote: 'Aperçu : le formulaire sera relié à votre boîte mail à la mise en ligne.',
     contactTitre: 'Parlons de votre projet', contactTexte: 'Une pièce vous intéresse, vous aménagez une terrasse, un hôtel ou un restaurant : écrivez-nous, nous revenons vers vous rapidement.',
@@ -97,7 +97,7 @@ const T = {
     proPageTitre: 'Professionele ruimte', proPageIntro: 'Voorbehouden aan architecten, decorateurs, verdelers en professionals uit de horeca. Uw professionele prijzen verschijnen met uw toegangscode, en u kunt ons uw bestelaanvragen rechtstreeks vanuit de catalogus sturen.',
     code: 'Toegangscode', voirPrix: 'Prijzen bekijken', codeNote: 'Voorvertoning: de toegang met code wordt geactiveerd bij de lancering.',
     demanderCode: 'Een toegangscode aanvragen', demanderCodeTexte: 'Vul dit formulier in: wij controleren uw activiteit en sturen u uw persoonlijke code.',
-    societe: 'Bedrijf', tva: 'Btw-nummer', nom: 'Naam', email: 'E-mail', telephone: 'Telefoon', activite: 'Activiteit',
+    societe: 'Bedrijf', tva: 'Ondernemings- of btw-nummer', nom: 'Naam', email: 'E-mail', telephone: 'Telefoon', activite: 'Activiteit',
     activites: ['Architect', 'Decorateur', 'Verdeler', 'Hotel, restaurant', 'Andere'], message: 'Bericht', envoyer: 'Aanvraag versturen',
     formNote: 'Voorvertoning: het formulier wordt bij de lancering aan uw mailbox gekoppeld.',
     contactTitre: 'Laten we over uw project praten', contactTexte: 'Heeft u interesse in een stuk, richt u een terras, hotel of restaurant in? Schrijf ons, wij nemen snel contact met u op.',
@@ -129,13 +129,38 @@ const T = {
     proPageTitre: 'Trade area', proPageIntro: 'Reserved for architects, interior designers, resellers and hospitality professionals. Your trade prices appear with your access code, and you can send us order requests directly from the catalogue.',
     code: 'Access code', voirPrix: 'See prices', codeNote: 'Preview: code access will be enabled at launch.',
     demanderCode: 'Request an access code', demanderCodeTexte: 'Fill in this form: we check your business and send you your personal code.',
-    societe: 'Company', tva: 'VAT number', nom: 'Name', email: 'Email', telephone: 'Phone', activite: 'Business',
+    societe: 'Company', tva: 'Company or VAT number', nom: 'Name', email: 'Email', telephone: 'Phone', activite: 'Business',
     activites: ['Architect', 'Interior designer', 'Reseller', 'Hotel, restaurant', 'Other'], message: 'Message', envoyer: 'Send request',
     formNote: 'Preview: the form will be connected to your mailbox at launch.',
     contactTitre: 'Let’s talk about your project', contactTexte: 'Interested in a piece, furnishing a terrace, a hotel or a restaurant? Write to us and we will get back to you quickly.',
     vousEtes: 'You are', particulier: 'Private customer', professionnel: 'Professional', suivre: 'Follow Initium³ on Facebook',
     infosPiece: 'Hello, I would like information about: ',
   },
+};
+
+/* ---------- l'espace pro branche (2026-10-28) : textes de assets/pro.js ---------- */
+const PRO = {
+  fr: { bonjour: 'Connecté :', sortir: 'Se déconnecter', chercher: 'Rechercher un modèle, une référence…', public: 'Prix public HT', pro: 'Votre prix HT', ref: 'Réf.',
+    ajouter: 'Ajouter à ma demande', ajoute: 'Ajouté', qte: 'Quantité', demande: 'Ma demande', vide: 'Votre demande est vide.', message: 'Un message pour Initium³ (délai, livraison, coloris…)',
+    envoyer: 'Envoyer ma demande', envoyee: 'Merci, votre demande est envoyée. Initium³ vous recontacte rapidement.', retirer: 'Retirer', total: 'Total HT',
+    surDemande: 'Prix sur demande', aucun: 'Aucun modèle ne correspond.', fermer: 'Fermer', articles: 'article(s)',
+    codeFaux: 'Code incorrect. Vérifiez les 8 chiffres.', trop: 'Trop d’essais. Réessayez dans quelques minutes.', champs: 'Merci de remplir la société, le numéro d’entreprise, le nom et un e-mail valide.',
+    codeOk: 'Votre accès est ouvert. Votre code personnel :', codeGarder: 'Notez-le : il vous servira à vous reconnecter.', voirCatalogue: 'Voir le catalogue',
+    attente: 'Merci ! Nous vérifions votre demande et vous envoyons votre code personnel par e-mail très rapidement.', erreur: 'Une erreur est survenue. Réessayez dans un instant.' },
+  nl: { bonjour: 'Aangemeld:', sortir: 'Afmelden', chercher: 'Zoek een model, een referentie…', public: 'Publieksprijs excl. btw', pro: 'Uw prijs excl. btw', ref: 'Ref.',
+    ajouter: 'Toevoegen aan mijn aanvraag', ajoute: 'Toegevoegd', qte: 'Aantal', demande: 'Mijn aanvraag', vide: 'Uw aanvraag is leeg.', message: 'Een bericht voor Initium³ (termijn, levering, kleur…)',
+    envoyer: 'Aanvraag versturen', envoyee: 'Bedankt, uw aanvraag is verstuurd. Initium³ neemt snel contact met u op.', retirer: 'Verwijderen', total: 'Totaal excl. btw',
+    surDemande: 'Prijs op aanvraag', aucun: 'Geen enkel model komt overeen.', fermer: 'Sluiten', articles: 'artikel(en)',
+    codeFaux: 'Onjuiste code. Controleer de 8 cijfers.', trop: 'Te veel pogingen. Probeer het over enkele minuten opnieuw.', champs: 'Vul het bedrijf, het ondernemingsnummer, de naam en een geldig e-mailadres in.',
+    codeOk: 'Uw toegang is geopend. Uw persoonlijke code:', codeGarder: 'Noteer hem: u hebt hem nodig om opnieuw in te loggen.', voirCatalogue: 'Catalogus bekijken',
+    attente: 'Bedankt! We controleren uw aanvraag en sturen u zeer snel uw persoonlijke code per e-mail.', erreur: 'Er is een fout opgetreden. Probeer het zo meteen opnieuw.' },
+  en: { bonjour: 'Signed in:', sortir: 'Sign out', chercher: 'Search a model, a reference…', public: 'Retail price excl. VAT', pro: 'Your price excl. VAT', ref: 'Ref.',
+    ajouter: 'Add to my request', ajoute: 'Added', qte: 'Quantity', demande: 'My request', vide: 'Your request is empty.', message: 'A message for Initium³ (lead time, delivery, colours…)',
+    envoyer: 'Send my request', envoyee: 'Thank you, your request has been sent. Initium³ will get back to you shortly.', retirer: 'Remove', total: 'Total excl. VAT',
+    surDemande: 'Price on request', aucun: 'No model matches.', fermer: 'Close', articles: 'item(s)',
+    codeFaux: 'Wrong code. Please check the 8 digits.', trop: 'Too many attempts. Please try again in a few minutes.', champs: 'Please fill in the company, the company number, the name and a valid email.',
+    codeOk: 'Your access is open. Your personal code:', codeGarder: 'Keep it: you will need it to sign in again.', voirCatalogue: 'See the catalogue',
+    attente: 'Thank you! We are checking your request and will email you your personal code very shortly.', erreur: 'Something went wrong. Please try again in a moment.' },
 };
 
 /* ---------- les univers et les pieces (noms descriptifs en attendant les vrais) ---------- */
@@ -193,7 +218,7 @@ const SIGNATURE = [['v20', 'interieur', N('Canapé cadre teck', 'Sofa met teakfr
   ['v11', 'exterieur', N('Fauteuils lounge', 'Loungefauteuils', 'Lounge armchairs')], ['v25', 'interieur', N('Canapé courbe', 'Gebogen sofa', 'Curved sofa')]];
 
 /* ---------- gabarit ---------- */
-function page(lg, cle, { titre, description, corps, clair = false, jsonld = [] }) {
+function page(lg, cle, { titre, description, corps, clair = false, jsonld = [], apres = '' }) {
   const t = T[lg];
   const ici = chemin(lg, cle);
   const r = '../'.repeat(ici.split('/').filter(Boolean).length);
@@ -225,7 +250,7 @@ ${alternates}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${r}assets/style.css?v=4">
+<link rel="stylesheet" href="${r}assets/style.css?v=5">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 </head>
 <body class="${clair ? 'entete-clair' : ''}">
@@ -268,6 +293,7 @@ ${corps(r, lien)}
   };
 </script>
 <script src="${r}assets/site.js?v=2" defer></script>
+${apres}
 <script src="${r}mesure.js" defer></script>
 </body>
 </html>
@@ -408,24 +434,27 @@ for (const lg of LANGUES) {
     titre: `${t.proPageTitre} — ${NOM}`,
     description: t.proPageIntro,
     clair: true,
+    // Le catalogue pro se charge apres connexion (assets/pro.js, fonction in-pro).
+    apres: `<script>window.IN_PRO = ${JSON.stringify({ langue: lg, ...PRO[lg] })};</script>
+<script src="../${PREFIXE[lg] ? '../' : ''}assets/pro.js?v=1" defer></script>`,
     corps: () => `
-<section class="page-texte">
+<section class="page-texte" data-pro-accueil>
   <h1>${t.proPageTitre}</h1>
   <p class="page-chapo">${t.proPageIntro}</p>
 </section>
-<section class="pro-grille">
-  <form class="formulaire carte-code" data-apercu>
+<section class="pro-grille" data-pro-accueil>
+  <form class="formulaire carte-code" data-pro-code>
     <h2>${t.code}</h2>
-    <label>${t.code}<input name="code" autocomplete="off" required></label>
+    <label>${t.code}<input name="code" inputmode="numeric" maxlength="9" autocomplete="off" required></label>
     <button class="bouton" type="submit">${t.voirPrix}</button>
-    <p class="note" hidden data-note>${t.codeNote}</p>
+    <p class="note" hidden data-note></p>
   </form>
-  <form class="formulaire" data-apercu>
+  <form class="formulaire" data-pro-demande>
     <h2>${t.demanderCode}</h2>
     <p class="aide">${t.demanderCodeTexte}</p>
     <div class="deux">
       <label>${t.societe}<input name="societe" autocomplete="organization" required></label>
-      <label>${t.tva}<input name="tva" placeholder="BE0123456789" required></label>
+      <label>${t.tva}<input name="numero" placeholder="BE0123456789 · SIREN · KvK" required></label>
     </div>
     <div class="deux">
       <label>${t.nom}<input name="nom" autocomplete="name" required></label>
@@ -435,9 +464,10 @@ for (const lg of LANGUES) {
     <label>${t.activite}<select name="activite">${t.activites.map((a) => `<option>${a}</option>`).join('')}</select></label>
     <label>${t.message}<textarea name="message" rows="4"></textarea></label>
     <button class="bouton" type="submit">${t.envoyer}</button>
-    <p class="note" hidden data-note>${t.formNote}</p>
+    <div class="note" hidden data-note></div>
   </form>
-</section>`,
+</section>
+<section class="pro-catalogue" data-pro-catalogue hidden></section>`,
   }]);
 
   /* CONTACT */
@@ -476,6 +506,21 @@ for (const [lg, cle, p] of pages) {
   fs.mkdirSync(path.join(ICI, ici), { recursive: true });
   fs.writeFileSync(path.join(ICI, ici, 'index.html'), page(lg, cle, p));
 }
-fs.writeFileSync(path.join(ICI, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${URL_SITE}sitemap.xml\n`);
+// L'espace de gestion d'Olivier (2026-10-28) : page a part, en francais, jamais indexee.
+fs.mkdirSync(path.join(ICI, 'gestion'), { recursive: true });
+fs.writeFileSync(path.join(ICI, 'gestion', 'index.html'), `<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow"><title>Gestion — ${NOM}</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css?v=5"><link rel="stylesheet" href="../assets/gestion.css?v=1">
+</head><body class="gestion">
+<div id="app"></div>
+<script>window.LOCWEB_CONFIG = { supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co', supabaseAnonKey: 'sb_publishable_rpLrUo4Cqnfl8zSohDqO0A_Q5Vkj2Hk' };</script>
+<script src="../assets/gestion.js?v=1" defer></script>
+</body></html>
+`);
+fs.writeFileSync(path.join(ICI, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /gestion/\n\nSitemap: ${URL_SITE}sitemap.xml\n`);
 fs.writeFileSync(path.join(ICI, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.map(([lg, cle]) => `  <url><loc>${URL_SITE}${chemin(lg, cle)}</loc></url>`).join('\n')}\n</urlset>\n`);
 console.log(pages.length, 'pages');

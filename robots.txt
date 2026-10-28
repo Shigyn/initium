@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /gestion/
 
 Sitemap: https://shigyn.github.io/initium/sitemap.xml

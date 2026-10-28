@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/style.css?v=4">
+<link rel="stylesheet" href="../../assets/style.css?v=5">
 
 </head>
 <body class="entete-clair">
@@ -44,23 +44,23 @@
 </div>
 <main id="contenu">
 
-<section class="page-texte">
+<section class="page-texte" data-pro-accueil>
   <h1>Professionele ruimte</h1>
   <p class="page-chapo">Voorbehouden aan architecten, decorateurs, verdelers en professionals uit de horeca. Uw professionele prijzen verschijnen met uw toegangscode, en u kunt ons uw bestelaanvragen rechtstreeks vanuit de catalogus sturen.</p>
 </section>
-<section class="pro-grille">
-  <form class="formulaire carte-code" data-apercu>
+<section class="pro-grille" data-pro-accueil>
+  <form class="formulaire carte-code" data-pro-code>
     <h2>Toegangscode</h2>
-    <label>Toegangscode<input name="code" autocomplete="off" required></label>
+    <label>Toegangscode<input name="code" inputmode="numeric" maxlength="9" autocomplete="off" required></label>
     <button class="bouton" type="submit">Prijzen bekijken</button>
-    <p class="note" hidden data-note>Voorvertoning: de toegang met code wordt geactiveerd bij de lancering.</p>
+    <p class="note" hidden data-note></p>
   </form>
-  <form class="formulaire" data-apercu>
+  <form class="formulaire" data-pro-demande>
     <h2>Een toegangscode aanvragen</h2>
     <p class="aide">Vul dit formulier in: wij controleren uw activiteit en sturen u uw persoonlijke code.</p>
     <div class="deux">
       <label>Bedrijf<input name="societe" autocomplete="organization" required></label>
-      <label>Btw-nummer<input name="tva" placeholder="BE0123456789" required></label>
+      <label>Ondernemings- of btw-nummer<input name="numero" placeholder="BE0123456789 · SIREN · KvK" required></label>
     </div>
     <div class="deux">
       <label>Naam<input name="nom" autocomplete="name" required></label>
@@ -70,9 +70,10 @@
     <label>Activiteit<select name="activite"><option>Architect</option><option>Decorateur</option><option>Verdeler</option><option>Hotel, restaurant</option><option>Andere</option></select></label>
     <label>Bericht<textarea name="message" rows="4"></textarea></label>
     <button class="bouton" type="submit">Aanvraag versturen</button>
-    <p class="note" hidden data-note>Voorvertoning: het formulier wordt bij de lancering aan uw mailbox gekoppeld.</p>
+    <div class="note" hidden data-note></div>
   </form>
 </section>
+<section class="pro-catalogue" data-pro-catalogue hidden></section>
 </main>
 <footer class="pied">
   <div class="pied-grille">
@@ -95,6 +96,8 @@
   };
 </script>
 <script src="../../assets/site.js?v=2" defer></script>
+<script>window.IN_PRO = {"langue":"nl","bonjour":"Aangemeld:","sortir":"Afmelden","chercher":"Zoek een model, een referentie…","public":"Publieksprijs excl. btw","pro":"Uw prijs excl. btw","ref":"Ref.","ajouter":"Toevoegen aan mijn aanvraag","ajoute":"Toegevoegd","qte":"Aantal","demande":"Mijn aanvraag","vide":"Uw aanvraag is leeg.","message":"Een bericht voor Initium³ (termijn, levering, kleur…)","envoyer":"Aanvraag versturen","envoyee":"Bedankt, uw aanvraag is verstuurd. Initium³ neemt snel contact met u op.","retirer":"Verwijderen","total":"Totaal excl. btw","surDemande":"Prijs op aanvraag","aucun":"Geen enkel model komt overeen.","fermer":"Sluiten","articles":"artikel(en)","codeFaux":"Onjuiste code. Controleer de 8 cijfers.","trop":"Te veel pogingen. Probeer het over enkele minuten opnieuw.","champs":"Vul het bedrijf, het ondernemingsnummer, de naam en een geldig e-mailadres in.","codeOk":"Uw toegang is geopend. Uw persoonlijke code:","codeGarder":"Noteer hem: u hebt hem nodig om opnieuw in te loggen.","voirCatalogue":"Catalogus bekijken","attente":"Bedankt! We controleren uw aanvraag en sturen u zeer snel uw persoonlijke code per e-mail.","erreur":"Er is een fout opgetreden. Probeer het zo meteen opnieuw."};</script>
+<script src="../../assets/pro.js?v=1" defer></script>
 <script src="../../mesure.js" defer></script>
 </body>
 </html>

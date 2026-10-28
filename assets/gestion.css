@@ -1,0 +1,59 @@
+/* Initium³ — l'espace de gestion d'Olivier (2026-10-28). Memes reperes que le site : blanc, sable, Montserrat. */
+body.gestion { background: var(--sable) }
+.g-code { width: min(360px, 100% - 40px); margin: 14vh auto 40px; display: grid; gap: 16px; text-align: center; background: #fff; padding: 40px 30px }
+.g-code h1 { margin: 0; font-weight: 400; font-size: 26px }
+.g-code p { margin: 0; color: var(--gris) }
+.g-code input { text-align: center; font: 400 26px var(--police); letter-spacing: .2em; border: 0; border-bottom: 1px solid var(--pierre); padding: 10px 0 }
+.g-code input:focus { outline: none; border-bottom-color: var(--noir) }
+.g-code .bouton { justify-self: center }
+.g-err { color: #a3392b !important; min-height: 1.4em }
+.g-marque { margin: 0; letter-spacing: .14em; font-weight: 500 }
+.g-marque span { color: var(--gris); font-weight: 400; letter-spacing: .08em; margin-left: 10px; text-transform: uppercase; font-size: 12px }
+.g-tete { display: flex; justify-content: space-between; align-items: center; padding: 20px var(--marge); background: #fff; border-bottom: 1px solid var(--pierre) }
+.g-onglets { display: flex; gap: 6px; padding: 18px var(--marge) 0; overflow-x: auto }
+.g-onglets button { border: 1px solid var(--pierre); background: #fff; padding: 11px 18px; font: 500 13px var(--police); letter-spacing: .04em; cursor: pointer; white-space: nowrap }
+.g-onglets button.on { background: var(--noir); border-color: var(--noir); color: #fff }
+.g-onglets b { display: inline-block; min-width: 20px; padding: 1px 6px; margin-left: 6px; background: var(--moutarde); color: #fff; font-size: 11px; border-radius: 10px }
+.g-zone { padding: 24px var(--marge) 80px; display: grid; gap: 14px }
+.g-aide { margin: 0; color: var(--gris); font-size: 14px; max-width: 70ch }
+.g-barre { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; justify-content: space-between }
+.g-carte { background: #fff; padding: 20px 22px; display: grid; gap: 8px }
+.g-carte p { margin: 0 }
+.g-gris { color: var(--gris); font-size: 13.5px }
+.g-message { white-space: pre-line; background: var(--sable); padding: 10px 12px; font-size: 14px }
+.g-actions { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; margin-top: 6px }
+.g-traitee { opacity: .55 }
+.g-case { display: flex !important; gap: 8px; align-items: center; text-transform: none !important; letter-spacing: 0 !important; font-size: 14px !important; color: var(--noir) !important }
+.g-case input { width: auto !important }
+.g-vide { color: var(--gris) }
+.g-table { overflow-x: auto; background: #fff }
+.g-table table { width: 100%; border-collapse: collapse; font-size: 14px }
+.g-table th, .g-table td { text-align: left; padding: 12px 14px; border-bottom: 1px solid #f0ece5; vertical-align: top }
+.g-table th { font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--gris) }
+.g-table small { color: var(--gris) }
+.g-boutons { white-space: nowrap }
+.g-etat { font-size: 12px; padding: 3px 9px; border-radius: 10px; background: var(--sable) }
+.g-actif { background: #e3efe3; color: #2f6b36 }
+.g-coupe, .g-refuse { background: #f4e1dd; color: #8f3326 }
+.g-produits { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)) }
+.g-produit { display: grid; grid-template-columns: 64px 1fr; gap: 12px; align-items: center; text-align: left; background: #fff; border: 1px solid transparent; padding: 10px; font: inherit; cursor: pointer }
+.g-produit:hover { border-color: var(--pierre) }
+.g-masque { opacity: .5 }
+.g-vignette { width: 64px; height: 64px; background: #fff; border: 1px solid #f0ece5; display: grid; place-items: center; overflow: hidden }
+.g-vignette img { width: 100%; height: 100%; object-fit: contain }
+.g-produit-txt { display: grid; gap: 3px; min-width: 0 }
+.g-produit-txt b { font-weight: 500; font-size: 14px }
+.g-produit-txt small { color: var(--gris); font-size: 12.5px }
+.g-photos { display: flex; flex-wrap: wrap; gap: 10px }
+.g-photo { position: relative; width: 96px; height: 96px; border: 1px solid var(--pierre); background: #fff; display: grid; place-items: center }
+.g-photo img { max-width: 100%; max-height: 100%; object-fit: contain }
+.g-photo button { position: absolute; top: 2px; width: 24px; height: 24px; border: 0; background: rgba(18, 20, 19, .75); color: #fff; cursor: pointer; font-size: 14px; line-height: 1 }
+.g-photo button[data-enlever] { right: 2px }
+.g-photo button[data-premiere] { left: 2px }
+.g-photo em { position: absolute; left: 0; right: 0; bottom: 0; font-style: normal; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; text-align: center; background: rgba(255, 255, 255, .85); padding: 2px 0 }
+.g-ajout-photo { cursor: pointer; color: var(--teck) !important; text-decoration: underline; text-underline-offset: 3px }
+.g-danger { color: #a3392b }
+.g-modale { margin: auto; background: #fff; padding: 32px; width: min(420px, 100% - 32px); display: grid; gap: 12px; text-align: center }
+.g-modale h2 { margin: 0; font-weight: 400 }
+.g-modale .g-actions { justify-content: center }
+.g-fond { display: grid; place-items: center; justify-items: center }
