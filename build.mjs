@@ -13,6 +13,7 @@
 // ===================================================================
 import fs from 'node:fs';
 import path from 'node:path';
+import { LEGAL } from './_source/legal.mjs';
 
 const ICI = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)/, '$1');
 const URL_SITE = 'https://shigyn.github.io/initium/';
@@ -35,6 +36,8 @@ const SLUGS = {
   showroom: { fr: 'showroom', nl: 'showroom', en: 'showroom' },
   pro: { fr: 'espace-pro', nl: 'professionelen', en: 'trade' },
   contact: { fr: 'contact', nl: 'contact', en: 'contact' },
+  mentions: { fr: 'mentions-legales', nl: 'juridische-informatie', en: 'legal-notice' },
+  confidentialite: { fr: 'confidentialite', nl: 'privacy', en: 'privacy' },
 };
 const chemin = (lg, cle) => PREFIXE[lg] + (cle ? `${SLUGS[cle][lg]}/` : '');
 
@@ -250,7 +253,7 @@ ${alternates}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${r}assets/style.css?v=5">
+<link rel="stylesheet" href="${r}assets/style.css?v=6">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 </head>
 <body class="${clair ? 'entete-clair' : ''}">
@@ -282,7 +285,7 @@ ${corps(r, lien)}
     <nav aria-label="${t.piedCatalogues}"><p class="pied-titre">${t.piedCatalogues}</p>${univers}</nav>
     <nav aria-label="Langue"><p class="pied-titre">${t.langue}</p>${LANGUES.map((l) => `<a href="${lien(l, cle)}" hreflang="${l}">${T[l].langue}</a>`).join('')}</nav>
   </div>
-  <p class="pied-bas">© ${NOM} · ${t.droits}</p>
+  <p class="pied-bas">© ${NOM} · ${t.droits} · <a href="${lien(lg, 'mentions')}">${LEGAL[lg].mentions.titre}</a> · <a href="${lien(lg, 'confidentialite')}">${LEGAL[lg].confidentialite.titre}</a></p>
 </footer>
 <script>
   window.LOCWEB_CONFIG = {
@@ -470,6 +473,21 @@ for (const lg of LANGUES) {
 <section class="pro-catalogue" data-pro-catalogue hidden></section>`,
   }]);
 
+  /* MENTIONS LEGALES ET CONFIDENTIALITE (2026-10-30), textes dans _source/legal.mjs */
+  for (const cle of ['mentions', 'confidentialite']) {
+    const L = LEGAL[lg][cle];
+    pages.push([lg, cle, {
+      titre: `${L.titre} — ${NOM}`,
+      description: `${L.titre} — ${NOM}.`,
+      clair: true,
+      corps: () => `
+<section class="page-texte texte-legal">
+  <h1>${L.titre}</h1>
+  ${L.sections.map(([titre, texte]) => `<h2>${esc(titre)}</h2><p>${esc(texte)}</p>`).join('\n  ')}
+</section>`,
+    }]);
+  }
+
   /* CONTACT */
   pages.push([lg, 'contact', {
     titre: `Contact — ${NOM}`,
@@ -498,7 +516,7 @@ for (const lg of LANGUES) {
 }
 
 /* ---------- ecriture ---------- */
-for (const d of ['exterieur', 'interieur', 'olwen', 'showroom', 'espace-pro', 'contact', 'nl', 'en']) {
+for (const d of ['exterieur', 'interieur', 'olwen', 'showroom', 'espace-pro', 'contact', 'mentions-legales', 'confidentialite', 'nl', 'en']) {
   fs.rmSync(path.join(ICI, d), { recursive: true, force: true });
 }
 for (const [lg, cle, p] of pages) {
@@ -514,7 +532,7 @@ fs.writeFileSync(path.join(ICI, 'gestion', 'index.html'), `<!DOCTYPE html>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=5"><link rel="stylesheet" href="../assets/gestion.css?v=1">
+<link rel="stylesheet" href="../assets/style.css?v=6"><link rel="stylesheet" href="../assets/gestion.css?v=1">
 </head><body class="gestion">
 <div id="app"></div>
 <script>window.LOCWEB_CONFIG = { supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co', supabaseAnonKey: 'sb_publishable_rpLrUo4Cqnfl8zSohDqO0A_Q5Vkj2Hk' };</script>
