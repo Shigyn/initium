@@ -257,3 +257,10 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
 .texte-legal h2 { font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; margin: 34px 0 10px }
 .texte-legal p { margin: 0; color: var(--gris); line-height: 1.7 }
 .pied-bas a { color: inherit; text-decoration: underline; text-underline-offset: 3px }
+/* Espace pro (2026-10-30, Nicolas) : un filet fin autour des blocs, sinon la
+   page se lisait comme un grand vide blanc. Rien de plus : pas d'ombre. */
+[data-pro-code], [data-pro-demande] { border: 1px solid var(--pierre); padding: clamp(26px, 3vw, 40px) }
+[data-pro-demande] { background: #fff }
+.pro-fiche { border: 1px solid var(--pierre); padding: 14px 14px 18px; background: #fff }
+.pro-fiche .pro-photo { border: 0; border-bottom: 1px solid #f0ece5; margin: -14px -14px 4px }
+.pro-tete { border: 1px solid var(--pierre); padding: 16px 20px; background: #fff }
