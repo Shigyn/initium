@@ -264,3 +264,7 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
 .pro-fiche { border: 1px solid var(--pierre); padding: 14px 14px 18px; background: #fff }
 .pro-fiche .pro-photo { border: 0; border-bottom: 1px solid #f0ece5; margin: -14px -14px 4px }
 .pro-tete { border: 1px solid var(--pierre); padding: 16px 20px; background: #fff }
+
+/* Le lien LocWeb du pied de page : a peine plus visible, dans le teck du site (2026-10-31). */
+.pied-bas a.lien-locweb { color: var(--teck); text-decoration: none; font-weight: 500 }
+.pied-bas a.lien-locweb:hover { color: var(--moutarde) }

@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /gestion/
 
-Sitemap: https://shigyn.github.io/initium/sitemap.xml
+Sitemap: https://initium3.com/sitemap.xml

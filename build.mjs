@@ -16,7 +16,8 @@ import path from 'node:path';
 import { LEGAL } from './_source/legal.mjs';
 
 const ICI = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)/, '$1');
-const URL_SITE = 'https://shigyn.github.io/initium/';
+// Domaine du client relie le 31/10/2026 (DNS chez Wix) : le site est livre.
+const URL_SITE = 'https://initium3.com/';
 const NOM = 'Initium³';
 const PHOTOS = JSON.parse(fs.readFileSync(path.join(ICI, '_source', 'photos.json'), 'utf8'));
 const LANGUES = ['fr', 'nl', 'en'];
@@ -238,8 +239,6 @@ function page(lg, cle, { titre, description, corps, clair = false, jsonld = [], 
 <script>document.documentElement.classList.add('js')</script>
 <title>${esc(titre)}</title>
 <meta name="description" content="${esc(description)}">
-<!-- APERCU DE PRESENTATION (2026-09-17) : noindex tant que le site n'est pas livre. -->
-<meta name="robots" content="noindex, follow">
 <link rel="canonical" href="${URL_SITE}${ici}">
 ${alternates}
 <link rel="alternate" hreflang="x-default" href="${URL_SITE}${chemin('fr', cle)}">
@@ -253,7 +252,7 @@ ${alternates}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${r}assets/style.css?v=7">
+<link rel="stylesheet" href="${r}assets/style.css?v=8">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 </head>
 <body class="${clair ? 'entete-clair' : ''}">
@@ -285,7 +284,7 @@ ${corps(r, lien)}
     <nav aria-label="${t.piedCatalogues}"><p class="pied-titre">${t.piedCatalogues}</p>${univers}</nav>
     <nav aria-label="Langue"><p class="pied-titre">${t.langue}</p>${LANGUES.map((l) => `<a href="${lien(l, cle)}" hreflang="${l}">${T[l].langue}</a>`).join('')}</nav>
   </div>
-  <p class="pied-bas">© ${NOM} · ${t.droits} · <a href="${lien(lg, 'mentions')}">${LEGAL[lg].mentions.titre}</a> · <a href="${lien(lg, 'confidentialite')}">${LEGAL[lg].confidentialite.titre}</a></p>
+  <p class="pied-bas">© ${NOM} · ${t.droits} · <a href="${lien(lg, 'mentions')}">${LEGAL[lg].mentions.titre}</a> · <a href="${lien(lg, 'confidentialite')}">${LEGAL[lg].confidentialite.titre}</a> · <a class="lien-locweb" href="https://locweb.fr" target="_blank" rel="noopener">LocWeb</a></p>
 </footer>
 <script>
   window.LOCWEB_CONFIG = {
@@ -532,11 +531,11 @@ fs.writeFileSync(path.join(ICI, 'gestion', 'index.html'), `<!DOCTYPE html>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=7"><link rel="stylesheet" href="../assets/gestion.css?v=1">
+<link rel="stylesheet" href="../assets/style.css?v=8"><link rel="stylesheet" href="../assets/gestion.css?v=1">
 </head><body class="gestion">
 <div id="app"></div>
 <script>window.LOCWEB_CONFIG = { supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co', supabaseAnonKey: 'sb_publishable_rpLrUo4Cqnfl8zSohDqO0A_Q5Vkj2Hk' };</script>
-<script src="../assets/gestion.js?v=1" defer></script>
+<script src="../assets/gestion.js?v=2" defer></script>
 </body></html>
 `);
 fs.writeFileSync(path.join(ICI, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /gestion/\n\nSitemap: ${URL_SITE}sitemap.xml\n`);
