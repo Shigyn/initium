@@ -83,15 +83,31 @@
     zone.innerHTML =
       '<div class="pro-tete"><p>' + esc(T.bonjour) + ' <b>' + esc(session.societe) + '</b> · <button type="button" class="pro-lien" data-sortir>' + esc(T.sortir) + '</button></p>' +
         '<input type="search" class="pro-recherche" placeholder="' + esc(T.chercher) + '" data-chercher value="' + esc(filtre) + '"></div>' +
-      '<div class="pro-grille-produits" data-grille></div>' +
+      '<nav class="pro-rubriques" data-rubs></nav>' +
+      '<div data-grille></div>' +
       '<button type="button" class="pro-barre" data-ouvrir hidden></button>';
     grille();
     majBarre();
   }
 
+  /* Les rubriques d'Olivier (Canapes, Tables...) : une pastille par rubrique
+     pour filtrer, et le catalogue range par rubrique (31/10). */
+  var rubrique = '';
   function grille() {
-    var q = filtre.toLowerCase(), l = produits.filter(function (p) { return !q || (p.nom + ' ' + p.details + ' ' + p.reference).toLowerCase().indexOf(q) !== -1; });
-    $('[data-grille]').innerHTML = l.length ? l.map(function (p) {
+    var rubs = [];
+    produits.forEach(function (p) { var r = p.rubrique || ''; if (rubs.indexOf(r) === -1) rubs.push(r); });
+    rubs.sort(function (a, b) { return !a ? 1 : !b ? -1 : a.localeCompare(b, 'fr'); });
+    $('[data-rubs]').innerHTML = rubs.length > 1 ? '<button type="button" data-rub=""' + (rubrique ? '' : ' class="on"') + '>' + esc(T.tout) + '</button>' +
+      rubs.filter(Boolean).map(function (r) { return '<button type="button" data-rub="' + esc(r) + '"' + (rubrique === r ? ' class="on"' : '') + '>' + esc(r) + '</button>'; }).join('') : '';
+    var q = filtre.toLowerCase(), l = produits.filter(function (p) { return (!rubrique || p.rubrique === rubrique) && (!q || (p.nom + ' ' + p.details + ' ' + p.reference).toLowerCase().indexOf(q) !== -1); });
+    if (!l.length) { $('[data-grille]').innerHTML = '<p class="pro-attente">' + esc(T.aucun) + '</p>'; return; }
+    $('[data-grille]').innerHTML = rubs.map(function (r) {
+      var lot = l.filter(function (p) { return (p.rubrique || '') === r; });
+      if (!lot.length) return '';
+      return (r && !rubrique ? '<h2 class="pro-rub-titre">' + esc(r) + '</h2>' : '') + '<div class="pro-grille-produits">' + lot.map(fiche).join('') + '</div>';
+    }).join('');
+  }
+  function fiche(p) {
       var dans = panier.some(function (x) { return x.id === p.id; });
       return '<article class="pro-fiche">' +
         '<div class="pro-photo">' + (p.photos[0] ? '<img src="' + esc(p.photos[0]) + '" alt="' + esc(p.nom) + '" loading="lazy" data-principale>' : '') + '</div>' +
@@ -105,7 +121,6 @@
         '<div class="pro-ajout"><label><span class="sr">' + esc(T.qte) + '</span><input type="number" min="1" max="999" value="1" data-qte></label>' +
           '<button type="button" class="bouton" data-ajouter="' + p.id + '">' + esc(dans ? T.ajoute + ' ✓' : T.ajouter) + '</button></div>' +
       '</article>';
-    }).join('') : '<p class="pro-attente">' + esc(T.aucun) + '</p>';
   }
 
   function majBarre() {
@@ -151,6 +166,8 @@
     var t = e.target;
     if (t.closest('[data-sortir]')) { sortir(); return; }
     if (t.closest('[data-ouvrir]')) { ouvrirDemande(); return; }
+    var rb = t.closest('[data-rub]');
+    if (rb) { rubrique = rb.getAttribute('data-rub'); grille(); return; }
     var v = t.closest('[data-vignette]');
     if (v) {
       var fiche = v.closest('.pro-fiche');

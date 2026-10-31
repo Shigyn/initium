@@ -268,3 +268,10 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
 /* Le lien LocWeb du pied de page : a peine plus visible, dans le teck du site (2026-10-31). */
 .pied-bas a.lien-locweb { color: var(--teck); text-decoration: none; font-weight: 500 }
 .pied-bas a.lien-locweb:hover { color: var(--moutarde) }
+/* Rubriques du catalogue pro (31/10) */
+.pro-rubriques { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 26px }
+.pro-rubriques:empty { display: none }
+.pro-rubriques button { border: 1px solid var(--pierre); background: #fff; padding: 9px 16px; cursor: pointer; font: 500 12px var(--police); letter-spacing: .1em; text-transform: uppercase; color: var(--noir) }
+.pro-rubriques button.on { background: var(--noir); border-color: var(--noir); color: #fff }
+.pro-rub-titre { font-size: 13px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; margin: 40px 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--pierre) }
+.pro-rub-titre:first-child { margin-top: 0 }

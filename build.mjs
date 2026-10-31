@@ -145,21 +145,21 @@ const T = {
 
 /* ---------- l'espace pro branche (2026-10-28) : textes de assets/pro.js ---------- */
 const PRO = {
-  fr: { bonjour: 'Connecté :', sortir: 'Se déconnecter', chercher: 'Rechercher un modèle, une référence…', public: 'Prix public HT', pro: 'Votre prix HT', ref: 'Réf.',
+  fr: { tout: 'Tout', bonjour: 'Connecté :', sortir: 'Se déconnecter', chercher: 'Rechercher un modèle, une référence…', public: 'Prix public HT', pro: 'Votre prix HT', ref: 'Réf.',
     ajouter: 'Ajouter à ma demande', ajoute: 'Ajouté', qte: 'Quantité', demande: 'Ma demande', vide: 'Votre demande est vide.', message: 'Un message pour Initium³ (délai, livraison, coloris…)',
     envoyer: 'Envoyer ma demande', envoyee: 'Merci, votre demande est envoyée. Initium³ vous recontacte rapidement.', retirer: 'Retirer', total: 'Total HT',
     surDemande: 'Prix sur demande', aucun: 'Aucun modèle ne correspond.', fermer: 'Fermer', articles: 'article(s)',
     codeFaux: 'Code incorrect. Vérifiez les 8 chiffres.', trop: 'Trop d’essais. Réessayez dans quelques minutes.', champs: 'Merci de remplir la société, le numéro d’entreprise, le nom et un e-mail valide.',
     codeOk: 'Votre accès est ouvert. Votre code personnel :', codeGarder: 'Notez-le : il vous servira à vous reconnecter.', voirCatalogue: 'Voir le catalogue',
     attente: 'Merci ! Nous vérifions votre demande et vous envoyons votre code personnel par e-mail très rapidement.', erreur: 'Une erreur est survenue. Réessayez dans un instant.' },
-  nl: { bonjour: 'Aangemeld:', sortir: 'Afmelden', chercher: 'Zoek een model, een referentie…', public: 'Publieksprijs excl. btw', pro: 'Uw prijs excl. btw', ref: 'Ref.',
+  nl: { tout: 'Alles', bonjour: 'Aangemeld:', sortir: 'Afmelden', chercher: 'Zoek een model, een referentie…', public: 'Publieksprijs excl. btw', pro: 'Uw prijs excl. btw', ref: 'Ref.',
     ajouter: 'Toevoegen aan mijn aanvraag', ajoute: 'Toegevoegd', qte: 'Aantal', demande: 'Mijn aanvraag', vide: 'Uw aanvraag is leeg.', message: 'Een bericht voor Initium³ (termijn, levering, kleur…)',
     envoyer: 'Aanvraag versturen', envoyee: 'Bedankt, uw aanvraag is verstuurd. Initium³ neemt snel contact met u op.', retirer: 'Verwijderen', total: 'Totaal excl. btw',
     surDemande: 'Prijs op aanvraag', aucun: 'Geen enkel model komt overeen.', fermer: 'Sluiten', articles: 'artikel(en)',
     codeFaux: 'Onjuiste code. Controleer de 8 cijfers.', trop: 'Te veel pogingen. Probeer het over enkele minuten opnieuw.', champs: 'Vul het bedrijf, het ondernemingsnummer, de naam en een geldig e-mailadres in.',
     codeOk: 'Uw toegang is geopend. Uw persoonlijke code:', codeGarder: 'Noteer hem: u hebt hem nodig om opnieuw in te loggen.', voirCatalogue: 'Catalogus bekijken',
     attente: 'Bedankt! We controleren uw aanvraag en sturen u zeer snel uw persoonlijke code per e-mail.', erreur: 'Er is een fout opgetreden. Probeer het zo meteen opnieuw.' },
-  en: { bonjour: 'Signed in:', sortir: 'Sign out', chercher: 'Search a model, a reference…', public: 'Retail price excl. VAT', pro: 'Your price excl. VAT', ref: 'Ref.',
+  en: { tout: 'All', bonjour: 'Signed in:', sortir: 'Sign out', chercher: 'Search a model, a reference…', public: 'Retail price excl. VAT', pro: 'Your price excl. VAT', ref: 'Ref.',
     ajouter: 'Add to my request', ajoute: 'Added', qte: 'Quantity', demande: 'My request', vide: 'Your request is empty.', message: 'A message for Initium³ (lead time, delivery, colours…)',
     envoyer: 'Send my request', envoyee: 'Thank you, your request has been sent. Initium³ will get back to you shortly.', retirer: 'Remove', total: 'Total excl. VAT',
     surDemande: 'Price on request', aucun: 'No model matches.', fermer: 'Close', articles: 'item(s)',
@@ -253,7 +253,7 @@ ${alternates}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${r}assets/style.css?v=8">
+<link rel="stylesheet" href="${r}assets/style.css?v=9">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 </head>
 <body class="${clair ? 'entete-clair' : ''}">
@@ -439,7 +439,7 @@ for (const lg of LANGUES) {
     clair: true,
     // Le catalogue pro se charge apres connexion (assets/pro.js, fonction in-pro).
     apres: `<script>window.IN_PRO = ${JSON.stringify({ langue: lg, ...PRO[lg] })};</script>
-<script src="../${PREFIXE[lg] ? '../' : ''}assets/pro.js?v=1" defer></script>`,
+<script src="../${PREFIXE[lg] ? '../' : ''}assets/pro.js?v=2" defer></script>`,
     corps: () => `
 <section class="page-texte" data-pro-accueil>
   <h1>${t.proPageTitre}</h1>
@@ -532,11 +532,11 @@ fs.writeFileSync(path.join(ICI, 'gestion', 'index.html'), `<!DOCTYPE html>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=8"><link rel="stylesheet" href="../assets/gestion.css?v=1">
+<link rel="stylesheet" href="../assets/style.css?v=9"><link rel="stylesheet" href="../assets/gestion.css?v=2">
 </head><body class="gestion">
 <div id="app"></div>
 <script>window.LOCWEB_CONFIG = { supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co', supabaseAnonKey: 'sb_publishable_rpLrUo4Cqnfl8zSohDqO0A_Q5Vkj2Hk' };</script>
-<script src="../assets/gestion.js?v=4" defer></script>
+<script src="../assets/gestion.js?v=5" defer></script>
 </body></html>
 `);
 fs.writeFileSync(path.join(ICI, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /gestion/\n\nSitemap: ${URL_SITE}sitemap.xml\n`);

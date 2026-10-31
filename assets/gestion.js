@@ -109,11 +109,21 @@
   }
 
   /* ---------- catalogue ---------- */
-  var recherche = '';
+  /* Les rubriques (31/10) : Canapes, Tables... Olivier en cree une en tapant
+     un nouveau nom dans la fiche d'un produit ; une rubrique sans produit
+     disparait d'elle-meme. Ici, une pastille par rubrique pour filtrer. */
+  var recherche = '', rubriqueVue = '';
+  function rubriques() {
+    var l = []; donnees.produits.forEach(function (p) { if (p.rubrique && l.indexOf(p.rubrique) === -1) l.push(p.rubrique); });
+    return l.sort(function (a, b) { return a.localeCompare(b, 'fr'); });
+  }
   function vueCatalogue() {
-    var q = recherche.toLowerCase();
-    var l = donnees.produits.filter(function (p) { return !q || (p.nom + ' ' + p.reference + ' ' + p.details).toLowerCase().indexOf(q) !== -1; });
+    var q = recherche.toLowerCase(), rs = rubriques();
+    var l = donnees.produits.filter(function (p) { return (!rubriqueVue || (rubriqueVue === '__sans' ? !p.rubrique : p.rubrique === rubriqueVue)) && (!q || (p.nom + ' ' + p.reference + ' ' + p.details).toLowerCase().indexOf(q) !== -1); });
     return '<div class="g-barre"><input type="search" class="pro-recherche" placeholder="Rechercher un produit…" value="' + esc(recherche) + '" data-recherche><button type="button" class="bouton" data-produit="">+ Nouveau produit</button></div>' +
+      '<div class="g-rubriques"><button type="button" data-rub=""' + (rubriqueVue ? '' : ' class="on"') + '>Toutes (' + donnees.produits.length + ')</button>' +
+        rs.map(function (r) { var n = donnees.produits.filter(function (p) { return p.rubrique === r; }).length; return '<button type="button" data-rub="' + esc(r) + '"' + (rubriqueVue === r ? ' class="on"' : '') + '>' + esc(r) + ' (' + n + ')</button>'; }).join('') +
+        (donnees.produits.some(function (p) { return !p.rubrique; }) ? '<button type="button" data-rub="__sans"' + (rubriqueVue === '__sans' ? ' class="on"' : '') + '>Sans rubrique</button>' : '') + '</div>' +
       '<div class="g-produits">' + l.map(function (p) {
         return '<button type="button" class="g-produit' + (p.visible ? '' : ' g-masque') + '" data-produit="' + p.id + '">' +
           '<span class="g-vignette">' + (p.urls[0] ? '<img src="' + esc(p.urls[0]) + '" alt="" loading="lazy">' : '') + '</span>' +
@@ -138,13 +148,15 @@
   }
 
   function editer(id) {
-    var p = donnees.produits.filter(function (x) { return x.id === id; })[0] || { nom: '', details: '', reference: '', prix_public_cents: null, prix_pro_cents: null, photos: [], urls: [], visible: true };
+    var p = donnees.produits.filter(function (x) { return x.id === id; })[0] || { nom: '', rubrique: rubriqueVue && rubriqueVue !== '__sans' ? rubriqueVue : '', details: '', reference: '', prix_public_cents: null, prix_pro_cents: null, photos: [], urls: [], visible: true };
     var photos = p.photos.map(function (ch, i) { return { chemin: ch, url: p.urls[i] }; });
     var en = function (c) { return c == null ? '' : (c / 100).toFixed(2); };
     var f = document.createElement('div'); f.className = 'pro-fond';
     f.innerHTML = '<form class="pro-panneau formulaire" data-fiche><div class="pro-panneau-tete"><h2>' + (id ? 'Modifier le produit' : 'Nouveau produit') + '</h2><button type="button" class="pro-lien" data-fermer>Fermer</button></div>' +
       '<div class="g-photos" data-photos></div><label class="g-ajout-photo">+ Ajouter une photo<input type="file" accept="image/*" multiple data-fichier hidden></label>' +
       '<label>Nom<input name="nom" required value="' + esc(p.nom) + '"></label>' +
+      '<label>Rubrique (Canapés, Tables… ou un nouveau nom pour en créer une)<input name="rubrique" list="g-liste-rubriques" value="' + esc(p.rubrique || '') + '"></label>' +
+      '<datalist id="g-liste-rubriques">' + rubriques().map(function (r) { return '<option value="' + esc(r) + '">'; }).join('') + '</datalist>' +
       '<label>Détails (dimensions, matériaux, tissu…)<textarea name="details" rows="5">' + esc(p.details) + '</textarea></label>' +
       '<label>Référence<input name="reference" value="' + esc(p.reference) + '"></label>' +
       '<div class="deux"><label>Prix public HT (€)<input name="public" type="number" step="0.01" min="0" value="' + en(p.prix_public_cents) + '"></label>' +
@@ -183,7 +195,7 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var c = function (v) { return v === '' ? null : Math.round(parseFloat(v) * 100); };
-      appel('produit_enregistrer', { id: id || '', nom: form.nom.value, details: form.details.value, reference: form.reference.value,
+      appel('produit_enregistrer', { id: id || '', nom: form.nom.value, rubrique: form.rubrique.value, details: form.details.value, reference: form.reference.value,
         prix_public_cents: c(form.public.value), prix_pro_cents: c(form.pro.value), visible: form.visible.checked, photos: photos.map(function (x) { return x.chemin; }) })
         .then(function () { f.remove(); charger(); }).catch(function (x) { alert(x.message); });
     });
@@ -221,6 +233,7 @@
     if ((b = t.closest('[data-couper]'))) { if (confirm('Couper cet accès ? Le client ne verra plus les prix.')) appel('acces_couper', { id: b.getAttribute('data-couper') }).then(charger); return; }
     if ((b = t.closest('[data-reactiver]'))) { appel('acces_reactiver', { id: b.getAttribute('data-reactiver') }).then(charger); return; }
     if (t.closest('[data-creer]')) { creerAcces(); return; }
+    if ((b = t.closest('[data-rub]'))) { rubriqueVue = b.getAttribute('data-rub'); dessiner(); return; }
     if ((b = t.closest('[data-produit]'))) { editer(b.getAttribute('data-produit')); return; }
   });
   app.addEventListener('change', function (e) {
