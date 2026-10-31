@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /gestion/
 
-Sitemap: https://initium3.com/sitemap.xml
+Sitemap: https://www.initium3.com/sitemap.xml

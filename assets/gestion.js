@@ -87,7 +87,7 @@
   }
   function montrerCode(code, a) {
     var lien = 'mailto:' + encodeURIComponent(a && a.email || '') + '?subject=' + encodeURIComponent('Votre accès professionnel Initium³') +
-      '&body=' + encodeURIComponent('Bonjour,\n\nVotre accès à notre espace professionnel est ouvert. Votre code personnel : ' + code + '\n\nConnectez-vous sur https://initium3.com/espace-pro/ pour voir vos prix et nous envoyer vos demandes.\n\nÀ bientôt,\nInitium³');
+      '&body=' + encodeURIComponent('Bonjour,\n\nVotre accès à notre espace professionnel est ouvert. Votre code personnel : ' + code + '\n\nConnectez-vous sur https://www.initium3.com/espace-pro/ pour voir vos prix et nous envoyer vos demandes.\n\nÀ bientôt,\nInitium³');
     var f = document.createElement('div'); f.className = 'pro-fond g-fond';
     f.innerHTML = '<div class="g-modale"><h2>Code du client</h2><p class="pro-code">' + code.slice(0, 4) + ' ' + code.slice(4) + '</p><p class="g-gris">Envoyez-le au client : il ne s’affichera plus ensuite.</p>' +
       '<div class="g-actions">' + (a && a.email ? '<a class="bouton" href="' + lien + '">Envoyer par e-mail</a>' : '') + '<button type="button" class="pro-lien" data-ok>Fermer</button></div></div>';
