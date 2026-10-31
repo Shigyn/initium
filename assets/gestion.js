@@ -159,9 +159,8 @@
       '<datalist id="g-liste-rubriques">' + rubriques().map(function (r) { return '<option value="' + esc(r) + '">'; }).join('') + '</datalist>' +
       '<label>Détails (dimensions, matériaux, tissu…)<textarea name="details" rows="5">' + esc(p.details) + '</textarea></label>' +
       '<label>Référence<input name="reference" value="' + esc(p.reference) + '"></label>' +
-      '<div class="deux"><label>Prix public HT (€)<input name="public" type="number" step="0.01" min="0" value="' + en(p.prix_public_cents) + '"></label>' +
+      '<div class="deux"><label>Prix public HT (€, pour vous, non affiché)<input name="public" type="number" step="0.01" min="0" value="' + en(p.prix_public_cents) + '"></label>' +
       '<label>Prix pro HT (€)<input name="pro" type="number" step="0.01" min="0" value="' + en(p.prix_pro_cents) + '"></label></div>' +
-      '<button type="button" class="pro-lien" data-remise>Prix pro = prix public − 45 %</button>' +
       '<label class="g-case"><input type="checkbox" name="visible"' + (p.visible ? ' checked' : '') + '> Visible dans l’espace pro</label>' +
       '<div class="g-actions"><button class="bouton" type="submit">Enregistrer</button>' + (id ? '<button type="button" class="pro-lien g-danger" data-supprimer>Supprimer ce produit</button>' : '') + '</div></form>';
     document.body.appendChild(f);
@@ -178,7 +177,6 @@
       if (t === f || t.closest('[data-fermer]')) { f.remove(); return; }
       var en1 = t.closest('[data-enlever]'); if (en1) { photos.splice(+en1.getAttribute('data-enlever'), 1); majPhotos(); return; }
       var pr = t.closest('[data-premiere]'); if (pr) { photos.unshift(photos.splice(+pr.getAttribute('data-premiere'), 1)[0]); majPhotos(); return; }
-      if (t.closest('[data-remise]')) { var v = parseFloat(form.public.value); if (v > 0) form.pro.value = (v * 0.55).toFixed(2); return; }
       if (t.closest('[data-supprimer]')) {
         if (!confirm('Supprimer « ' + p.nom + ' » du catalogue ? Les demandes déjà reçues le gardent.')) return;
         appel('produit_supprimer', { id: id }).then(function () { f.remove(); charger(); }).catch(function (x) { alert(x.message); });

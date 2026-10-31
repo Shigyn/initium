@@ -116,7 +116,8 @@
         (p.details ? '<p class="pro-details">' + esc(p.details) + '</p>' : '') +
         (p.reference ? '<p class="pro-ref">' + esc(T.ref) + ' ' + esc(p.reference) + '</p>' : '') +
         '<div class="pro-prix">' + (p.prix_pro_cents != null
-          ? (p.prix_public_cents ? '<span><small>' + esc(T.public) + '</small><s>' + prix(p.prix_public_cents) + '</s></span>' : '') + '<span><small>' + esc(T.pro) + '</small><b>' + prix(p.prix_pro_cents) + '</b></span>'
+          // Seulement le prix d'achat pro HT : plus de prix public (Olivier, 31/10).
+          ? '<span><small>' + esc(T.pro) + '</small><b>' + prix(p.prix_pro_cents) + '</b></span>'
           : '<span><b>' + esc(T.surDemande) + '</b></span>') + '</div>' +
         '<div class="pro-ajout"><label><span class="sr">' + esc(T.qte) + '</span><input type="number" min="1" max="999" value="1" data-qte></label>' +
           '<button type="button" class="bouton" data-ajouter="' + p.id + '">' + esc(dans ? T.ajoute + ' ✓' : T.ajouter) + '</button></div>' +
