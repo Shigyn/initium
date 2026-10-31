@@ -17,8 +17,8 @@ import { LEGAL } from './_source/legal.mjs';
 
 const ICI = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)/, '$1');
 // Domaine du client relie le 31/10/2026 (DNS chez Wix) : le site est livre.
-// www comme adresse principale (31/10) : c'est ainsi que GitHub couvre www ET le domaine nu en HTTPS.
-const URL_SITE = 'https://www.initium3.com/';
+// Domaine nu en adresse principale (31/10) : le certificat GitHub pour www n'a jamais ete delivre.
+const URL_SITE = 'https://initium3.com/';
 const NOM = 'Initium³';
 const PHOTOS = JSON.parse(fs.readFileSync(path.join(ICI, '_source', 'photos.json'), 'utf8'));
 const LANGUES = ['fr', 'nl', 'en'];
@@ -536,7 +536,7 @@ fs.writeFileSync(path.join(ICI, 'gestion', 'index.html'), `<!DOCTYPE html>
 </head><body class="gestion">
 <div id="app"></div>
 <script>window.LOCWEB_CONFIG = { supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co', supabaseAnonKey: 'sb_publishable_rpLrUo4Cqnfl8zSohDqO0A_Q5Vkj2Hk' };</script>
-<script src="../assets/gestion.js?v=3" defer></script>
+<script src="../assets/gestion.js?v=4" defer></script>
 </body></html>
 `);
 fs.writeFileSync(path.join(ICI, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /gestion/\n\nSitemap: ${URL_SITE}sitemap.xml\n`);
