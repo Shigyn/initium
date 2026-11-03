@@ -1,5 +1,6 @@
 # Initium³ — import du catalogue Excel d'Olivier dans l'espace pro (LocWeb, 2026-10-28).
-#   python -I _source/import_catalogue.py _source/olivier-2026-10-28/catalogue.xlsx
+#   python -I _source/import_catalogue.py _source/olivier-2026-11-03/catalogue.xlsx
+#   Format du catalogue du 03/11 : une seule colonne de prix (pro HT), plus de prix public.
 #
 # Une fiche = un prix. Dans l'Excel, un ensemble (BOHO, Lungo, Calahonda...)
 # porte son prix sur sa premiere ligne ; les lignes suivantes sans prix sont
@@ -21,47 +22,62 @@ for im in ws._images:
     images.setdefault(im.anchor._from.row + 1, []).append(im._data())
 
 propre = lambda v: re.sub(r'\s+', ' ', str(v or '').replace('\n', ' ')).strip()
-# Un code produit (CT-34-YB, DV-O-08A-TA...) : pas de minuscule, au moins un chiffre et un tiret.
-est_code = lambda s: bool(s) and not re.search(r'[a-z]', s) and re.search(r'\d', s) and '-' in s and ' ' not in s.strip()
 COUPE = re.compile(r'\s(?=(W\s?\d|DIAM|Dia\s?\d|D\s?\d|\d+[*x]))', re.I)
 
+# Format du 03/11 : la colonne Item porte le nom ou le code produit, suivi du code CU19...
+# (CT-34-YBCU1931026 CU1931049026 : l'ancien code colle, le dernier est le bon).
 def nom_et_dims(c, d):
     c, d = propre(c), propre(d)
-    if c and not est_code(c):
-        return c[:1].upper() + c[1:], d, ''
-    texte = d or c
-    parts = COUPE.split(texte, maxsplit=1)
-    nom = parts[0].strip(' -') if parts else texte
-    dims = texte[len(parts[0]):].strip() if len(parts) > 1 else ''
+    codes = re.findall(r'CU[0-9A-Z_]+', c)
+    avant = re.split(r'CU[0-9A-Z_]+', c)[0].strip(' .+-') if codes else c
+    cube = codes[-1] if codes else ''
+    if avant and re.search(r'[a-z]', avant):
+        return avant[:1].upper() + avant[1:], d, '', cube
+    parts = COUPE.split(d, maxsplit=1)
+    nom = parts[0].strip(' -') if parts else d
+    dims = d[len(parts[0]):].strip() if len(parts) > 1 else ''
     nom = nom.capitalize() if nom.isupper() else nom
-    return (nom or c or 'Produit').replace('Dinning', 'Dining'), dims, c if est_code(c) else ''
+    return (nom or avant or 'Produit').replace('Dinning', 'Dining'), dims, avant, cube
 
 def cents(v):
     try: return round(float(v) * 100)
     except (TypeError, ValueError): return None
 
-# Fautes de frappe de l'Excel, et une ligne a plusieurs codes sans nom lisible.
-CORRIGE = {'Calahondalounge': 'Calahonda lounge', 'Surved center': 'Curved center', 'CALAHONDA CORNER': 'Calahonda corner', 'CALAHONDA SEATER': 'Calahonda seater', 'LUNGO 3-SEATER': 'Lungo 3-seater'}
-NOM_LIGNE = {57: 'DV-R modulable (1, 2 et 3 places + pouf)', 90: 'Lampadaire solaire teck', 91: 'Lampadaire solaire teck', 92: 'Lampadaire solaire alu',
-             93: 'Tapis 2 × 3 m', 94: 'Tapis 2 × 3 m', 95: 'Tapis 2 × 3 m', 97: 'Tapis 2 × 3 m', 98: 'Tapis 3 × 4 m'}
+def rubrique(nom):
+    n = nom.lower()
+    if 'tapis' in n: return 'Tapis'
+    if 'lampadaire' in n: return 'Luminaires'
+    if 'dining chair' in n: return 'Chaises'
+    if 'lounge chair' in n or 'armchair' in n or 'arm chair' in n: return 'Fauteuils'
+    if 'lounger' in n: return 'Bains de soleil'
+    if 'table' in n: return 'Tables'
+    if 'ottoman' in n or 'pouf' in n: return 'Poufs'
+    return 'Canapés et salons'
+
+# Fautes de frappe de l'Excel, et les lignes sans nom lisible.
+CORRIGE = {'BOHO 1 Seater X': 'BOHO 1 Seater X 2', 'BOHO 1 Seater X 2 2': 'BOHO 1 Seater X 2', 'BOHOCoffee': 'BOHO Coffee', 'SURVED': 'Curved', 'Calahondalounge': 'Calahonda lounge', 'Surved center': 'Curved center', 'CALAHONDA CORNER': 'Calahonda corner', 'CALAHONDA SEATER': 'Calahonda seater', 'LUNGO 3-SEATER': 'Lungo 3-seater'}
+NOM_LIGNE = {57: 'DV-R 1 seater', 58: 'DV-R 2 seater', 59: 'DV-R 3 seater', 60: 'DV-R pouf', 89: 'Lampadaire solaire teck', 90: 'Lampadaire solaire teck', 91: 'Lampadaire solaire alu',
+             92: 'Tapis 2 × 3 m', 93: 'Tapis 2 × 3 m', 94: 'Tapis 2 × 3 m', 96: 'Tapis 2 × 3 m', 97: 'Tapis 3 × 4 m'}
 
 fiches, courante = [], None
 for r in range(5, ws.max_row + 1):
     val = lambda col: ws[f'{col}{r}'].value
-    c, d, e, f, g, h, i, k = (val(x) for x in 'CDEFGHIK')
-    a_du_contenu = any(propre(x) for x in (c, d, e, f, g, h)) or cents(i)
-    if a_du_contenu:
-        nom, dims, ref = nom_et_dims(c, d)
-        for a, b in CORRIGE.items(): nom = nom.replace(a, b)
-        if r in NOM_LIGNE: nom, dims, ref = NOM_LIGNE[r], propre(d), ''
-        piece = {'nom': nom, 'dims': dims, 'ref': ref, 'materiaux': propre(e), 'structure': propre(f), 'tissu': propre(g), 'cube': propre(h)}
-        if cents(i) or courante is None:
-            courante = {'pieces': [], 'photos': [], 'public': cents(i), 'pro': cents(k)}
-            fiches.append(courante)
-        courante['pieces'].append(piece)
-    if courante is not None:
-        for n, data in enumerate(images.get(r, []), 1):
-            courante['photos'].append((r, n, data))
+    c, d, e, f, g, qte, pro = (val(x) for x in 'CDEFGHI')
+    # Les lignes vides de l'Excel (#REF! en prix, images perdues) ne comptent pas.
+    if not any(propre(x) for x in (c, d, e, f, g)): continue
+    nom, dims, ref, cube = nom_et_dims(c, d)
+    for a, b in CORRIGE.items(): nom = nom.replace(a, b)
+    if r in NOM_LIGNE:
+        nom = NOM_LIGNE[r]
+        if r >= 89: dims = propre(d)
+    piece = {'nom': nom, 'dims': dims, 'ref': ref, 'materiaux': propre(e), 'structure': propre(f), 'tissu': propre(g), 'cube': cube}
+    if cents(pro) or courante is None:
+        q = propre(qte)
+        courante = {'pieces': [], 'photos': [], 'pro': cents(pro), 'qte': '' if q == '1' else q.replace('1double', '1 double')}
+        fiches.append(courante)
+    courante['pieces'].append(piece)
+    for n, data in enumerate(images.get(r, []), 1):
+        courante['photos'].append((r, n, data))
 
 def ligne_details(p, seul):
     morceaux = [] if seul else [p['nom'] + ' :']
@@ -83,11 +99,12 @@ for fi in fiches:
         finition = next((x for x in (p0['structure'], p0['tissu']) if x and x != '/'), '')
         if finition: fi['nom'] += ' — ' + finition
 
-sql, n_photos = [], 0
+sql, n_photos, precedentes = [], 0, []
 q = lambda s: "$q$" + s.replace('$q$', '') + "$q$"
 for idx, fi in enumerate(fiches):
     nom = fi['nom']
     details = '\n'.join(ligne_details(p, len(fi['pieces']) == 1) for p in fi['pieces'])
+    if fi['qte']: details += '\nComposition : ' + fi['qte']
     refs = ' / '.join(dict.fromkeys(x for p in fi['pieces'] for x in (p['ref'], p['cube']) if x))
     chemins = []
     for r, n, data in fi['photos']:
@@ -100,20 +117,22 @@ for idx, fi in enumerate(fiches):
         if im.mode == 'RGBA':
             fond = Image.new('RGB', im.size, 'white'); fond.paste(im, mask=im.split()[3]); im = fond
         im = im.convert('RGB'); im.thumbnail((1400, 1400))
-        fichier = f'cat-{r:03d}-{n}.webp'
+        fichier = f'c2-{r:03d}-{n}.webp'
         im.save(os.path.join(PHOTOS, fichier), 'WEBP', quality=82)
         chemins.append('catalogue/' + fichier); n_photos += 1
+    # Sans photo : celle de la fiche d'avant, le meme modele (table Olwen, modules DV-R).
+    chemins = chemins or precedentes
+    precedentes = chemins
     tab = 'array[' + ','.join(q(x) for x in chemins) + ']::text[]' if chemins else "'{}'::text[]"
-    pub = 'null' if fi['public'] is None else str(fi['public'])
     pro = 'null' if fi['pro'] is None else str(fi['pro'])
-    sql.append(f"({(idx + 1) * 10}, {q(nom)}, {q(details)}, {q(refs)}, {pub}, {pro}, {tab})")
+    sql.append(f"({(idx + 1) * 10}, {q(rubrique(nom))}, {q(nom)}, {q(details)}, {q(refs)}, null, {pro}, {tab})")
 
 sortie = os.path.join(os.path.dirname(os.path.abspath(XLSX)), 'import-produits.sql')
 with open(sortie, 'w', encoding='utf-8') as fh:
     fh.write('-- GENERE par _source/import_catalogue.py — contient les prix pro, jamais dans le depot.\n')
-    fh.write('delete from in_produits;\n')
-    fh.write('insert into in_produits (ordre, nom, details, reference, prix_public_cents, prix_pro_cents, photos) values\n')
-    fh.write(',\n'.join(sql) + ';\n')
+    fh.write('begin;\ndelete from in_produits;\n')
+    fh.write('insert into in_produits (ordre, rubrique, nom, details, reference, prix_public_cents, prix_pro_cents, photos) values\n')
+    fh.write(',\n'.join(sql) + ';\ncommit;\n')
 print(len(fiches), 'fiches,', n_photos, 'photos ->', sortie)
 for fi in fiches:
-    print(' -', fi['nom'][:70], '|', fi['public'], fi['pro'], '|', len(fi['photos']), 'ph')
+    print(' -', rubrique(fi['nom'])[:10], '|', fi['nom'][:70], '|', fi['pro'], '|', len(fi['photos']), 'ph')

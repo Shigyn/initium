@@ -127,7 +127,7 @@
       '<div class="g-produits">' + l.map(function (p) {
         return '<button type="button" class="g-produit' + (p.visible ? '' : ' g-masque') + '" data-produit="' + p.id + '">' +
           '<span class="g-vignette">' + (p.urls[0] ? '<img src="' + esc(p.urls[0]) + '" alt="" loading="lazy">' : '') + '</span>' +
-          '<span class="g-produit-txt"><b>' + esc(p.nom) + '</b><small>' + euros(p.prix_public_cents) + ' · pro ' + euros(p.prix_pro_cents) + (p.visible ? '' : ' · masqué') + '</small></span></button>';
+          '<span class="g-produit-txt"><b>' + esc(p.nom) + '</b><small>' + (p.prix_public_cents != null ? euros(p.prix_public_cents) + ' · ' : '') + 'pro ' + euros(p.prix_pro_cents) + (p.visible ? '' : ' · masqué') + '</small></span></button>';
       }).join('') + '</div>';
   }
 

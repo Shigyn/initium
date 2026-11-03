@@ -49,8 +49,9 @@ p { margin: 0 0 1.1em }
   transition: background-color .5s var(--courbe), color .5s var(--courbe), height .5s var(--courbe), box-shadow .5s;
 }
 .entete[data-plein], .entete-clair .entete { background: var(--blanc); color: var(--noir); height: 74px; box-shadow: 0 1px 0 rgba(18, 20, 19, .08) }
-.marque { justify-self: start; text-decoration: none; font-weight: 400; font-size: 19px; letter-spacing: .3em }
-.marque sup { font-size: .55em; letter-spacing: 0; margin-left: -.22em; vertical-align: .85em }
+/* Le logo d'Olivier en masque : il prend la couleur du texte (blanc sur les photos, noir sur fond clair). */
+.marque { justify-self: start; display: block; width: 214px; height: 27px; background: currentColor; -webkit-mask: url(logo-initium.png) left center / contain no-repeat; mask: url(logo-initium.png) left center / contain no-repeat }
+
 .nav-univers { display: flex; gap: clamp(20px, 3vw, 48px) }
 .nav-univers a, .panneau a, .langues a, .langues span {
   text-decoration: none; text-transform: uppercase; letter-spacing: .14em; font-size: 13.5px; font-weight: 500;
@@ -75,7 +76,7 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
 @media (max-width: 860px) {
   .entete { grid-template-columns: 1fr auto; height: 68px }
   .nav-univers { display: none }
-  .marque { font-size: 16px }
+  .marque { width: 162px; height: 20px }
 }
 
 /* ---------------- ouverture plein ecran, sans texte ---------------- */
@@ -186,8 +187,8 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
 /* ---------------- pied ---------------- */
 .pied { background: var(--sable); padding: clamp(60px, 8vw, 110px) var(--marge) 28px }
 .pied-grille { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px }
-.pied-marque { font-weight: 400; font-size: 22px; letter-spacing: .3em; margin-bottom: 12px }
-.pied-marque sup { font-size: .55em; letter-spacing: 0; margin-left: -.22em }
+.pied-marque { width: 250px; max-width: 100%; aspect-ratio: 1109 / 313; margin: 0 0 14px; background: currentColor; -webkit-mask: url(logo-initium-complet.png) left center / contain no-repeat; mask: url(logo-initium-complet.png) left center / contain no-repeat }
+
 .pied-devise { color: var(--gris); font-size: 14.5px; max-width: 28ch }
 .pied nav { display: grid; gap: 10px; align-content: start }
 .pied-titre { text-transform: uppercase; letter-spacing: .14em; font-size: 12px; font-weight: 500; color: var(--gris); margin: 0 0 6px }

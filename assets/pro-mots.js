@@ -12,6 +12,7 @@
     [/Matériaux\s*:/g, 'Matériaux :', 'Materialen:', 'Materials:'],
     [/Structure\s*:/g, 'Structure :', 'Structuur:', 'Frame:'],
     [/Tissu\s*:/g, 'Tissu :', 'Stof:', 'Fabric:'],
+    [/Composition\s*:/g, 'Composition :', 'Samenstelling:', 'Set:'],
     // Les noms ecrits en francais
     [/Lampadaire solaire teck/g, 'Lampadaire solaire en teck', 'Solar vloerlamp in teak', 'Solar teak floor lamp'],
     [/Lampadaire solaire alu/g, 'Lampadaire solaire en alu', 'Solar vloerlamp in alu', 'Solar aluminium floor lamp'],
@@ -49,6 +50,7 @@
     [/\blounger\b/gi, 'Bain de soleil', 'Ligbed'],
     [/\bottoman\b/gi, 'Pouf', 'Poef'],
     [/\bpouf\b/g, 'pouf', 'poef'],
+    [/\bchair \+ stool\b/gi, 'Fauteuil + tabouret', 'Stoel + kruk'],
     [/\barm ?chair\b/gi, 'Fauteuil', 'Fauteuil'],
     [/\bcurved center\b/gi, 'Élément central courbe', 'Gebogen middenelement'],
     [/\bcenter\b/gi, 'Élément central', 'Middenelement'],

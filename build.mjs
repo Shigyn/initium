@@ -236,13 +236,13 @@ ${alternates}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${r}assets/style.css?v=9">
+<link rel="stylesheet" href="${r}assets/style.css?v=11">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 </head>
 <body class="${clair ? 'entete-clair' : ''}">
 <a class="evitement" href="#contenu">${t.evitement}</a>
 <header class="entete" data-entete>
-  <a class="marque" href="${lien(lg, null)}" aria-label="${NOM}">INITIUM<sup>3</sup></a>
+  <a class="marque" href="${lien(lg, null)}" aria-label="${NOM}"></a>
   <nav class="nav-univers" aria-label="${t.menu}">${univers}</nav>
   <div class="entete-droite">
     <nav class="langues" aria-label="Langue / Taal / Language">${langues}</nav>
@@ -261,7 +261,7 @@ ${corps(r, lien)}
 <footer class="pied">
   <div class="pied-grille">
     <div class="pied-marque-bloc">
-      <p class="pied-marque">INITIUM<sup>3</sup></p>
+      <p class="pied-marque" role="img" aria-label="${NOM}, rinato nel 2026, inspirato dal 2003"></p>
       <p class="pied-devise">${t.piedDevise}</p>
     </div>
     <nav aria-label="${t.piedMaison}"><p class="pied-titre">${t.piedMaison}</p>${['showroom', 'pro', 'contact'].map((c) => `<a href="${lien(lg, c)}">${t.liens[c]}</a>`).join('')}<a href="https://www.facebook.com/outletdesigninout" rel="noopener">Facebook</a></nav>
@@ -422,7 +422,7 @@ for (const lg of LANGUES) {
     clair: true,
     // Le catalogue pro se charge apres connexion (assets/pro.js, fonction in-pro).
     apres: `<script>window.IN_PRO = ${JSON.stringify({ langue: lg, ...PRO[lg] })};</script>
-<script src="../${PREFIXE[lg] ? '../' : ''}assets/pro-mots.js?v=1" defer></script>
+<script src="../${PREFIXE[lg] ? '../' : ''}assets/pro-mots.js?v=2" defer></script>
 <script src="../${PREFIXE[lg] ? '../' : ''}assets/pro.js?v=4" defer></script>`,
     corps: () => `
 <section class="page-texte" data-pro-accueil>
@@ -516,11 +516,11 @@ fs.writeFileSync(path.join(ICI, 'gestion', 'index.html'), `<!DOCTYPE html>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=9"><link rel="stylesheet" href="../assets/gestion.css?v=2">
+<link rel="stylesheet" href="../assets/style.css?v=11"><link rel="stylesheet" href="../assets/gestion.css?v=2">
 </head><body class="gestion">
 <div id="app"></div>
 <script>window.LOCWEB_CONFIG = { supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co', supabaseAnonKey: 'sb_publishable_rpLrUo4Cqnfl8zSohDqO0A_Q5Vkj2Hk' };</script>
-<script src="../assets/gestion.js?v=6" defer></script>
+<script src="../assets/gestion.js?v=7" defer></script>
 </body></html>
 `);
 fs.writeFileSync(path.join(ICI, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /gestion/\n\nSitemap: ${URL_SITE}sitemap.xml\n`);
