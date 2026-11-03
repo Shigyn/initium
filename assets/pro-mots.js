@@ -25,6 +25,7 @@
     [/(\d)\s*meter\b/gi, '$1 m', '$1 m'],
     // Les pieces
     [/\bfloor lamp-?\s*/gi, 'Lampadaire ', 'Vloerlamp '],
+    [/\b1\s*double seater\b/gi, '1 canapé double', '1 dubbele sofa'],
     [/\b(\d)\s*-?\s*seater sofa\b/gi, function (m, n) { return 'Canapé ' + plur(m, n); }, '$1-zitsbank'],
     [/\b(\d)\s*-?\s*seater\b/gi, plur, '$1-zits'],
     [/\bseater\b/gi, 'places', 'zits'],

@@ -422,7 +422,7 @@ for (const lg of LANGUES) {
     clair: true,
     // Le catalogue pro se charge apres connexion (assets/pro.js, fonction in-pro).
     apres: `<script>window.IN_PRO = ${JSON.stringify({ langue: lg, ...PRO[lg] })};</script>
-<script src="../${PREFIXE[lg] ? '../' : ''}assets/pro-mots.js?v=2" defer></script>
+<script src="../${PREFIXE[lg] ? '../' : ''}assets/pro-mots.js?v=3" defer></script>
 <script src="../${PREFIXE[lg] ? '../' : ''}assets/pro.js?v=4" defer></script>`,
     corps: () => `
 <section class="page-texte" data-pro-accueil>
