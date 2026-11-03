@@ -177,7 +177,7 @@ for idx, fi in enumerate(fiches):
     sql.append(f"({(idx + 1) * 10}, {q(rubrique(nom))}, {q(nom)}, {q(details)}, {q(refs)}, null, {pro}, {tab})")
 
 sortie = os.path.join(os.path.dirname(os.path.abspath(XLSX)), 'import-produits.sql')
-with open(sortie, 'w', encoding='utf-8') as fh:
+with open(sortie, 'w', encoding='utf-8', newline='\n') as fh:
     fh.write('-- GENERE par _source/import_catalogue.py — contient les prix pro, jamais dans le depot.\n')
     fh.write('begin;\ndelete from in_produits;\n')
     fh.write('insert into in_produits (ordre, rubrique, nom, details, reference, prix_public_cents, prix_pro_cents, photos) values\n')
