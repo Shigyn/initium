@@ -54,15 +54,22 @@
     elements.forEach(function (el) { el.classList.add('vu'); });
   }
 
-  /* formulaires : pas encore relies dans l'apercu, on le dit */
-  document.querySelectorAll('[data-apercu]').forEach(function (f) {
+  /* Le formulaire de contact : le message part dans la gestion d'Olivier (fonction in-pro). */
+  document.querySelectorAll('[data-contact]').forEach(function (f) {
     var piece = new URLSearchParams(location.search).get('piece');
     var message = f.querySelector('[data-message]');
     if (piece && message) message.value = (f.getAttribute('data-prefixe') || '') + piece;
     f.addEventListener('submit', function (e) {
       e.preventDefault();
       if (!f.reportValidity()) return;
-      f.querySelector('[data-note]').hidden = false;
+      var note = f.querySelector('[data-note]'), b = f.querySelector('button'), C = window.LOCWEB_CONFIG || {};
+      b.disabled = true; note.hidden = true;
+      fetch(C.supabaseUrl + '/functions/v1/in-pro', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'contact', langue: document.documentElement.lang, nom: f.nom.value, email: f.email.value, profil: f.profil.value, message: f.message.value }),
+      }).then(function (r) { if (!r.ok) throw new Error(); note.textContent = f.getAttribute('data-ok'); f.reset(); })
+        .catch(function () { note.textContent = f.getAttribute('data-erreur'); })
+        .then(function () { note.hidden = false; b.disabled = false; });
     });
   });
 })();

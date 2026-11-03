@@ -13,6 +13,7 @@
     [/Structure\s*:/g, 'Structure :', 'Structuur:', 'Frame:'],
     [/Tissu\s*:/g, 'Tissu :', 'Stof:', 'Fabric:'],
     [/Composition\s*:/g, 'Composition :', 'Samenstelling:', 'Set:'],
+    [/Dimensions\s*:/g, 'Dimensions :', 'Afmetingen:', 'Dimensions:'],
     // Les noms ecrits en francais
     [/Lampadaire solaire teck/g, 'Lampadaire solaire en teck', 'Solar vloerlamp in teak', 'Solar teak floor lamp'],
     [/Lampadaire solaire alu/g, 'Lampadaire solaire en alu', 'Solar vloerlamp in alu', 'Solar aluminium floor lamp'],
@@ -26,6 +27,7 @@
     // Les pieces
     [/\bfloor lamp-?\s*/gi, 'Lampadaire ', 'Vloerlamp '],
     [/\b1\s*double seater\b/gi, '1 canapé double', '1 dubbele sofa'],
+    [/\b(\d) x /g, '$1 × ', '$1 × ', '$1 × '],
     [/\b(\d)\s*-?\s*seater sofa\b/gi, function (m, n) { return 'Canapé ' + plur(m, n); }, '$1-zitsbank'],
     [/\b(\d)\s*-?\s*seater\b/gi, plur, '$1-zits'],
     [/\bseater\b/gi, 'places', 'zits'],
@@ -66,6 +68,7 @@
     [/\bPE rattan\b/gi, 'rotin PE', 'PE-rotan'],
     [/\bacacia wood\b/gi, 'acacia', 'acacia'],
     [/\b(?:aluminum|aluminium)\b/gi, 'aluminium', 'aluminium'],
+    [/\bAlu\b\.?/g, 'alu', 'alu', 'aluminium'],
     [/\bteak\b/gi, 'teck', 'teak'],
     [/\brope\b/gi, 'corde', 'touw'],
     [/\bcarpet\b/gi, 'tapis', 'tapijt'],

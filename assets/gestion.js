@@ -39,11 +39,11 @@
     return appel('tableau').then(function (j) { donnees = j; dessiner(); }).catch(function (x) { if (jeton) alert(x.message); });
   }
 
-  var ONGLETS = [['attente', 'Accès à valider'], ['clients', 'Clients pro'], ['demandes', 'Demandes de commande'], ['catalogue', 'Catalogue']];
+  var ONGLETS = [['attente', 'Accès à valider'], ['clients', 'Clients pro'], ['demandes', 'Demandes de commande'], ['messages', 'Messages'], ['catalogue', 'Catalogue']];
   function dessiner() {
     var attente = donnees.acces.filter(function (a) { return a.statut === 'en_attente'; });
     var nonTraitees = donnees.demandes.filter(function (d) { return !d.traitee; });
-    var compte = { attente: attente.length, demandes: nonTraitees.length };
+    var compte = { attente: attente.length, demandes: nonTraitees.length, messages: (donnees.messages || []).filter(function (m) { return !m.traite; }).length };
     app.innerHTML = '<header class="g-tete"><p class="g-marque">INITIUM<sup>3</sup> <span>Gestion</span></p><button type="button" class="pro-lien" data-sortir>Se déconnecter</button></header>' +
       '<nav class="g-onglets">' + ONGLETS.map(function (o) {
         return '<button type="button" data-onglet="' + o[0] + '"' + (onglet === o[0] ? ' class="on"' : '') + '>' + o[1] + (compte[o[0]] ? ' <b>' + compte[o[0]] + '</b>' : '') + '</button>';
@@ -52,6 +52,7 @@
     if (onglet === 'attente') z.innerHTML = vueAttente(attente);
     if (onglet === 'clients') z.innerHTML = vueClients();
     if (onglet === 'demandes') z.innerHTML = vueDemandes();
+    if (onglet === 'messages') z.innerHTML = vueMessages();
     if (onglet === 'catalogue') z.innerHTML = vueCatalogue();
   }
 
@@ -65,7 +66,7 @@
       (a.message ? '<p class="g-message">' + esc(a.message) + '</p>' : '');
   }
   function vueAttente(l) {
-    return '<p class="g-aide">Les demandes dont le numéro de TVA est reconnu par le registre européen (VIES) sont ouvertes automatiquement. Celles-ci attendent votre décision.</p>' +
+    return '<p class="g-aide">Personne ne voit les prix tant que vous n’avez pas accepté. Le résultat du registre européen de la TVA (VIES) vous aide à décider.</p>' +
       (l.length ? l.map(function (a) {
         return '<article class="g-carte">' + fiche(a) + '<p class="g-gris">' + viesTexte(a) + ' · reçue le ' + date(a.cree_le) + '</p>' +
           '<div class="g-actions"><button type="button" class="bouton" data-accepter="' + a.id + '">Accepter</button><button type="button" class="pro-lien" data-refuser="' + a.id + '">Refuser</button></div></article>';
@@ -106,6 +107,16 @@
         '<p class="pro-total"><span>Total HT (prix pro)</span><b>' + euros(total) + '</b></p>' + (d.message ? '<p class="g-message">' + esc(d.message) + '</p>' : '') +
         '<label class="g-case"><input type="checkbox" data-traitee="' + d.id + '"' + (d.traitee ? ' checked' : '') + '> Traitée</label></article>';
     }).join('') : '<p class="g-vide">Aucune demande de commande pour l’instant.</p>';
+  }
+
+  /* ---------- messages du formulaire de contact ---------- */
+  function vueMessages() {
+    var l = donnees.messages || [];
+    return l.length ? l.map(function (m) {
+      return '<article class="g-carte' + (m.traite ? ' g-traitee' : '') + '"><p><b>' + esc(m.nom) + '</b> · ' + date(m.cree_le) + (m.profil ? ' · ' + esc(m.profil) : '') + '</p>' +
+        '<p class="g-gris"><a href="mailto:' + esc(m.email) + '">' + esc(m.email) + '</a></p><p class="g-message">' + esc(m.message) + '</p>' +
+        '<label class="g-case"><input type="checkbox" data-msg-traite="' + m.id + '"' + (m.traite ? ' checked' : '') + '> Traité</label></article>';
+    }).join('') : '<p class="g-vide">Aucun message pour l’instant.</p>';
   }
 
   /* ---------- catalogue ---------- */
@@ -237,6 +248,8 @@
   app.addEventListener('change', function (e) {
     var c = e.target.closest('[data-traitee]');
     if (c) appel('demande_traitee', { id: c.getAttribute('data-traitee'), valeur: c.checked }).then(charger);
+    var m = e.target.closest('[data-msg-traite]');
+    if (m) appel('message_traite', { id: m.getAttribute('data-msg-traite'), valeur: m.checked }).then(charger);
   });
   app.addEventListener('input', function (e) {
     if (!e.target.matches('[data-recherche]')) return;

@@ -79,6 +79,54 @@ for r in range(5, ws.max_row + 1):
     for n, data in enumerate(images.get(r, []), 1):
         courante['photos'].append((r, n, data))
 
+# Les descriptions, une information par ligne (03/11) : on range, on ne change pas les mots.
+LIBELLES = 'Composition|Dimensions|Matériaux|Structure|Tissu'
+def valeur_propre(v):
+    v = re.sub(r'\s*\+\s*', ' + ', v).strip(' +·,')
+    v = re.sub(r'\bAlu\b\.?', 'Alu', v, flags=re.I)
+    v = re.sub(r'\bOutdoor (solar )?fabric\b', lambda m: 'Outdoor ' + ('solar ' if m.group(1) else '') + 'fabric', v, flags=re.I)
+    v = re.sub(r'\bCeramic top\b', 'Ceramic top', v, flags=re.I)
+    v = re.sub(r'\bCreamic\b', 'Ceramic', v, flags=re.I)
+    if v.isupper() and not re.search(r'\d', v): v = v.capitalize()
+    return re.sub(r'\s{2,}', ' ', v).strip()
+def dims_propres(v):
+    v = re.sub(r'(?<=\d)\s*[*x]\s*(?=\d)', ' × ', v)
+    v = re.sub(r'(?<=\d)-(?=[WDH]\d)', ' ', v)
+    v = re.sub(r'(?<=D)9O\b', '90', v)
+    v = re.sub(r'(?<=\d)\s*meters?\b', ' m', v, flags=re.I)
+    return re.sub(r'\s{2,}', ' ', v).strip(' ·,')
+EST_DIM = re.compile(r'^(W\s?\d|D\s?\d|H\s?\d|DIAM|Dia\s?\d|\d+(\.\d+)?\s*[*x×]|Seat:|\d+(\.\d+)?\s*m\b)', re.I)
+def details_propres(d):
+    t = re.sub(r'\s*[·•]\s*', '\n', str(d or '').replace('\r', ''))
+    # Une etiquette au milieu d'une ligne passe a la ligne.
+    t = re.sub(r'[ ,;]+(?=(?:' + LIBELLES + r')\s*:)', '\n', t, flags=re.I)
+    t = re.sub(r'(?<=[^\n])\s+(?=Dimensions\b)', '\n', t)
+    sortie = []
+    for brute in t.split('\n'):
+        l = re.sub(r'\s+', ' ', brute).strip(' ·,')
+        if not l: continue
+        m = re.match(r'^(' + LIBELLES + r')\s*:?\s+(.*)$', l, flags=re.I)
+        if m:
+            nom = m.group(1).capitalize().replace('Materiaux', 'Matériaux')
+            val = m.group(2).strip(' :')
+            sortie.append(nom + ' : ' + (dims_propres(val) if nom == 'Dimensions' else valeur_propre(val)))
+        elif EST_DIM.match(l):
+            sortie.append('Dimensions : ' + dims_propres(l))
+        else:
+            # Le nom d'une piece d'un ensemble : « Lungo armchair : W118 D98 H73 »
+            p = re.match(r'^(.+?)\s*:\s*(.*)$', l)
+            if p and not EST_DIM.match(p.group(1)):
+                if sortie: sortie.append('')
+                sortie.append(p.group(1).strip())
+                if p.group(2): sortie.append('Dimensions : ' + dims_propres(p.group(2)))
+            else:
+                sortie.append(l)
+    # La composition d'abord, comme Olivier l'ecrit dans ses fiches.
+    compo = [re.sub(r'seater\.', 'seater', x, flags=re.I) for x in sortie if x.startswith('Composition :')]
+    reste = [x for x in sortie if not x.startswith('Composition :')]
+    if compo and reste and '' in reste: compo.append('')
+    return '\n'.join(compo + reste)
+
 def ligne_details(p, seul):
     morceaux = [] if seul else [p['nom'] + ' :']
     if p['dims']: morceaux.append(p['dims'])
@@ -105,6 +153,7 @@ for idx, fi in enumerate(fiches):
     nom = fi['nom']
     details = '\n'.join(ligne_details(p, len(fi['pieces']) == 1) for p in fi['pieces'])
     if fi['qte']: details += '\nComposition : ' + fi['qte']
+    details = details_propres(details)
     refs = ' / '.join(dict.fromkeys(x for p in fi['pieces'] for x in (p['ref'], p['cube']) if x))
     chemins = []
     for r, n, data in fi['photos']:

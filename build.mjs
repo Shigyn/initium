@@ -71,7 +71,7 @@ const T = {
     demanderCode: 'Demander un code d’accès', demanderCodeTexte: 'Remplissez ce formulaire : nous vérifions votre activité et vous envoyons votre code personnel.',
     societe: 'Société', tva: 'Numéro d’entreprise ou de TVA', nom: 'Nom', email: 'E-mail', telephone: 'Téléphone', activite: 'Activité',
     activites: ['Architecte', 'Décorateur', 'Revendeur', 'Hôtel, restaurant', 'Autre'], message: 'Message', envoyer: 'Envoyer la demande',
-    formNote: 'Aperçu : le formulaire sera relié à votre boîte mail à la mise en ligne.',
+    formOk: 'Merci, votre message est bien envoyé. Nous revenons vers vous rapidement.', formErreur: 'Le message n’a pas pu partir. Réessayez dans un instant.',
     contactTitre: 'Parlons de votre projet', contactTexte: 'Une pièce vous intéresse, vous aménagez une terrasse, un hôtel ou un restaurant : écrivez-nous, nous revenons vers vous rapidement.',
     vousEtes: 'Vous êtes', particulier: 'Particulier', professionnel: 'Professionnel', suivre: 'Suivre Initium³ sur Facebook',
     infosPiece: 'Bonjour, je souhaite des informations sur : ',
@@ -103,7 +103,7 @@ const T = {
     demanderCode: 'Een toegangscode aanvragen', demanderCodeTexte: 'Vul dit formulier in: wij controleren uw activiteit en sturen u uw persoonlijke code.',
     societe: 'Bedrijf', tva: 'Ondernemings- of btw-nummer', nom: 'Naam', email: 'E-mail', telephone: 'Telefoon', activite: 'Activiteit',
     activites: ['Architect', 'Decorateur', 'Verdeler', 'Hotel, restaurant', 'Andere'], message: 'Bericht', envoyer: 'Aanvraag versturen',
-    formNote: 'Voorvertoning: het formulier wordt bij de lancering aan uw mailbox gekoppeld.',
+    formOk: 'Bedankt, uw bericht is verstuurd. Wij nemen snel contact met u op.', formErreur: 'Het bericht kon niet worden verstuurd. Probeer het zo meteen opnieuw.',
     contactTitre: 'Laten we over uw project praten', contactTexte: 'Heeft u interesse in een stuk, richt u een terras, hotel of restaurant in? Schrijf ons, wij nemen snel contact met u op.',
     vousEtes: 'U bent', particulier: 'Particulier', professionnel: 'Professional', suivre: 'Volg Initium³ op Facebook',
     infosPiece: 'Goedendag, ik wens informatie over: ',
@@ -135,7 +135,7 @@ const T = {
     demanderCode: 'Request an access code', demanderCodeTexte: 'Fill in this form: we check your business and send you your personal code.',
     societe: 'Company', tva: 'Company or VAT number', nom: 'Name', email: 'Email', telephone: 'Phone', activite: 'Business',
     activites: ['Architect', 'Interior designer', 'Reseller', 'Hotel, restaurant', 'Other'], message: 'Message', envoyer: 'Send request',
-    formNote: 'Preview: the form will be connected to your mailbox at launch.',
+    formOk: 'Thank you, your message has been sent. We will get back to you shortly.', formErreur: 'Your message could not be sent. Please try again in a moment.',
     contactTitre: 'Let’s talk about your project', contactTexte: 'Interested in a piece, furnishing a terrace, a hotel or a restaurant? Write to us and we will get back to you quickly.',
     vousEtes: 'You are', particulier: 'Private customer', professionnel: 'Professional', suivre: 'Follow Initium³ on Facebook',
     infosPiece: 'Hello, I would like information about: ',
@@ -278,7 +278,7 @@ ${corps(r, lien)}
     ga4Id: ''
   };
 </script>
-<script src="${r}assets/site.js?v=2" defer></script>
+<script src="${r}assets/site.js?v=3" defer></script>
 ${apres}
 <script src="${r}mesure.js" defer></script>
 </body>
@@ -422,7 +422,7 @@ for (const lg of LANGUES) {
     clair: true,
     // Le catalogue pro se charge apres connexion (assets/pro.js, fonction in-pro).
     apres: `<script>window.IN_PRO = ${JSON.stringify({ langue: lg, ...PRO[lg] })};</script>
-<script src="../${PREFIXE[lg] ? '../' : ''}assets/pro-mots.js?v=3" defer></script>
+<script src="../${PREFIXE[lg] ? '../' : ''}assets/pro-mots.js?v=4" defer></script>
 <script src="../${PREFIXE[lg] ? '../' : ''}assets/pro.js?v=4" defer></script>`,
     corps: () => `
 <section class="page-texte" data-pro-accueil>
@@ -485,7 +485,7 @@ for (const lg of LANGUES) {
 </section>
 <section class="pro-grille">
   <div></div>
-  <form class="formulaire" data-apercu data-contact data-prefixe="${esc(t.infosPiece)}">
+  <form class="formulaire" data-contact data-prefixe="${esc(t.infosPiece)}" data-ok="${esc(t.formOk)}" data-erreur="${esc(t.formErreur)}">
     <div class="deux">
       <label>${t.nom}<input name="nom" autocomplete="name" required></label>
       <label>${t.email}<input type="email" name="email" autocomplete="email" required></label>
@@ -493,7 +493,7 @@ for (const lg of LANGUES) {
     <label>${t.vousEtes}<select name="profil"><option>${t.particulier}</option><option>${t.professionnel}</option></select></label>
     <label>${t.message}<textarea name="message" rows="6" required data-message></textarea></label>
     <button class="bouton" type="submit">${t.envoyer}</button>
-    <p class="note" hidden data-note>${t.formNote}</p>
+    <p class="note" hidden data-note></p>
   </form>
 </section>`,
   }]);
@@ -520,7 +520,7 @@ fs.writeFileSync(path.join(ICI, 'gestion', 'index.html'), `<!DOCTYPE html>
 </head><body class="gestion">
 <div id="app"></div>
 <script>window.LOCWEB_CONFIG = { supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co', supabaseAnonKey: 'sb_publishable_rpLrUo4Cqnfl8zSohDqO0A_Q5Vkj2Hk' };</script>
-<script src="../assets/gestion.js?v=7" defer></script>
+<script src="../assets/gestion.js?v=9" defer></script>
 </body></html>
 `);
 fs.writeFileSync(path.join(ICI, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /gestion/\n\nSitemap: ${URL_SITE}sitemap.xml\n`);

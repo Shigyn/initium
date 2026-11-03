@@ -49,7 +49,7 @@
 </section>
 <section class="pro-grille">
   <div></div>
-  <form class="formulaire" data-apercu data-contact data-prefixe="Goedendag, ik wens informatie over: ">
+  <form class="formulaire" data-contact data-prefixe="Goedendag, ik wens informatie over: " data-ok="Bedankt, uw bericht is verstuurd. Wij nemen snel contact met u op." data-erreur="Het bericht kon niet worden verstuurd. Probeer het zo meteen opnieuw.">
     <div class="deux">
       <label>Naam<input name="nom" autocomplete="name" required></label>
       <label>E-mail<input type="email" name="email" autocomplete="email" required></label>
@@ -57,7 +57,7 @@
     <label>U bent<select name="profil"><option>Particulier</option><option>Professional</option></select></label>
     <label>Bericht<textarea name="message" rows="6" required data-message></textarea></label>
     <button class="bouton" type="submit">Aanvraag versturen</button>
-    <p class="note" hidden data-note>Voorvertoning: het formulier wordt bij de lancering aan uw mailbox gekoppeld.</p>
+    <p class="note" hidden data-note></p>
   </form>
 </section>
 </main>
@@ -81,7 +81,7 @@
     ga4Id: ''
   };
 </script>
-<script src="../../assets/site.js?v=2" defer></script>
+<script src="../../assets/site.js?v=3" defer></script>
 
 <script src="../../mesure.js" defer></script>
 </body>

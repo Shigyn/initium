@@ -49,7 +49,7 @@
 </section>
 <section class="pro-grille">
   <div></div>
-  <form class="formulaire" data-apercu data-contact data-prefixe="Bonjour, je souhaite des informations sur : ">
+  <form class="formulaire" data-contact data-prefixe="Bonjour, je souhaite des informations sur : " data-ok="Merci, votre message est bien envoyé. Nous revenons vers vous rapidement." data-erreur="Le message n’a pas pu partir. Réessayez dans un instant.">
     <div class="deux">
       <label>Nom<input name="nom" autocomplete="name" required></label>
       <label>E-mail<input type="email" name="email" autocomplete="email" required></label>
@@ -57,7 +57,7 @@
     <label>Vous êtes<select name="profil"><option>Particulier</option><option>Professionnel</option></select></label>
     <label>Message<textarea name="message" rows="6" required data-message></textarea></label>
     <button class="bouton" type="submit">Envoyer la demande</button>
-    <p class="note" hidden data-note>Aperçu : le formulaire sera relié à votre boîte mail à la mise en ligne.</p>
+    <p class="note" hidden data-note></p>
   </form>
 </section>
 </main>
@@ -81,7 +81,7 @@
     ga4Id: ''
   };
 </script>
-<script src="../assets/site.js?v=2" defer></script>
+<script src="../assets/site.js?v=3" defer></script>
 
 <script src="../mesure.js" defer></script>
 </body>
