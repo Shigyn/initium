@@ -54,14 +54,8 @@
     var note = $('[data-note]', fDemande), b = $('button', fDemande), d = {};
     ['societe', 'numero', 'nom', 'telephone', 'email', 'activite', 'message'].forEach(function (k) { d[k] = fDemande[k] ? fDemande[k].value : ''; });
     b.disabled = true; note.hidden = true;
-    appel('demande', d).then(function (j) {
-      if (j.code) {
-        note.innerHTML = '<p>' + esc(T.codeOk) + '</p><p class="pro-code">' + esc(j.code.slice(0, 4) + ' ' + j.code.slice(4)) + '</p><p>' + esc(T.codeGarder) + '</p>' +
-          '<button type="button" class="bouton" data-voir>' + esc(T.voirCatalogue) + '</button>';
-        $('[data-voir]', note).addEventListener('click', function () { entrer(j); });
-      } else {
-        note.textContent = T.attente; fDemande.reset();
-      }
+    appel('demande', d).then(function () {
+      note.textContent = T.attente; fDemande.reset();
       note.hidden = false;
     }).catch(function (x) { note.textContent = x.message; note.hidden = false; })
       .then(function () { b.disabled = false; });
@@ -73,7 +67,11 @@
     accueil(false);
     zone.innerHTML = '<p class="pro-attente">…</p>';
     appel('catalogue').then(function (j) {
-      produits = j.produits || []; session.societe = j.societe; ecrire('in-pro', session);
+      var M = window.IN_MOTS;
+      produits = (j.produits || []).map(function (p) {
+        return Object.assign({}, p, { brut: p.nom + ' ' + p.details, nom: M.texte(p.nom, T.langue), details: M.texte(p.details, T.langue), rubrique: M.rubrique(p.rubrique, T.langue) });
+      });
+      session.societe = j.societe; ecrire('in-pro', session);
       panier = panier.filter(function (l) { return produits.some(function (p) { return p.id === l.id; }); });
       dessiner();
     }).catch(function (x) { if (session) zone.innerHTML = '<p class="pro-attente">' + esc(x.message) + '</p>'; });
@@ -96,10 +94,10 @@
   function grille() {
     var rubs = [];
     produits.forEach(function (p) { var r = p.rubrique || ''; if (rubs.indexOf(r) === -1) rubs.push(r); });
-    rubs.sort(function (a, b) { return !a ? 1 : !b ? -1 : a.localeCompare(b, 'fr'); });
+    rubs.sort(function (a, b) { return !a ? 1 : !b ? -1 : a.localeCompare(b, T.langue); });
     $('[data-rubs]').innerHTML = rubs.length > 1 ? '<button type="button" data-rub=""' + (rubrique ? '' : ' class="on"') + '>' + esc(T.tout) + '</button>' +
       rubs.filter(Boolean).map(function (r) { return '<button type="button" data-rub="' + esc(r) + '"' + (rubrique === r ? ' class="on"' : '') + '>' + esc(r) + '</button>'; }).join('') : '';
-    var q = filtre.toLowerCase(), l = produits.filter(function (p) { return (!rubrique || p.rubrique === rubrique) && (!q || (p.nom + ' ' + p.details + ' ' + p.reference).toLowerCase().indexOf(q) !== -1); });
+    var q = filtre.toLowerCase(), l = produits.filter(function (p) { return (!rubrique || p.rubrique === rubrique) && (!q || (p.nom + ' ' + p.details + ' ' + p.reference + ' ' + p.brut).toLowerCase().indexOf(q) !== -1); });
     if (!l.length) { $('[data-grille]').innerHTML = '<p class="pro-attente">' + esc(T.aucun) + '</p>'; return; }
     $('[data-grille]').innerHTML = rubs.map(function (r) {
       var lot = l.filter(function (p) { return (p.rubrique || '') === r; });

@@ -34,7 +34,6 @@ const img = (r, id, alt, { grand = false, eager = false } = {}) => {
 const SLUGS = {
   exterieur: { fr: 'exterieur', nl: 'buiten', en: 'outdoor' },
   interieur: { fr: 'interieur', nl: 'binnen', en: 'indoor' },
-  olwen: { fr: 'olwen', nl: 'olwen', en: 'olwen' },
   showroom: { fr: 'showroom', nl: 'showroom', en: 'showroom' },
   pro: { fr: 'espace-pro', nl: 'professionelen', en: 'trade' },
   contact: { fr: 'contact', nl: 'contact', en: 'contact' },
@@ -47,7 +46,7 @@ const chemin = (lg, cle) => PREFIXE[lg] + (cle ? `${SLUGS[cle][lg]}/` : '');
 const T = {
   fr: {
     langue: 'Français', menu: 'Menu', fermer: 'Fermer le menu', evitement: 'Aller au contenu', decouvrir: 'Découvrir',
-    univers: { exterieur: 'Extérieur', interieur: 'Intérieur', olwen: 'OLWEN' },
+    univers: { exterieur: 'Extérieur', interieur: 'Intérieur' },
     liens: { showroom: 'Showroom', pro: 'Espace pro', contact: 'Contact' },
     titreSite: 'Mobilier hybride intérieur & extérieur, Bruxelles',
     descSite: 'Initium³, maison belge de design et de fabrication de mobilier hybride : canapés, salons lounge et collections pensés pour l’intérieur comme pour l’extérieur.',
@@ -66,7 +65,7 @@ const T = {
     voirShowroom: 'Envie de voir ces pièces en vrai ?', visiter: 'Visiter le showroom',
     showroomTitre: 'Le showroom', showroomAccroche: 'Asseyez-vous, touchez les matières, composez votre salon.',
     showroomTexte: 'Nos collections intérieur et extérieur sont exposées en périphérie de Bruxelles. Venez comparer les tissus, les finitions de teck et les compositions modulables, avec les conseils de notre équipe.',
-    adresse: 'Adresse', horaires: 'Horaires', aCompleter: 'à compléter', rdv: 'Prendre rendez-vous', peripherie: 'Périphérie de Bruxelles',
+    adresse: 'Adresse', horaires: 'Horaires', ouverture: 'Du mardi au samedi, de 11 h à 18 h', pays: 'Belgique', rdv: 'Prendre rendez-vous',
     proPageTitre: 'Espace professionnel', proPageIntro: 'Réservé aux architectes, décorateurs, revendeurs et professionnels de l’hôtellerie. Vos prix professionnels s’affichent avec votre code d’accès, et vous pouvez nous envoyer vos demandes de commande directement depuis le catalogue.',
     code: 'Code d’accès', voirPrix: 'Voir les prix', codeNote: 'Aperçu : l’accès par code sera activé à la mise en ligne.',
     demanderCode: 'Demander un code d’accès', demanderCodeTexte: 'Remplissez ce formulaire : nous vérifions votre activité et vous envoyons votre code personnel.',
@@ -79,7 +78,7 @@ const T = {
   },
   nl: {
     langue: 'Nederlands', menu: 'Menu', fermer: 'Menu sluiten', evitement: 'Naar de inhoud', decouvrir: 'Ontdekken',
-    univers: { exterieur: 'Buiten', interieur: 'Binnen', olwen: 'OLWEN' },
+    univers: { exterieur: 'Buiten', interieur: 'Binnen' },
     liens: { showroom: 'Showroom', pro: 'Professionelen', contact: 'Contact' },
     titreSite: 'Hybride meubelen voor binnen & buiten, Brussel',
     descSite: 'Initium³, Belgisch huis voor het ontwerp en de productie van hybride meubelen: sofa’s, loungesets en collecties voor binnen én buiten.',
@@ -98,7 +97,7 @@ const T = {
     voirShowroom: 'Deze stukken in het echt bekijken?', visiter: 'Bezoek de showroom',
     showroomTitre: 'De showroom', showroomAccroche: 'Kom zitten, voel de materialen, stel uw salon samen.',
     showroomTexte: 'Onze binnen- en buitencollecties staan opgesteld in de rand rond Brussel. Vergelijk de stoffen, de teakafwerkingen en de modulaire opstellingen, met het advies van ons team.',
-    adresse: 'Adres', horaires: 'Openingsuren', aCompleter: 'aan te vullen', rdv: 'Afspraak maken', peripherie: 'Rand rond Brussel',
+    adresse: 'Adres', horaires: 'Openingsuren', ouverture: 'Van dinsdag tot zaterdag, van 11 tot 18 uur', pays: 'België', rdv: 'Afspraak maken',
     proPageTitre: 'Professionele ruimte', proPageIntro: 'Voorbehouden aan architecten, decorateurs, verdelers en professionals uit de horeca. Uw professionele prijzen verschijnen met uw toegangscode, en u kunt ons uw bestelaanvragen rechtstreeks vanuit de catalogus sturen.',
     code: 'Toegangscode', voirPrix: 'Prijzen bekijken', codeNote: 'Voorvertoning: de toegang met code wordt geactiveerd bij de lancering.',
     demanderCode: 'Een toegangscode aanvragen', demanderCodeTexte: 'Vul dit formulier in: wij controleren uw activiteit en sturen u uw persoonlijke code.',
@@ -111,7 +110,7 @@ const T = {
   },
   en: {
     langue: 'English', menu: 'Menu', fermer: 'Close menu', evitement: 'Skip to content', decouvrir: 'Discover',
-    univers: { exterieur: 'Outdoor', interieur: 'Indoor', olwen: 'OLWEN' },
+    univers: { exterieur: 'Outdoor', interieur: 'Indoor' },
     liens: { showroom: 'Showroom', pro: 'Trade area', contact: 'Contact' },
     titreSite: 'Hybrid indoor & outdoor furniture, Brussels',
     descSite: 'Initium³, a Belgian house of hybrid furniture design and manufacturing: sofas, lounge sets and collections made for indoors and outdoors alike.',
@@ -130,7 +129,7 @@ const T = {
     voirShowroom: 'Want to see these pieces in person?', visiter: 'Visit the showroom',
     showroomTitre: 'The showroom', showroomAccroche: 'Sit down, feel the materials, design your living space.',
     showroomTexte: 'Our indoor and outdoor collections are on display on the outskirts of Brussels. Compare fabrics, teak finishes and modular layouts, with advice from our team.',
-    adresse: 'Address', horaires: 'Opening hours', aCompleter: 'to be completed', rdv: 'Book a visit', peripherie: 'Outskirts of Brussels',
+    adresse: 'Address', horaires: 'Opening hours', ouverture: 'Tuesday to Saturday, 11 am to 6 pm', pays: 'Belgium', rdv: 'Book a visit',
     proPageTitre: 'Trade area', proPageIntro: 'Reserved for architects, interior designers, resellers and hospitality professionals. Your trade prices appear with your access code, and you can send us order requests directly from the catalogue.',
     code: 'Access code', voirPrix: 'See prices', codeNote: 'Preview: code access will be enabled at launch.',
     demanderCode: 'Request an access code', demanderCodeTexte: 'Fill in this form: we check your business and send you your personal code.',
@@ -150,21 +149,18 @@ const PRO = {
     envoyer: 'Envoyer ma demande', envoyee: 'Merci, votre demande est envoyée. Initium³ vous recontacte rapidement.', retirer: 'Retirer', total: 'Total HT',
     surDemande: 'Prix sur demande', aucun: 'Aucun modèle ne correspond.', fermer: 'Fermer', articles: 'article(s)',
     codeFaux: 'Code incorrect. Vérifiez les 8 chiffres.', trop: 'Trop d’essais. Réessayez dans quelques minutes.', champs: 'Merci de remplir la société, le numéro d’entreprise, le nom et un e-mail valide.',
-    codeOk: 'Votre accès est ouvert. Votre code personnel :', codeGarder: 'Notez-le : il vous servira à vous reconnecter.', voirCatalogue: 'Voir le catalogue',
     attente: 'Merci ! Nous vérifions votre demande et vous envoyons votre code personnel par e-mail très rapidement.', erreur: 'Une erreur est survenue. Réessayez dans un instant.' },
   nl: { tout: 'Alles', bonjour: 'Aangemeld:', sortir: 'Afmelden', chercher: 'Zoek een model, een referentie…', public: 'Publieksprijs excl. btw', pro: 'Pro-prijs excl. btw', ref: 'Ref.',
     ajouter: 'Toevoegen aan mijn aanvraag', ajoute: 'Toegevoegd', qte: 'Aantal', demande: 'Mijn aanvraag', vide: 'Uw aanvraag is leeg.', message: 'Een bericht voor Initium³ (termijn, levering, kleur…)',
     envoyer: 'Aanvraag versturen', envoyee: 'Bedankt, uw aanvraag is verstuurd. Initium³ neemt snel contact met u op.', retirer: 'Verwijderen', total: 'Totaal excl. btw',
     surDemande: 'Prijs op aanvraag', aucun: 'Geen enkel model komt overeen.', fermer: 'Sluiten', articles: 'artikel(en)',
     codeFaux: 'Onjuiste code. Controleer de 8 cijfers.', trop: 'Te veel pogingen. Probeer het over enkele minuten opnieuw.', champs: 'Vul het bedrijf, het ondernemingsnummer, de naam en een geldig e-mailadres in.',
-    codeOk: 'Uw toegang is geopend. Uw persoonlijke code:', codeGarder: 'Noteer hem: u hebt hem nodig om opnieuw in te loggen.', voirCatalogue: 'Catalogus bekijken',
     attente: 'Bedankt! We controleren uw aanvraag en sturen u zeer snel uw persoonlijke code per e-mail.', erreur: 'Er is een fout opgetreden. Probeer het zo meteen opnieuw.' },
   en: { tout: 'All', bonjour: 'Signed in:', sortir: 'Sign out', chercher: 'Search a model, a reference…', public: 'Retail price excl. VAT', pro: 'Trade price excl. VAT', ref: 'Ref.',
     ajouter: 'Add to my request', ajoute: 'Added', qte: 'Quantity', demande: 'My request', vide: 'Your request is empty.', message: 'A message for Initium³ (lead time, delivery, colours…)',
     envoyer: 'Send my request', envoyee: 'Thank you, your request has been sent. Initium³ will get back to you shortly.', retirer: 'Remove', total: 'Total excl. VAT',
     surDemande: 'Price on request', aucun: 'No model matches.', fermer: 'Close', articles: 'item(s)',
     codeFaux: 'Wrong code. Please check the 8 digits.', trop: 'Too many attempts. Please try again in a few minutes.', champs: 'Please fill in the company, the company number, the name and a valid email.',
-    codeOk: 'Your access is open. Your personal code:', codeGarder: 'Keep it: you will need it to sign in again.', voirCatalogue: 'See the catalogue',
     attente: 'Thank you! We are checking your request and will email you your personal code very shortly.', erreur: 'Something went wrong. Please try again in a moment.' },
 };
 
@@ -205,21 +201,8 @@ const UNIVERS = [
       ['v07', N('Canapé bouclette', 'Bouclé sofa', 'Bouclé sofa')],
       ['v16', N('Salon face à la mer', 'Salon met zeezicht', 'Sea view living room')],
     ] },
-  { cle: 'olwen', couverture: 'v33',
-    titre: N('Collection OLWEN', 'Collectie OLWEN', 'OLWEN collection'),
-    intro: N('Des modules aux formes pleines, un tissu chiné et une ligne de passepoil : OLWEN se compose en canapé, en angle ou en méridienne, dedans comme dehors.',
-      'Modules met volle vormen, een gemêleerde stof en een lijn van passepoil: OLWEN wordt een sofa, een hoek of een méridienne, binnen zoals buiten.',
-      'Full-bodied modules, a mottled fabric and a piping line: OLWEN becomes a sofa, a corner or a chaise, indoors and out.'),
-    pieces: [
-      ['v14', N('OLWEN fauteuil', 'OLWEN fauteuil', 'OLWEN armchair')],
-      ['v13', N('OLWEN canapé modulable', 'OLWEN modulaire sofa', 'OLWEN modular sofa')],
-      ['v33', N('OLWEN composition d’angle', 'OLWEN hoekopstelling', 'OLWEN corner layout')],
-      ['v28', N('OLWEN bord de piscine', 'OLWEN aan het zwembad', 'OLWEN poolside')],
-      ['v12', N('OLWEN module d’angle', 'OLWEN hoekmodule', 'OLWEN corner module')],
-      ['v30', N('OLWEN fauteuil gris chiné', 'OLWEN fauteuil gemêleerd grijs', 'OLWEN mottled grey armchair')],
-    ] },
 ];
-const SIGNATURE = [['v20', 'interieur', N('Canapé cadre teck', 'Sofa met teakframe', 'Teak frame sofa')], ['v14', 'olwen', N('Fauteuil OLWEN', 'OLWEN fauteuil', 'OLWEN armchair')],
+const SIGNATURE = [['v20', 'interieur', N('Canapé cadre teck', 'Sofa met teakframe', 'Teak frame sofa')], ['v14', 'exterieur', N('Fauteuil gris chiné', 'Fauteuil gemêleerd grijs', 'Mottled grey armchair')],
   ['v11', 'exterieur', N('Fauteuils lounge', 'Loungefauteuils', 'Lounge armchairs')], ['v25', 'interieur', N('Canapé courbe', 'Gebogen sofa', 'Curved sofa')]];
 
 /* ---------- gabarit ---------- */
@@ -228,7 +211,7 @@ function page(lg, cle, { titre, description, corps, clair = false, jsonld = [], 
   const ici = chemin(lg, cle);
   const r = '../'.repeat(ici.split('/').filter(Boolean).length);
   const lien = (l, c) => r + chemin(l, c);
-  const univers = ['exterieur', 'interieur', 'olwen'].map((c) => `<a href="${lien(lg, c)}">${t.univers[c]}</a>`).join('');
+  const univers = ['exterieur', 'interieur'].map((c) => `<a href="${lien(lg, c)}">${t.univers[c]}</a>`).join('');
   const alternates = LANGUES.map((l) => `<link rel="alternate" hreflang="${l}" href="${URL_SITE}${chemin(l, cle)}">`).join('\n');
   const langues = LANGUES.map((l) => l === lg ? `<span aria-current="true">${l.toUpperCase()}</span>` : `<a href="${lien(l, cle)}" hreflang="${l}" lang="${l}" title="${T[l].langue}">${l.toUpperCase()}</a>`).join('');
 
@@ -320,7 +303,7 @@ for (const lg of LANGUES) {
     description: t.descSite,
     jsonld: [{ '@context': 'https://schema.org', '@type': 'FurnitureStore', name: NOM, alternateName: ['Initium3', 'Outlet Design In Out'],
       url: URL_SITE + PREFIXE[lg], image: `${URL_SITE}photos/v03.webp`, areaServed: 'BE',
-      address: { '@type': 'PostalAddress', addressRegion: 'Bruxelles', addressCountry: 'BE' }, sameAs: ['https://www.facebook.com/outletdesigninout'] }],
+      address: { '@type': 'PostalAddress', streetAddress: 'Bergensesteenweg 456', postalCode: '1600', addressLocality: 'Sint-Pieters-Leeuw', addressCountry: 'BE' }, openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '11:00', closes: '18:00' }], sameAs: ['https://www.facebook.com/outletdesigninout'] }],
     corps: (r, lien) => `
 <section class="ouverture" data-ouverture>
   ${['v03', 'v24', 'v16', 'v01'].map((id, i) => `<div class="diapo${i === 0 ? ' active' : ''}">${img(r, id, '', { grand: true, eager: i === 0 })}</div>`).join('')}
@@ -423,8 +406,8 @@ for (const lg of LANGUES) {
     <div class="reveler">
       <p>${t.showroomTexte}</p>
       <dl class="infos">
-        <div><dt>${t.adresse}</dt><dd>${t.peripherie}<br><em>${t.aCompleter}</em></dd></div>
-        <div><dt>${t.horaires}</dt><dd><em>${t.aCompleter}</em></dd></div>
+        <div><dt>${t.adresse}</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=Bergensesteenweg+456+1600+Sint-Pieters-Leeuw" target="_blank" rel="noopener">Bergensesteenweg 456<br>1600 Sint-Pieters-Leeuw</a><br>${t.pays}</dd></div>
+        <div><dt>${t.horaires}</dt><dd>${t.ouverture}</dd></div>
       </dl>
       <a class="lien-maj" href="${lien(lg, 'contact')}">${t.rdv}</a>
     </div>
@@ -439,7 +422,8 @@ for (const lg of LANGUES) {
     clair: true,
     // Le catalogue pro se charge apres connexion (assets/pro.js, fonction in-pro).
     apres: `<script>window.IN_PRO = ${JSON.stringify({ langue: lg, ...PRO[lg] })};</script>
-<script src="../${PREFIXE[lg] ? '../' : ''}assets/pro.js?v=3" defer></script>`,
+<script src="../${PREFIXE[lg] ? '../' : ''}assets/pro-mots.js?v=1" defer></script>
+<script src="../${PREFIXE[lg] ? '../' : ''}assets/pro.js?v=4" defer></script>`,
     corps: () => `
 <section class="page-texte" data-pro-accueil>
   <h1>${t.proPageTitre}</h1>
