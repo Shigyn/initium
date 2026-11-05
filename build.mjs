@@ -34,6 +34,7 @@ const img = (r, id, alt, { grand = false, eager = false } = {}) => {
 const SLUGS = {
   exterieur: { fr: 'exterieur', nl: 'buiten', en: 'outdoor' },
   interieur: { fr: 'interieur', nl: 'binnen', en: 'indoor' },
+  collection: { fr: 'collection', nl: 'collectie', en: 'collection' },
   showroom: { fr: 'showroom', nl: 'showroom', en: 'showroom' },
   pro: { fr: 'espace-pro', nl: 'professionelen', en: 'trade' },
   contact: { fr: 'contact', nl: 'contact', en: 'contact' },
@@ -46,7 +47,9 @@ const chemin = (lg, cle) => PREFIXE[lg] + (cle ? `${SLUGS[cle][lg]}/` : '');
 const T = {
   fr: {
     langue: 'Français', menu: 'Menu', fermer: 'Fermer le menu', evitement: 'Aller au contenu', decouvrir: 'Découvrir',
-    univers: { exterieur: 'Extérieur', interieur: 'Intérieur' },
+    univers: { exterieur: 'Extérieur', interieur: 'Intérieur', collection: 'Collection' },
+    collectionTitre: 'La collection', voirCollection: 'Voir toute la collection',
+    collectionIntro: 'Toutes nos pièces, pour l’intérieur comme pour l’extérieur. Les prix sont réservés aux professionnels : pour un projet, une question ou une visite, écrivez-nous.',
     liens: { showroom: 'Showroom', pro: 'Espace pro', contact: 'Contact' },
     titreSite: 'Mobilier hybride intérieur & extérieur, Bruxelles',
     descSite: 'Initium³, maison belge de design et de fabrication de mobilier hybride : canapés, salons lounge et collections pensés pour l’intérieur comme pour l’extérieur.',
@@ -78,7 +81,9 @@ const T = {
   },
   nl: {
     langue: 'Nederlands', menu: 'Menu', fermer: 'Menu sluiten', evitement: 'Naar de inhoud', decouvrir: 'Ontdekken',
-    univers: { exterieur: 'Buiten', interieur: 'Binnen' },
+    univers: { exterieur: 'Buiten', interieur: 'Binnen', collection: 'Collectie' },
+    collectionTitre: 'De collectie', voirCollection: 'Bekijk de volledige collectie',
+    collectionIntro: 'Al onze stukken, voor binnen en voor buiten. De prijzen zijn voorbehouden aan professionelen: voor een project, een vraag of een bezoek, schrijf ons.',
     liens: { showroom: 'Showroom', pro: 'Professionelen', contact: 'Contact' },
     titreSite: 'Hybride meubelen voor binnen & buiten, Brussel',
     descSite: 'Initium³, Belgisch huis voor het ontwerp en de productie van hybride meubelen: sofa’s, loungesets en collecties voor binnen én buiten.',
@@ -110,7 +115,9 @@ const T = {
   },
   en: {
     langue: 'English', menu: 'Menu', fermer: 'Close menu', evitement: 'Skip to content', decouvrir: 'Discover',
-    univers: { exterieur: 'Outdoor', interieur: 'Indoor' },
+    univers: { exterieur: 'Outdoor', interieur: 'Indoor', collection: 'Collection' },
+    collectionTitre: 'The collection', voirCollection: 'View the full collection',
+    collectionIntro: 'All our pieces, for indoors and outdoors. Prices are reserved for trade customers: for a project, a question or a visit, write to us.',
     liens: { showroom: 'Showroom', pro: 'Trade area', contact: 'Contact' },
     titreSite: 'Hybrid indoor & outdoor furniture, Brussels',
     descSite: 'Initium³, a Belgian house of hybrid furniture design and manufacturing: sofas, lounge sets and collections made for indoors and outdoors alike.',
@@ -164,6 +171,19 @@ const PRO = {
     attente: 'Thank you! We are checking your request and will email you your personal code very shortly.', erreur: 'Something went wrong. Please try again in a moment.' },
 };
 
+/* ---------- la collection publique (2026-11-05) : textes de assets/collection.js ---------- */
+const COLL = {
+  fr: { tout: 'Tout', categorie: 'Catégorie', ref: 'Référence', fermer: 'Fermer', infos: 'Demander des informations',
+    prixPro: 'Prix réservés aux professionnels :', espacePro: 'accéder à l’espace pro',
+    erreur: 'La collection n’a pas pu se charger. Rechargez la page dans un instant.' },
+  nl: { tout: 'Alles', categorie: 'Categorie', ref: 'Referentie', fermer: 'Sluiten', infos: 'Informatie aanvragen',
+    prixPro: 'Prijzen voorbehouden aan professionelen:', espacePro: 'naar de professionele ruimte',
+    erreur: 'De collectie kon niet worden geladen. Herlaad de pagina zo meteen.' },
+  en: { tout: 'All', categorie: 'Category', ref: 'Reference', fermer: 'Close', infos: 'Request information',
+    prixPro: 'Prices reserved for trade customers:', espacePro: 'go to the trade area',
+    erreur: 'The collection could not be loaded. Please reload the page in a moment.' },
+};
+
 /* ---------- les univers et les pieces (noms descriptifs en attendant les vrais) ---------- */
 const N = (fr, nl, en) => ({ fr, nl, en });
 const UNIVERS = [
@@ -211,7 +231,7 @@ function page(lg, cle, { titre, description, corps, clair = false, jsonld = [], 
   const ici = chemin(lg, cle);
   const r = '../'.repeat(ici.split('/').filter(Boolean).length);
   const lien = (l, c) => r + chemin(l, c);
-  const univers = ['exterieur', 'interieur'].map((c) => `<a href="${lien(lg, c)}">${t.univers[c]}</a>`).join('');
+  const univers = ['exterieur', 'interieur', 'collection'].map((c) => `<a href="${lien(lg, c)}">${t.univers[c]}</a>`).join('');
   const alternates = LANGUES.map((l) => `<link rel="alternate" hreflang="${l}" href="${URL_SITE}${chemin(l, cle)}">`).join('\n');
   const langues = LANGUES.map((l) => l === lg ? `<span aria-current="true">${l.toUpperCase()}</span>` : `<a href="${lien(l, cle)}" hreflang="${l}" lang="${l}" title="${T[l].langue}">${l.toUpperCase()}</a>`).join('');
 
@@ -236,7 +256,7 @@ ${alternates}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${r}assets/style.css?v=11">
+<link rel="stylesheet" href="${r}assets/style.css?v=12">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 </head>
 <body class="${clair ? 'entete-clair' : ''}">
@@ -372,6 +392,7 @@ for (const lg of LANGUES) {
 </section>
 <section class="univers-intro">
   <p class="reveler">${u.intro[lg]}</p>
+  <a class="lien-maj reveler" href="${lien(lg, 'collection')}">${t.voirCollection}</a>
 </section>
 <section class="catalogue">
   ${u.pieces.map(([id, nom]) => `<figure class="piece reveler">
@@ -389,6 +410,34 @@ for (const lg of LANGUES) {
 </section>`,
     }]);
   }
+
+  /* COLLECTION PUBLIQUE (2026-11-05) : toutes les fiches, sans prix, lues en base par assets/collection.js */
+  pages.push([lg, 'collection', {
+    titre: `${t.collectionTitre} — ${NOM}`,
+    description: t.collectionIntro,
+    apres: `<script>window.IN_COLLECTION = ${JSON.stringify({ langue: lg, titre: t.univers.collection, ...COLL[lg] })};</script>
+<script src="../${PREFIXE[lg] ? '../' : ''}assets/pro-mots.js?v=4" defer></script>
+<script src="../${PREFIXE[lg] ? '../' : ''}assets/collection.js?v=1" defer></script>`,
+    corps: (r, lien) => `
+<section class="tete-univers">
+  <div class="tete-univers-image">${img(r, 'v26', t.collectionTitre, { grand: true, eager: true })}</div>
+  <div class="tete-univers-voile"></div>
+  <h1>${t.collectionTitre}</h1>
+</section>
+<section class="univers-intro">
+  <p class="reveler">${t.collectionIntro}</p>
+</section>
+<section class="col-zone" data-collection data-contact="${lien(lg, 'contact')}" data-pro="${lien(lg, 'pro')}">
+  <p class="pro-attente">…</p>
+</section>
+<section class="pro-bande">
+  <div>
+    <h2 class="reveler">${t.proTitre}</h2>
+    <p class="reveler">${t.proTexte}</p>
+  </div>
+  <a class="lien-maj reveler" href="${lien(lg, 'pro')}">${t.proBouton}</a>
+</section>`,
+  }]);
 
   /* SHOWROOM */
   pages.push([lg, 'showroom', {
@@ -500,7 +549,7 @@ for (const lg of LANGUES) {
 }
 
 /* ---------- ecriture ---------- */
-for (const d of ['exterieur', 'interieur', 'olwen', 'showroom', 'espace-pro', 'contact', 'mentions-legales', 'confidentialite', 'nl', 'en']) {
+for (const d of ['exterieur', 'interieur', 'collection', 'olwen', 'showroom', 'espace-pro', 'contact', 'mentions-legales', 'confidentialite', 'nl', 'en']) {
   fs.rmSync(path.join(ICI, d), { recursive: true, force: true });
 }
 for (const [lg, cle, p] of pages) {
@@ -516,7 +565,7 @@ fs.writeFileSync(path.join(ICI, 'gestion', 'index.html'), `<!DOCTYPE html>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=11"><link rel="stylesheet" href="../assets/gestion.css?v=2">
+<link rel="stylesheet" href="../assets/style.css?v=12"><link rel="stylesheet" href="../assets/gestion.css?v=2">
 </head><body class="gestion">
 <div id="app"></div>
 <script>window.LOCWEB_CONFIG = { supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co', supabaseAnonKey: 'sb_publishable_rpLrUo4Cqnfl8zSohDqO0A_Q5Vkj2Hk' };</script>

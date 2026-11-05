@@ -276,3 +276,57 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
 .pro-rubriques button.on { background: var(--noir); border-color: var(--noir); color: #fff }
 .pro-rub-titre { font-size: 13px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; margin: 40px 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--pierre) }
 .pro-rub-titre:first-child { margin-top: 0 }
+
+/* ---------------- collection publique (2026-11-05), sur le modele de gommaire.com ---------------- */
+.univers-intro .lien-maj { margin-top: 28px }
+.col-zone { padding: 0 var(--marge) clamp(70px, 10vw, 150px) }
+.col-rubriques { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 0 0 clamp(34px, 4vw, 60px) }
+.col-rubriques button {
+  background: none; border: 0; padding: 2px 0; cursor: pointer;
+  font: 500 12.5px var(--police); letter-spacing: .12em; text-transform: uppercase; color: var(--gris);
+}
+.col-rubriques button:hover { color: var(--noir) }
+.col-rubriques button[aria-pressed="true"] { color: var(--noir); text-decoration: underline; text-decoration-color: var(--moutarde); text-underline-offset: 7px }
+.col-grille { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(36px, 4vw, 64px) clamp(16px, 2.4vw, 40px) }
+@media (max-width: 1100px) { .col-grille { grid-template-columns: repeat(3, minmax(0, 1fr)) } }
+@media (max-width: 760px) { .col-grille { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
+.col-carte { position: relative; display: block; text-decoration: none; padding: 0 26px 14px 0; border-bottom: 1px solid var(--pierre) }
+.col-photo { display: grid; place-items: center; aspect-ratio: 1; margin-bottom: 16px; overflow: hidden; background: #fff }
+.col-photo img { width: 88%; height: 88%; object-fit: contain; transition: transform 1.2s var(--courbe) }
+.col-carte:hover .col-photo img { transform: scale(1.05) }
+.col-nom { display: block; text-transform: uppercase; letter-spacing: .08em; font-size: 12.5px; font-weight: 500; line-height: 1.45 }
+.col-sous { display: block; margin-top: 4px; font-size: 13px; color: var(--gris) }
+.col-plus { position: absolute; right: 2px; bottom: 18px; width: 12px; height: 12px }
+.col-plus::before, .col-plus::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background: currentColor; transition: transform .5s var(--courbe) }
+.col-plus::after { transform: rotate(90deg) }
+.col-carte:hover .col-plus::after { transform: rotate(0) }
+.col-carte:hover { border-bottom-color: var(--noir) }
+
+.col-fiche { width: min(1080px, calc(100% - 32px)); max-height: calc(100svh - 32px); padding: 0; border: 0; overflow-y: auto; background: #fff; color: var(--noir) }
+.col-fiche::backdrop { background: rgba(18, 20, 19, .45) }
+.col-fiche-corps { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) }
+.col-galerie { display: grid; gap: 12px; align-content: start; padding: clamp(20px, 3vw, 44px); border-right: 1px solid var(--pierre) }
+.col-galerie-grande { display: grid; place-items: center; aspect-ratio: 1 }
+.col-galerie-grande img { width: 100%; height: 100%; object-fit: contain }
+.col-vignettes { display: flex; flex-wrap: wrap; gap: 8px }
+.col-vignettes button { width: 58px; height: 58px; padding: 0; border: 1px solid var(--pierre); background: #fff; cursor: pointer }
+.col-vignettes button[aria-pressed="true"] { border-color: var(--noir) }
+.col-vignettes img { width: 100%; height: 100%; object-fit: contain }
+.col-infos { display: grid; gap: 22px; align-content: start; justify-items: start; padding: clamp(28px, 3.6vw, 56px) clamp(24px, 3.6vw, 56px) clamp(28px, 3.6vw, 48px) }
+.col-fil { margin: 0; text-transform: uppercase; letter-spacing: .12em; font-size: 11.5px; font-weight: 500; color: var(--gris) }
+.col-infos h2 { font-size: clamp(22px, 2.2vw, 30px); text-transform: uppercase; letter-spacing: .04em; padding-right: 30px }
+.col-carac { display: grid; gap: 0; width: 100%; margin: 0 }
+.col-carac div { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 16px; padding: 11px 0; border-bottom: 1px solid #f0ece5 }
+.col-carac div:first-child { border-top: 1px solid #f0ece5 }
+.col-carac dt { text-transform: uppercase; letter-spacing: .1em; font-size: 11.5px; font-weight: 500; color: var(--gris); padding-top: 2px }
+.col-carac dd { margin: 0; font-size: 14px; overflow-wrap: anywhere }
+.col-pro-note { margin: 0; font-size: 13.5px; color: var(--gris) }
+.col-pro-note a { color: var(--teck); text-underline-offset: 3px }
+.col-fermer { position: absolute; top: 14px; right: 14px; z-index: 1; width: 44px; height: 44px; border: 0; background: #fff; cursor: pointer }
+.col-fermer::before, .col-fermer::after { content: ''; position: absolute; left: 11px; top: 50%; width: 22px; height: 1px; background: var(--noir); transform: rotate(45deg) }
+.col-fermer::after { transform: rotate(-45deg) }
+@media (max-width: 760px) {
+  .col-fiche-corps { grid-template-columns: minmax(0, 1fr) }
+  .col-galerie { border-right: 0; border-bottom: 1px solid var(--pierre); padding-top: 58px }
+  .col-carac div { grid-template-columns: minmax(0, 1fr); gap: 3px }
+}
