@@ -287,20 +287,21 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
 }
 .col-rubriques button:hover { color: var(--noir) }
 .col-rubriques button[aria-pressed="true"] { color: var(--noir); text-decoration: underline; text-decoration-color: var(--moutarde); text-underline-offset: 7px }
-.col-grille { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(36px, 4vw, 64px) clamp(16px, 2.4vw, 40px) }
+.col-grille { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 24px) }
 @media (max-width: 1100px) { .col-grille { grid-template-columns: repeat(3, minmax(0, 1fr)) } }
 @media (max-width: 760px) { .col-grille { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
-.col-carte { position: relative; display: block; text-decoration: none; padding: 0 26px 14px 0; border-bottom: 1px solid var(--pierre) }
-.col-photo { display: grid; place-items: center; aspect-ratio: 1; margin-bottom: 16px; overflow: hidden; background: #fff }
+/* Carte a peine dessinee (05/11, Nicolas) : un filet tres clair, une ombre qui n'apparait qu'au survol. */
+.col-carte { position: relative; display: block; text-decoration: none; padding: 12px 40px 16px 12px; border: 1px solid #f1ede6; background: #fff; transition: border-color .5s var(--courbe), box-shadow .5s var(--courbe) }
+.col-carte:hover { border-color: var(--pierre); box-shadow: 0 14px 30px -24px rgba(18, 20, 19, .35) }
+.col-photo { display: grid; place-items: center; aspect-ratio: 1; margin-bottom: 14px; overflow: hidden; background: #fff }
 .col-photo img { width: 88%; height: 88%; object-fit: contain; transition: transform 1.2s var(--courbe) }
 .col-carte:hover .col-photo img { transform: scale(1.05) }
 .col-nom { display: block; text-transform: uppercase; letter-spacing: .08em; font-size: 12.5px; font-weight: 500; line-height: 1.45 }
 .col-sous { display: block; margin-top: 4px; font-size: 13px; color: var(--gris) }
-.col-plus { position: absolute; right: 2px; bottom: 18px; width: 12px; height: 12px }
+.col-plus { position: absolute; right: 14px; bottom: 20px; width: 12px; height: 12px }
 .col-plus::before, .col-plus::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background: currentColor; transition: transform .5s var(--courbe) }
 .col-plus::after { transform: rotate(90deg) }
 .col-carte:hover .col-plus::after { transform: rotate(0) }
-.col-carte:hover { border-bottom-color: var(--noir) }
 
 .col-fiche { width: min(1080px, calc(100% - 32px)); max-height: calc(100svh - 32px); padding: 0; border: 0; overflow-y: auto; background: #fff; color: var(--noir) }
 .col-fiche::backdrop { background: rgba(18, 20, 19, .45) }
