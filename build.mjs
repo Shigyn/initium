@@ -284,7 +284,7 @@ ${corps(r, lien)}
       <p class="pied-marque" role="img" aria-label="${NOM}, rinato nel 2026, inspirato dal 2003"></p>
       <p class="pied-devise">${t.piedDevise}</p>
     </div>
-    <nav aria-label="${t.piedMaison}"><p class="pied-titre">${t.piedMaison}</p>${['showroom', 'pro', 'contact'].map((c) => `<a href="${lien(lg, c)}">${t.liens[c]}</a>`).join('')}<a href="https://www.facebook.com/outletdesigninout" rel="noopener">Facebook</a></nav>
+    <nav aria-label="${t.piedMaison}"><p class="pied-titre">${t.piedMaison}</p>${['showroom', 'pro', 'contact'].map((c) => `<a href="${lien(lg, c)}">${t.liens[c]}</a>`).join('')}<a href="https://www.facebook.com/profile.php?id=61589969791042" rel="noopener">Facebook</a></nav>
     <nav aria-label="${t.piedCatalogues}"><p class="pied-titre">${t.piedCatalogues}</p>${univers}</nav>
     <nav aria-label="Langue"><p class="pied-titre">${t.langue}</p>${LANGUES.map((l) => `<a href="${lien(l, cle)}" hreflang="${l}">${T[l].langue}</a>`).join('')}</nav>
   </div>
@@ -323,7 +323,7 @@ for (const lg of LANGUES) {
     description: t.descSite,
     jsonld: [{ '@context': 'https://schema.org', '@type': 'FurnitureStore', name: NOM, alternateName: ['Initium3', 'Outlet Design In Out'],
       url: URL_SITE + PREFIXE[lg], image: `${URL_SITE}photos/v03.webp`, areaServed: 'BE',
-      address: { '@type': 'PostalAddress', streetAddress: 'Bergensesteenweg 456', postalCode: '1600', addressLocality: 'Sint-Pieters-Leeuw', addressCountry: 'BE' }, openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '11:00', closes: '18:00' }], sameAs: ['https://www.facebook.com/outletdesigninout'] }],
+      address: { '@type': 'PostalAddress', streetAddress: 'Bergensesteenweg 456', postalCode: '1600', addressLocality: 'Sint-Pieters-Leeuw', addressCountry: 'BE' }, openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '11:00', closes: '18:00' }], sameAs: ['https://www.facebook.com/profile.php?id=61589969791042'] }],
     corps: (r, lien) => `
 <section class="ouverture" data-ouverture>
   ${['v03', 'v24', 'v16', 'v01'].map((id, i) => `<div class="diapo${i === 0 ? ' active' : ''}">${img(r, id, '', { grand: true, eager: i === 0 })}</div>`).join('')}
@@ -530,7 +530,7 @@ for (const lg of LANGUES) {
 <section class="page-texte">
   <h1>${t.contactTitre}</h1>
   <p class="page-chapo">${t.contactTexte}</p>
-  <a class="lien-maj" href="https://www.facebook.com/outletdesigninout" rel="noopener">${t.suivre}</a>
+  <a class="lien-maj" href="https://www.facebook.com/profile.php?id=61589969791042" rel="noopener">${t.suivre}</a>
 </section>
 <section class="pro-grille">
   <div></div>
