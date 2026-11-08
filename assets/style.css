@@ -331,3 +331,20 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
   .col-galerie { border-right: 0; border-bottom: 1px solid var(--pierre); padding-top: 58px }
   .col-carac div { grid-template-columns: minmax(0, 1fr); gap: 3px }
 }
+
+/* Agents B2B (2026-11-08) */
+.agents { padding: 0 var(--marge) clamp(70px, 10vw, 150px) }
+.agents-grille { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 24px) }
+@media (max-width: 1000px) { .agents-grille { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
+@media (max-width: 640px) { .agents-grille { grid-template-columns: minmax(0, 1fr) } }
+.agent { display: flex; flex-direction: column; gap: 8px; padding: clamp(22px, 2.4vw, 34px); border: 1px solid var(--pierre); background: #fff }
+.agent[hidden] { display: none }
+.agent p { margin: 0; color: var(--gris); font-size: 14.5px }
+.agent .agent-pays { text-transform: uppercase; letter-spacing: .12em; font-size: 12px; font-weight: 500; color: var(--teck) }
+.agent-nom { margin: 4px 0 2px; font-size: clamp(17px, 1.4vw, 21px); font-weight: 400; text-transform: uppercase; letter-spacing: .06em }
+.agent .agent-societe { color: var(--noir) }
+.agent-contacts { display: grid; gap: 2px; margin-top: 6px !important }
+.agent-contacts a { color: var(--noir); text-decoration: none; overflow-wrap: anywhere }
+.agent-contacts a:hover { color: var(--teck) }
+.agent-siege { background: var(--sable); border-color: var(--sable) }
+.agent-siege .lien-maj { align-self: flex-start; margin-top: auto; padding-top: 14px }

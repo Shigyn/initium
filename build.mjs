@@ -14,6 +14,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { LEGAL } from './_source/legal.mjs';
+import { AGENTS } from './_source/agents.mjs';
 
 const ICI = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)/, '$1');
 // Domaine du client relie le 31/10/2026 (DNS chez Wix) : le site est livre.
@@ -36,6 +37,7 @@ const SLUGS = {
   interieur: { fr: 'interieur', nl: 'binnen', en: 'indoor' },
   collection: { fr: 'collection', nl: 'collectie', en: 'collection' },
   showroom: { fr: 'showroom', nl: 'showroom', en: 'showroom' },
+  agents: { fr: 'agents-b2b', nl: 'b2b-agenten', en: 'b2b-agents' },
   pro: { fr: 'espace-pro', nl: 'professionelen', en: 'trade' },
   contact: { fr: 'contact', nl: 'contact', en: 'contact' },
   mentions: { fr: 'mentions-legales', nl: 'juridische-informatie', en: 'legal-notice' },
@@ -50,7 +52,10 @@ const T = {
     univers: { exterieur: 'Extérieur', interieur: 'Intérieur', collection: 'Collection' },
     collectionTitre: 'La collection', voirCollection: 'Voir toute la collection',
     collectionIntro: 'Toutes nos pièces, pour l’intérieur comme pour l’extérieur. Les prix sont réservés aux professionnels : pour un projet, une question ou une visite, écrivez-nous.',
-    liens: { showroom: 'Showroom', pro: 'Espace pro', contact: 'Contact' },
+    liens: { showroom: 'Showroom', agents: 'Agents B2B', pro: 'Espace pro', contact: 'Contact' },
+    agentsTitre: 'Agents B2B', agentsIntro: 'Architectes, décorateurs, revendeurs, hôtels et restaurants : trouvez l’interlocuteur Initium³ de votre pays. Pour un pays qui n’est pas encore listé, notre siège vous répond directement.',
+    tous: 'Tous', siege: 'Siège', ecrire: 'Nous écrire',
+    agentDevenir: 'Représenter Initium³ dans votre pays ?', agentDevenirTexte: 'Agents commerciaux et revendeurs : présentez-nous votre activité, nous revenons vers vous rapidement.',
     titreSite: 'Mobilier hybride intérieur & extérieur, Bruxelles',
     descSite: 'Initium³, maison belge de design et de fabrication de mobilier hybride : canapés, salons lounge et collections pensés pour l’intérieur comme pour l’extérieur.',
     introTitre: 'Hybrid living — un mobilier conçu pour le dehors et pensé pour le dedans',
@@ -84,7 +89,10 @@ const T = {
     univers: { exterieur: 'Buiten', interieur: 'Binnen', collection: 'Collectie' },
     collectionTitre: 'De collectie', voirCollection: 'Bekijk de volledige collectie',
     collectionIntro: 'Al onze stukken, voor binnen en voor buiten. De prijzen zijn voorbehouden aan professionelen: voor een project, een vraag of een bezoek, schrijf ons.',
-    liens: { showroom: 'Showroom', pro: 'Professionelen', contact: 'Contact' },
+    liens: { showroom: 'Showroom', agents: 'B2B-agenten', pro: 'Professionelen', contact: 'Contact' },
+    agentsTitre: 'B2B-agenten', agentsIntro: 'Architecten, decorateurs, verdelers, hotels en restaurants: vind de Initium³-contactpersoon in uw land. Voor een land dat nog niet in de lijst staat, helpt ons hoofdkantoor u rechtstreeks verder.',
+    tous: 'Alle', siege: 'Hoofdkantoor', ecrire: 'Schrijf ons',
+    agentDevenir: 'Initium³ vertegenwoordigen in uw land?', agentDevenirTexte: 'Handelsagenten en verdelers: stel uw activiteit aan ons voor, wij nemen snel contact met u op.',
     titreSite: 'Hybride meubelen voor binnen & buiten, Brussel',
     descSite: 'Initium³, Belgisch huis voor het ontwerp en de productie van hybride meubelen: sofa’s, loungesets en collecties voor binnen én buiten.',
     introTitre: 'Hybrid living — meubelen ontworpen voor buiten en bedacht voor binnen',
@@ -118,7 +126,10 @@ const T = {
     univers: { exterieur: 'Outdoor', interieur: 'Indoor', collection: 'Collection' },
     collectionTitre: 'The collection', voirCollection: 'View the full collection',
     collectionIntro: 'All our pieces, for indoors and outdoors. Prices are reserved for trade customers: for a project, a question or a visit, write to us.',
-    liens: { showroom: 'Showroom', pro: 'Trade area', contact: 'Contact' },
+    liens: { showroom: 'Showroom', agents: 'B2B agents', pro: 'Trade area', contact: 'Contact' },
+    agentsTitre: 'B2B agents', agentsIntro: 'Architects, interior designers, resellers, hotels and restaurants: find the Initium³ contact for your country. For a country not listed yet, our head office will answer you directly.',
+    tous: 'All', siege: 'Head office', ecrire: 'Write to us',
+    agentDevenir: 'Represent Initium³ in your country?', agentDevenirTexte: 'Sales agents and resellers: tell us about your business and we will get back to you quickly.',
     titreSite: 'Hybrid indoor & outdoor furniture, Brussels',
     descSite: 'Initium³, a Belgian house of hybrid furniture design and manufacturing: sofas, lounge sets and collections made for indoors and outdoors alike.',
     introTitre: 'Hybrid living — furniture designed for outdoors and made for indoors',
@@ -256,7 +267,7 @@ ${alternates}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${r}assets/style.css?v=13">
+<link rel="stylesheet" href="${r}assets/style.css?v=14">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 </head>
 <body class="${clair ? 'entete-clair' : ''}">
@@ -272,7 +283,7 @@ ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</sc
 <div class="panneau" id="panneau" hidden>
   <nav class="panneau-grands" aria-label="${t.menu}">${univers}</nav>
   <nav class="panneau-petits" aria-label="${t.piedMaison}">
-    ${['showroom', 'pro', 'contact'].map((c) => `<a href="${lien(lg, c)}">${t.liens[c]}</a>`).join('')}
+    ${['showroom', 'agents', 'pro', 'contact'].map((c) => `<a href="${lien(lg, c)}">${t.liens[c]}</a>`).join('')}
   </nav>
 </div>
 <main id="contenu">
@@ -284,7 +295,7 @@ ${corps(r, lien)}
       <p class="pied-marque" role="img" aria-label="${NOM}, rinato nel 2026, inspirato dal 2003"></p>
       <p class="pied-devise">${t.piedDevise}</p>
     </div>
-    <nav aria-label="${t.piedMaison}"><p class="pied-titre">${t.piedMaison}</p>${['showroom', 'pro', 'contact'].map((c) => `<a href="${lien(lg, c)}">${t.liens[c]}</a>`).join('')}<a href="https://www.facebook.com/profile.php?id=61589969791042" rel="noopener">Facebook</a></nav>
+    <nav aria-label="${t.piedMaison}"><p class="pied-titre">${t.piedMaison}</p>${['showroom', 'agents', 'pro', 'contact'].map((c) => `<a href="${lien(lg, c)}">${t.liens[c]}</a>`).join('')}<a href="https://www.facebook.com/profile.php?id=61589969791042" rel="noopener">Facebook</a></nav>
     <nav aria-label="${t.piedCatalogues}"><p class="pied-titre">${t.piedCatalogues}</p>${univers}</nav>
     <nav aria-label="Langue"><p class="pied-titre">${t.langue}</p>${LANGUES.map((l) => `<a href="${lien(l, cle)}" hreflang="${l}">${T[l].langue}</a>`).join('')}</nav>
   </div>
@@ -464,6 +475,54 @@ for (const lg of LANGUES) {
 </section>`,
   }]);
 
+  /* AGENTS B2B (Olivier, 08/11) : le siege, puis les agents de _source/agents.mjs, filtre par pays */
+  const nomPays = (code) => { try { return new Intl.DisplayNames([lg], { type: 'region' }).of(code); } catch (e) { return code; } };
+  const pays = [...new Set(AGENTS.map((a) => a.pays))];
+  pages.push([lg, 'agents', {
+    titre: `${t.agentsTitre} — ${NOM}`,
+    description: t.agentsIntro,
+    clair: true,
+    apres: pays.length > 1 ? `<script>
+document.querySelectorAll('[data-filtre]').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var p = b.getAttribute('data-filtre');
+    document.querySelectorAll('[data-filtre]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    document.querySelectorAll('[data-pays]').forEach(function (c) { c.hidden = p !== '' && c.getAttribute('data-pays') !== p; });
+  });
+});
+</script>` : '',
+    corps: (r, lien) => `
+<section class="page-texte">
+  <h1>${t.agentsTitre}</h1>
+  <p class="page-chapo">${t.agentsIntro}</p>
+</section>
+<section class="agents">
+  ${pays.length > 1 ? `<nav class="col-rubriques" aria-label="${t.agentsTitre}"><button type="button" data-filtre="" aria-pressed="true">${t.tous}</button>${pays.map((p) => `<button type="button" data-filtre="${esc(p)}" aria-pressed="false">${esc(nomPays(p))}</button>`).join('')}</nav>` : ''}
+  <div class="agents-grille">
+    <article class="agent agent-siege">
+      <p class="agent-pays">${t.siege} · ${t.pays}</p>
+      <h2 class="agent-nom">${NOM}</h2>
+      <p>Bergensesteenweg 456<br>1600 Sint-Pieters-Leeuw</p>
+      <a class="lien-maj" href="${lien(lg, 'contact')}">${t.ecrire}</a>
+    </article>
+    ${AGENTS.map((a) => `<article class="agent" data-pays="${esc(a.pays)}">
+      <p class="agent-pays">${esc(nomPays(a.pays))}${a.zone ? ' · ' + esc(a.zone) : ''}</p>
+      <h2 class="agent-nom">${esc(a.nom)}</h2>
+      ${a.societe ? `<p class="agent-societe">${esc(a.societe)}</p>` : ''}
+      ${a.adresse ? `<p>${esc(a.adresse)}</p>` : ''}
+      <p class="agent-contacts">${a.telephone ? `<a href="tel:${esc(a.telephone.replace(/[^\d+]/g, ''))}">${esc(a.telephone)}</a>` : ''}${a.email ? `<a href="mailto:${esc(a.email)}">${esc(a.email)}</a>` : ''}</p>
+    </article>`).join('\n    ')}
+  </div>
+</section>
+<section class="pro-bande">
+  <div>
+    <h2 class="reveler">${t.agentDevenir}</h2>
+    <p class="reveler">${t.agentDevenirTexte}</p>
+  </div>
+  <a class="lien-maj reveler" href="${lien(lg, 'contact')}">${t.contacter}</a>
+</section>`,
+  }]);
+
   /* ESPACE PRO */
   pages.push([lg, 'pro', {
     titre: `${t.proPageTitre} — ${NOM}`,
@@ -549,7 +608,7 @@ for (const lg of LANGUES) {
 }
 
 /* ---------- ecriture ---------- */
-for (const d of ['exterieur', 'interieur', 'collection', 'olwen', 'showroom', 'espace-pro', 'contact', 'mentions-legales', 'confidentialite', 'nl', 'en']) {
+for (const d of ['exterieur', 'interieur', 'collection', 'olwen', 'showroom', 'agents-b2b','espace-pro', 'contact', 'mentions-legales', 'confidentialite', 'nl', 'en']) {
   fs.rmSync(path.join(ICI, d), { recursive: true, force: true });
 }
 for (const [lg, cle, p] of pages) {
@@ -565,7 +624,7 @@ fs.writeFileSync(path.join(ICI, 'gestion', 'index.html'), `<!DOCTYPE html>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=13"><link rel="stylesheet" href="../assets/gestion.css?v=2">
+<link rel="stylesheet" href="../assets/style.css?v=14"><link rel="stylesheet" href="../assets/gestion.css?v=2">
 </head><body class="gestion">
 <div id="app"></div>
 <script>window.LOCWEB_CONFIG = { supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co', supabaseAnonKey: 'sb_publishable_rpLrUo4Cqnfl8zSohDqO0A_Q5Vkj2Hk' };</script>
