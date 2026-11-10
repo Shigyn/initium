@@ -15,6 +15,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { LEGAL } from './_source/legal.mjs';
 import { AGENTS } from './_source/agents.mjs';
+import { X, TISSUS, FICHE, NEWS } from './_source/nouveautes.mjs';
+const FICHIERS = JSON.parse(fs.readFileSync(path.join(path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)/, '$1'), '_source', 'fichiers.json'), 'utf8'));
 
 const ICI = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)/, '$1');
 // Domaine du client relie le 31/10/2026 (DNS chez Wix) : le site est livre.
@@ -36,6 +38,8 @@ const SLUGS = {
   exterieur: { fr: 'exterieur', nl: 'buiten', en: 'outdoor' },
   interieur: { fr: 'interieur', nl: 'binnen', en: 'indoor' },
   collection: { fr: 'collection', nl: 'collectie', en: 'collection' },
+  telechargements: { fr: 'telechargements', nl: 'downloads', en: 'downloads' },
+  news: { fr: 'news', nl: 'nieuws', en: 'news' },
   showroom: { fr: 'showroom', nl: 'showroom', en: 'showroom' },
   agents: { fr: 'agents-b2b', nl: 'b2b-agenten', en: 'b2b-agents' },
   pro: { fr: 'espace-pro', nl: 'professionelen', en: 'trade' },
@@ -243,6 +247,9 @@ function page(lg, cle, { titre, description, corps, clair = false, jsonld = [], 
   const r = '../'.repeat(ici.split('/').filter(Boolean).length);
   const lien = (l, c) => r + chemin(l, c);
   const univers = ['exterieur', 'interieur', 'collection'].map((c) => `<a href="${lien(lg, c)}">${t.univers[c]}</a>`).join('');
+  // Olivier, 10/11 : Telechargements juste apres Collection, puis News.
+  const dl = `<a href="${lien(lg, 'telechargements')}">${X[lg].telechargements}</a>`;
+  const navHaut = univers + dl + `<a href="${lien(lg, 'news')}">${X[lg].news}</a>`;
   const alternates = LANGUES.map((l) => `<link rel="alternate" hreflang="${l}" href="${URL_SITE}${chemin(l, cle)}">`).join('\n');
   const langues = LANGUES.map((l) => l === lg ? `<span aria-current="true">${l.toUpperCase()}</span>` : `<a href="${lien(l, cle)}" hreflang="${l}" lang="${l}" title="${T[l].langue}">${l.toUpperCase()}</a>`).join('');
 
@@ -267,21 +274,21 @@ ${alternates}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${r}assets/style.css?v=14">
+<link rel="stylesheet" href="${r}assets/style.css?v=16">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 </head>
 <body class="${clair ? 'entete-clair' : ''}">
 <a class="evitement" href="#contenu">${t.evitement}</a>
 <header class="entete" data-entete>
   <a class="marque" href="${lien(lg, null)}" aria-label="${NOM}"></a>
-  <nav class="nav-univers" aria-label="${t.menu}">${univers}</nav>
+  <nav class="nav-univers" aria-label="${t.menu}">${navHaut}</nav>
   <div class="entete-droite">
     <nav class="langues" aria-label="Langue / Taal / Language">${langues}</nav>
     <button class="burger" type="button" aria-expanded="false" aria-controls="panneau" aria-label="${t.menu}" data-libelle-fermer="${t.fermer}"><span></span><span></span></button>
   </div>
 </header>
 <div class="panneau" id="panneau" hidden>
-  <nav class="panneau-grands" aria-label="${t.menu}">${univers}</nav>
+  <nav class="panneau-grands" aria-label="${t.menu}">${navHaut}</nav>
   <nav class="panneau-petits" aria-label="${t.piedMaison}">
     ${['showroom', 'agents', 'pro', 'contact'].map((c) => `<a href="${lien(lg, c)}">${t.liens[c]}</a>`).join('')}
   </nav>
@@ -295,8 +302,8 @@ ${corps(r, lien)}
       <p class="pied-marque" role="img" aria-label="${NOM}, rinato nel 2026, inspirato dal 2003"></p>
       <p class="pied-devise">${t.piedDevise}</p>
     </div>
-    <nav aria-label="${t.piedMaison}"><p class="pied-titre">${t.piedMaison}</p>${['showroom', 'agents', 'pro', 'contact'].map((c) => `<a href="${lien(lg, c)}">${t.liens[c]}</a>`).join('')}<a href="https://www.facebook.com/profile.php?id=61589969791042" rel="noopener">Facebook</a></nav>
-    <nav aria-label="${t.piedCatalogues}"><p class="pied-titre">${t.piedCatalogues}</p>${univers}</nav>
+    <nav aria-label="${t.piedMaison}"><p class="pied-titre">${t.piedMaison}</p>${['showroom', 'agents', 'pro', 'contact'].map((c) => `<a href="${lien(lg, c)}">${t.liens[c]}</a>`).join('')}<a href="${lien(lg, 'news')}">${X[lg].news}</a><a href="https://www.facebook.com/profile.php?id=61589969791042" rel="noopener">Facebook</a></nav>
+    <nav aria-label="${t.piedCatalogues}"><p class="pied-titre">${t.piedCatalogues}</p>${univers}${dl}</nav>
     <nav aria-label="Langue"><p class="pied-titre">${t.langue}</p>${LANGUES.map((l) => `<a href="${lien(l, cle)}" hreflang="${l}">${T[l].langue}</a>`).join('')}</nav>
   </div>
   <p class="pied-bas">© ${NOM} · ${t.droits} · <a href="${lien(lg, 'mentions')}">${LEGAL[lg].mentions.titre}</a> · <a href="${lien(lg, 'confidentialite')}">${LEGAL[lg].confidentialite.titre}</a> · <a class="lien-locweb" href="https://locweb.fr" target="_blank" rel="noopener">LocWeb</a></p>
@@ -333,13 +340,26 @@ for (const lg of LANGUES) {
     titre: `${NOM} — ${t.titreSite}`,
     description: t.descSite,
     jsonld: [{ '@context': 'https://schema.org', '@type': 'FurnitureStore', name: NOM, alternateName: ['Initium3', 'Outlet Design In Out'],
-      url: URL_SITE + PREFIXE[lg], image: `${URL_SITE}photos/v03.webp`, areaServed: 'BE',
+      url: URL_SITE + PREFIXE[lg], image: `${URL_SITE}photos/v03.webp`, areaServed: 'BE', award: 'Brussels Balthazar 2026, 3e place, catégorie Love at first sight (canapé Olwen)',
       address: { '@type': 'PostalAddress', streetAddress: 'Bergensesteenweg 456', postalCode: '1600', addressLocality: 'Sint-Pieters-Leeuw', addressCountry: 'BE' }, openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '11:00', closes: '18:00' }], sameAs: ['https://www.facebook.com/profile.php?id=61589969791042'] }],
     corps: (r, lien) => `
 <section class="ouverture" data-ouverture>
   ${['v03', 'v24', 'v16', 'v01'].map((id, i) => `<div class="diapo${i === 0 ? ' active' : ''}">${img(r, id, '', { grand: true, eager: i === 0 })}</div>`).join('')}
   <div class="ouverture-voile"></div>
-  <a class="fleche" href="#intro" aria-label="${t.decouvrir}"><span></span></a>
+  <a class="fleche" href="#distinction" aria-label="${t.decouvrir}"><span></span></a>
+</section>
+
+<section class="distinction" id="distinction">
+  <figure class="distinction-affiche reveler">${img(r, 'n-affiche', 'Love at first sight, Laureate Brussels Balthazar 2026')}</figure>
+  <div class="distinction-texte reveler">
+    <p class="distinction-eyebrow">${X[lg].distEyebrow}</p>
+    <h2>${X[lg].distTitre}</h2>
+    <p>${X[lg].distTexte}</p>
+    <div class="distinction-liens">
+      <a class="lien-maj" href="${lien(lg, 'collection')}#olwen">${X[lg].decouvrirOlwen}</a>
+      <a class="lien-maj" href="${lien(lg, 'news')}#balthazar-2026">${X[lg].lireNews}</a>
+    </div>
+  </div>
 </section>
 
 <section class="intro" id="intro">
@@ -426,9 +446,9 @@ for (const lg of LANGUES) {
   pages.push([lg, 'collection', {
     titre: `${t.collectionTitre} — ${NOM}`,
     description: t.collectionIntro,
-    apres: `<script>window.IN_COLLECTION = ${JSON.stringify({ langue: lg, titre: t.univers.collection, ...COLL[lg] })};</script>
+    apres: `<script>window.IN_COLLECTION = ${JSON.stringify({ langue: lg, titre: t.univers.collection, badge: X[lg].badge, ...COLL[lg] })};</script>
 <script src="../${PREFIXE[lg] ? '../' : ''}assets/pro-mots.js?v=4" defer></script>
-<script src="../${PREFIXE[lg] ? '../' : ''}assets/collection.js?v=1" defer></script>`,
+<script src="../${PREFIXE[lg] ? '../' : ''}assets/collection.js?v=2" defer></script>`,
     corps: (r, lien) => `
 <section class="tete-univers">
   <div class="tete-univers-image">${img(r, 'v26', t.collectionTitre, { grand: true, eager: true })}</div>
@@ -473,6 +493,67 @@ for (const lg of LANGUES) {
     </div>
   </div>
 </section>`,
+  }]);
+
+  /* TELECHARGEMENTS (Olivier, 10/11) : tissus et fiche technique, fichiers dans fichiers/ */
+  const mo = (f) => (FICHIERS[f] / 1048576).toFixed(1).replace('.', lg === 'en' ? '.' : ',') + (lg === 'fr' ? ' Mo' : ' MB');
+  const carteDl = (r, prefixe, nom, titre) => {
+    const f = `initium3-${prefixe}-${nom}.jpg`;
+    return `<figure class="dl-carte">
+      <a class="dl-apercu" href="${r}fichiers/${f}" target="_blank" rel="noopener" aria-label="${esc(X[lg].voir)} : ${esc(titre)}"><img src="${r}fichiers/${prefixe}-${nom}-800.webp" alt="${esc(titre)}" loading="lazy" decoding="async"></a>
+      <figcaption><span class="dl-nom">${esc(titre)}</span><a class="dl-lien" href="${r}fichiers/${f}" download>${X[lg].telecharger} <small>JPG · ${mo(f)}</small></a></figcaption>
+    </figure>`;
+  };
+  pages.push([lg, 'telechargements', {
+    titre: `${X[lg].telechargements} — ${NOM}`,
+    description: X[lg].dlIntro,
+    clair: true,
+    corps: (r, lien) => `
+<section class="page-texte">
+  <h1>${X[lg].telechargements}</h1>
+  <p class="page-chapo">${X[lg].dlIntro}</p>
+  <nav class="col-rubriques dl-sommaire" aria-label="${X[lg].telechargements}"><a href="#tissus">${X[lg].tissus}</a><a href="#fiche-technique">${X[lg].fiche}</a></nav>
+</section>
+<section class="dl-zone" id="tissus">
+  <div class="dl-tete"><h2>${X[lg].tissus}</h2><a class="lien-maj" href="${r}fichiers/initium3-nuancier-tissus.pdf" download>${X[lg].toutTissus} · ${X[lg].pdf} ${mo('initium3-nuancier-tissus.pdf')}</a></div>
+  <div class="dl-grille">${TISSUS.map(([nom, titre]) => carteDl(r, 'tissus', nom, titre)).join('')}</div>
+</section>
+<section class="dl-zone" id="fiche-technique">
+  <div class="dl-tete"><h2>${X[lg].fiche}</h2><a class="lien-maj" href="${r}fichiers/initium3-fiche-technique.pdf" download>${X[lg].toutFiche} · ${X[lg].pdf} ${mo('initium3-fiche-technique.pdf')}</a></div>
+  <div class="dl-grille">${FICHE.map(([nom, titre]) => carteDl(r, 'fiche', nom, titre[lg])).join('')}</div>
+</section>
+<section class="pro-bande">
+  <div>
+    <h2 class="reveler">${t.proTitre}</h2>
+    <p class="reveler">${t.proTexte}</p>
+  </div>
+  <a class="lien-maj reveler" href="${lien(lg, 'contact')}">${t.contacter}</a>
+</section>`,
+  }]);
+
+  /* NEWS (Olivier, 10/11) : articles de _source/nouveautes.mjs, du plus recent au plus ancien */
+  const dateLongue = (d) => new Intl.DateTimeFormat({ fr: 'fr-BE', nl: 'nl-BE', en: 'en-GB' }[lg], { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(d + 'T12:00:00Z'));
+  pages.push([lg, 'news', {
+    titre: `${X[lg].news} — ${NOM}`,
+    description: X[lg].newsIntro,
+    clair: true,
+    jsonld: NEWS.map((a) => ({ '@context': 'https://schema.org', '@type': 'NewsArticle', headline: a.titre[lg], datePublished: a.date, description: a.chapo[lg],
+      image: a.photos.map((p) => `${URL_SITE}photos/${p}.webp`), publisher: { '@type': 'Organization', name: NOM }, inLanguage: lg })),
+    corps: (r, lien) => `
+<section class="page-texte">
+  <h1>${X[lg].news}</h1>
+  <p class="page-chapo">${X[lg].newsIntro}</p>
+</section>
+${NEWS.map((a) => `<article class="article" id="${a.id}">
+  <div class="article-tete">
+    <p class="distinction-eyebrow">${a.etiquette[lg]} · <time datetime="${a.date}">${dateLongue(a.date)}</time></p>
+    <h2>${a.titre[lg]}</h2>
+    <p class="article-chapo">${a.chapo[lg]}</p>
+    ${a.texte[lg].map((p) => `<p>${p}</p>`).join('\n    ')}
+    ${a.id === 'balthazar-2026' ? `<a class="lien-maj" href="${lien(lg, 'collection')}#olwen">${X[lg].decouvrirOlwen}</a>` : ''}
+  </div>
+  <div class="article-photos">${a.photos.map((p, i) => `<figure class="${i === 0 ? 'article-une' : ''}">${img(r, p, i === 0 ? a.titre[lg] : '', { grand: i < 2 })}</figure>`).join('')}</div>
+</article>`).join('\n')}`,
   }]);
 
   /* AGENTS B2B (Olivier, 08/11) : le siege, puis les agents de _source/agents.mjs, filtre par pays */
@@ -608,7 +689,7 @@ document.querySelectorAll('[data-filtre]').forEach(function (b) {
 }
 
 /* ---------- ecriture ---------- */
-for (const d of ['exterieur', 'interieur', 'collection', 'olwen', 'showroom', 'agents-b2b','espace-pro', 'contact', 'mentions-legales', 'confidentialite', 'nl', 'en']) {
+for (const d of ['exterieur', 'interieur', 'collection', 'olwen', 'showroom', 'agents-b2b', 'telechargements', 'news', 'espace-pro', 'contact', 'mentions-legales', 'confidentialite', 'nl', 'en']) {
   fs.rmSync(path.join(ICI, d), { recursive: true, force: true });
 }
 for (const [lg, cle, p] of pages) {
@@ -624,7 +705,7 @@ fs.writeFileSync(path.join(ICI, 'gestion', 'index.html'), `<!DOCTYPE html>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=14"><link rel="stylesheet" href="../assets/gestion.css?v=2">
+<link rel="stylesheet" href="../assets/style.css?v=16"><link rel="stylesheet" href="../assets/gestion.css?v=2">
 </head><body class="gestion">
 <div id="app"></div>
 <script>window.LOCWEB_CONFIG = { supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co', supabaseAnonKey: 'sb_publishable_rpLrUo4Cqnfl8zSohDqO0A_Q5Vkj2Hk' };</script>

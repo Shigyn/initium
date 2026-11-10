@@ -193,5 +193,30 @@
   "l": 1290,
   "h": 957,
   "source": "f3079128-8d60-48a8-b830-a37df4d3d754.jpg"
+ },
+ "n-affiche": {
+  "l": 1086,
+  "h": 1448,
+  "source": "bf39b967-d67c-4c37-8115-13caa048aa0e.jpg"
+ },
+ "n-podium": {
+  "l": 1114,
+  "h": 1600,
+  "source": "82918d1a-f410-4b3f-99dc-de02433019cd.jpg"
+ },
+ "n-podium-large": {
+  "l": 1536,
+  "h": 2048,
+  "source": "77DD7992-4E6F-434F-9C28-DCAFC31A74ED.jpg"
+ },
+ "n-trophee": {
+  "l": 900,
+  "h": 1600,
+  "source": "6d7b3e02-42ca-4327-962b-63b951bd73be.jpg"
+ },
+ "n-salle": {
+  "l": 1536,
+  "h": 2048,
+  "source": "AD900DD2-9CB4-410B-9B10-17F8CDE18282.jpg"
  }
 }

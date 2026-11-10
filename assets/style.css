@@ -348,3 +348,58 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
 .agent-contacts a:hover { color: var(--teck) }
 .agent-siege { background: var(--sable); border-color: var(--sable) }
 .agent-siege .lien-maj { align-self: flex-start; margin-top: auto; padding-top: 14px }
+
+/* Distinction Brussels Balthazar 2026 (accueil, 2026-11-10) */
+.distinction { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 6vw, 110px); align-items: center; padding: clamp(60px, 9vw, 140px) var(--marge); background: var(--sable) }
+.distinction-affiche { margin: 0; max-width: 440px; justify-self: end; width: 100% }
+.distinction-affiche img { display: block; width: 100%; height: auto; box-shadow: 0 30px 60px -36px rgba(18, 20, 19, .55) }
+.distinction-eyebrow { margin: 0 0 18px; text-transform: uppercase; letter-spacing: .14em; font-size: 12px; font-weight: 500; color: var(--teck) }
+.distinction h2 { margin: 0 0 22px; font-size: clamp(26px, 3vw, 46px); font-weight: 300; line-height: 1.15; max-width: 18ch; text-wrap: balance }
+.distinction-texte > p:not(.distinction-eyebrow) { max-width: 52ch; color: var(--gris); margin: 0 }
+.distinction-liens { display: flex; flex-wrap: wrap; gap: 18px 34px; margin-top: 34px }
+@media (max-width: 760px) {
+  .distinction { grid-template-columns: minmax(0, 1fr) }
+  .distinction-affiche { justify-self: center; max-width: 320px }
+}
+
+/* Telechargements (2026-11-10) */
+.dl-sommaire { margin: 30px 0 0 }
+.dl-sommaire a { text-transform: uppercase; letter-spacing: .12em; font-size: 13px; font-weight: 500; color: var(--gris); text-decoration: none }
+.dl-sommaire a:hover { color: var(--noir) }
+.dl-zone { padding: clamp(30px, 4vw, 60px) var(--marge) clamp(40px, 6vw, 90px); scroll-margin-top: 90px }
+.dl-tete { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 14px 30px; margin-bottom: clamp(24px, 3vw, 40px); padding-bottom: 18px; border-bottom: 1px solid var(--pierre) }
+.dl-tete h2 { margin: 0; font-size: clamp(22px, 2.2vw, 32px); font-weight: 300 }
+.dl-grille { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 2vw, 30px) }
+@media (max-width: 1100px) { .dl-grille { grid-template-columns: repeat(3, minmax(0, 1fr)) } }
+@media (max-width: 760px) { .dl-grille { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
+.dl-carte { margin: 0; display: flex; flex-direction: column; gap: 12px }
+.dl-apercu { display: block; aspect-ratio: 3 / 4; overflow: hidden; border: 1px solid var(--pierre); background: #fff }
+.dl-apercu img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 1.2s var(--courbe) }
+.dl-apercu:hover img { transform: scale(1.04) }
+.dl-carte figcaption { display: grid; gap: 6px }
+.dl-nom { text-transform: uppercase; letter-spacing: .08em; font-size: 12.5px; font-weight: 500; line-height: 1.45 }
+.dl-lien { justify-self: start; font-size: 13.5px; color: var(--noir); text-decoration: underline; text-decoration-color: var(--moutarde); text-underline-offset: 5px }
+.dl-lien small { color: var(--gris); font-size: 12px }
+.dl-lien:hover { color: var(--teck) }
+
+/* News (2026-11-10) */
+.article { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 90px); padding: clamp(20px, 3vw, 40px) var(--marge) clamp(70px, 10vw, 150px); scroll-margin-top: 90px }
+.article-tete h2 { margin: 0 0 20px; font-size: clamp(26px, 2.8vw, 42px); font-weight: 300; line-height: 1.15; text-wrap: balance }
+.article-tete p { color: var(--gris); max-width: 58ch }
+.article-tete .article-chapo { color: var(--noir); font-size: clamp(16px, 1.3vw, 19px) }
+.article-tete .lien-maj { display: inline-block; margin-top: 18px }
+.article-photos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(10px, 1.4vw, 20px); align-content: start }
+.article-photos figure { margin: 0; aspect-ratio: 4 / 5; overflow: hidden; background: var(--sable) }
+.article-photos img { width: 100%; height: 100%; object-fit: cover; display: block }
+.article-photos .article-une { aspect-ratio: auto; background: none }
+.article-photos .article-une img { height: auto; object-fit: contain }
+@media (max-width: 900px) { .article { grid-template-columns: minmax(0, 1fr) } }
+
+/* Badge du canape prime dans la collection */
+.col-badge { position: absolute; left: 12px; top: 12px; z-index: 1; padding: 5px 9px; background: var(--noir); color: #fff; font-size: 10.5px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase }
+.col-badge-fiche { position: static; display: inline-block; margin: 0 0 18px }
+
+/* Cinq liens dans le menu du haut depuis le 10/11 (Telechargements, News) : en dessous de 1240 px, ils passent dans le menu burger. */
+@media (max-width: 1240px) { .nav-univers { display: none } }
+@media (min-width: 1241px) and (max-width: 1480px) { .nav-univers { gap: 24px } .nav-univers a { font-size: 12.5px; letter-spacing: .1em } }
+.dl-tete .lien-maj { white-space: normal; line-height: 1.6 }

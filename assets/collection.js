@@ -36,7 +36,9 @@
     }).filter(function (l) { return l.val; });
     var dim = lignes.filter(function (l) { return l.dim; })[0];
     return { id: p.id, nom: M.texte(p.nom, lg), rubrique: M.rubrique(p.rubrique, lg) || '', reference: p.reference || '',
-      photos: p.photos || [], lignes: lignes, sous: dim ? dim.val : '' };
+      photos: p.photos || [], lignes: lignes, sous: dim ? dim.val : '',
+      // Brussels Balthazar 2026, 3e place « Love at first sight » : le canape Olwen (Olivier, 10/11).
+      prime: /olwen/i.test(p.nom) && /sofa|canap/i.test(p.nom) };
   }
 
   /* ---------- la grille ---------- */
@@ -53,6 +55,7 @@
     zone.querySelector('[data-grille]').innerHTML = l.map(function (p) {
       return '<a class="col-carte" href="#p-' + esc(p.id) + '" data-fiche="' + esc(p.id) + '">' +
         '<span class="col-photo">' + (p.photos[0] ? '<img src="' + esc(p.photos[0]) + '" alt="' + esc(p.nom) + '" loading="lazy" decoding="async">' : '') + '</span>' +
+        (p.prime && T.badge ? '<span class="col-badge">' + esc(T.badge) + '</span>' : '') +
         '<span class="col-nom">' + esc(p.nom) + '</span>' +
         '<span class="col-sous">' + esc(p.sous || p.rubrique) + '</span>' +
         '<span class="col-plus" aria-hidden="true"></span>' +
@@ -81,6 +84,7 @@
         '<div class="col-infos">' +
           '<p class="col-fil">' + esc(T.titre) + (p.rubrique ? ' · ' + esc(p.rubrique) : '') + '</p>' +
           '<h2>' + esc(p.nom) + '</h2>' +
+          (p.prime && T.badge ? '<p class="col-badge col-badge-fiche">' + esc(T.badge) + ' · Love at first sight</p>' : '') +
           '<dl class="col-carac">' +
             (p.rubrique ? '<div><dt>' + esc(T.categorie) + '</dt><dd>' + esc(p.rubrique) + '</dd></div>' : '') +
             (p.reference ? '<div><dt>' + esc(T.ref) + '</dt><dd>' + esc(p.reference) + '</dd></div>' : '') +
@@ -126,6 +130,8 @@
     dessiner();
     var m = location.hash.match(/^#p-(.+)$/);
     if (m) ouvrir(decodeURIComponent(m[1]));
+    // Lien « Decouvrir Olwen » (accueil, News) : la fiche du canape prime, quel que soit son identifiant.
+    else if (location.hash === '#olwen') { var o = produits.filter(function (p) { return p.prime; })[0]; if (o) ouvrir(o.id); }
   }).catch(function () {
     zone.innerHTML = '<p class="pro-attente">' + esc(T.erreur) + '</p>';
   });
