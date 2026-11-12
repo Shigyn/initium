@@ -13,7 +13,7 @@ export const X = {
     distEyebrow: 'Brussels Balthazar 2026 · Salon du Meuble de Bruxelles',
     distTitre: '3e place, catégorie « Coup de foudre »',
     distTexte: 'Notre canapé Olwen a été distingué au Salon du Meuble de Bruxelles, dans la catégorie « Love at first sight ». Une belle reconnaissance pour toute l’équipe.',
-    decouvrirOlwen: 'Découvrir Olwen', lireNews: 'Lire l’actualité', evtPrec: 'Événement précédent', evtSuiv: 'Événement suivant',
+    decouvrirOlwen: 'Découvrir Olwen', lireNews: 'Lire l’actualité', evtPrec: 'Événement précédent', evtSuiv: 'Événement suivant', evtsTitre: 'Actualités et événements', toutesNews: 'Toutes les actualités',
     badge: 'Balthazar 2026',
   },
   nl: {
@@ -25,7 +25,7 @@ export const X = {
     distEyebrow: 'Brussels Balthazar 2026 · Meubelbeurs Brussel',
     distTitre: '3de plaats, categorie « Liefde op het eerste gezicht »',
     distTexte: 'Onze sofa Olwen werd op de Meubelbeurs Brussel bekroond in de categorie « Love at first sight ». Een mooie erkenning voor het hele team.',
-    decouvrirOlwen: 'Ontdek Olwen', lireNews: 'Lees het nieuws', evtPrec: 'Vorig evenement', evtSuiv: 'Volgend evenement',
+    decouvrirOlwen: 'Ontdek Olwen', lireNews: 'Lees het nieuws', evtPrec: 'Vorig evenement', evtSuiv: 'Volgend evenement', evtsTitre: 'Nieuws en evenementen', toutesNews: 'Al het nieuws',
     badge: 'Balthazar 2026',
   },
   en: {
@@ -37,7 +37,7 @@ export const X = {
     distEyebrow: 'Brussels Balthazar 2026 · Brussels Furniture Fair',
     distTitre: '3rd place, « Love at first sight » category',
     distTexte: 'Our Olwen sofa received an award at the Brussels Furniture Fair, in the « Love at first sight » category. A wonderful recognition for the whole team.',
-    decouvrirOlwen: 'Discover Olwen', lireNews: 'Read the news', evtPrec: 'Previous event', evtSuiv: 'Next event',
+    decouvrirOlwen: 'Discover Olwen', lireNews: 'Read the news', evtPrec: 'Previous event', evtSuiv: 'Next event', evtsTitre: 'News and events', toutesNews: 'All news',
     badge: 'Balthazar 2026',
   },
 };
