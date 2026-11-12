@@ -218,5 +218,35 @@
   "l": 1536,
   "h": 2048,
   "source": "AD900DD2-9CB4-410B-9B10-17F8CDE18282.jpg"
+ },
+ "n-stand-1": {
+  "l": 1448,
+  "h": 1086,
+  "source": "envoi Nicolas 12/11 (21.jpg)"
+ },
+ "n-stand-2": {
+  "l": 1086,
+  "h": 1448,
+  "source": "envoi Nicolas 12/11 (22.jpg)"
+ },
+ "n-stand-3": {
+  "l": 1086,
+  "h": 1448,
+  "source": "envoi Nicolas 12/11 (23.jpg)"
+ },
+ "n-stand-4": {
+  "l": 1197,
+  "h": 1314,
+  "source": "envoi Nicolas 12/11 (24.jpg)"
+ },
+ "n-stand-5": {
+  "l": 1086,
+  "h": 1448,
+  "source": "envoi Nicolas 12/11 (25.jpg)"
+ },
+ "n-stand-6": {
+  "l": 1086,
+  "h": 1448,
+  "source": "envoi Nicolas 12/11 (26.jpg)"
  }
 }

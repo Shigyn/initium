@@ -78,5 +78,10 @@ export const NEWS = [
       en: ['A wonderful recognition for the whole team, and for what we stand for: hybrid furniture, as comfortable outdoors as it is indoors.', 'Thank you to the jury, to the fair organisers and to everyone who came to discover our pieces.'],
     },
     photos: ['n-affiche', 'n-podium', 'n-trophee', 'n-podium-large', 'n-salle'],
+    // Photos du stand envoyees par Nicolas le 12/11 : la premiere en large, les autres en grille.
+    stand: {
+      titre: { fr: 'Notre stand au salon', nl: 'Onze stand op de beurs', en: 'Our stand at the fair' },
+      photos: ['n-stand-1', 'n-stand-2', 'n-stand-3', 'n-stand-4', 'n-stand-5', 'n-stand-6'],
+    },
   },
 ];
