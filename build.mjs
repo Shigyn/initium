@@ -199,7 +199,8 @@ const COLL = {
     erreur: 'The collection could not be loaded. Please reload the page in a moment.' },
 };
 
-/* ---------- les univers et les pieces (noms descriptifs en attendant les vrais) ---------- */
+/* ---------- les univers et les pieces (noms descriptifs en attendant les vrais) ----------
+   Olivier, 12/11 : les noms de modeles (Galet, Olwen, Lungo, BOHO...) ne se traduisent JAMAIS, dans aucune langue. */
 const N = (fr, nl, en) => ({ fr, nl, en });
 const UNIVERS = [
   { cle: 'exterieur', couverture: 'v03',
@@ -216,7 +217,7 @@ const UNIVERS = [
       ['v18', N('Canapé modulable gris perle', 'Modulaire sofa parelgrijs', 'Pearl grey modular sofa')],
       ['v26', N('Ensemble courbe et tables rondes', 'Gebogen set met ronde tafels', 'Curved set with round tables')],
       ['v09', N('Table à manger et fauteuils tressés', 'Eettafel met gevlochten stoelen', 'Dining table and woven chairs')],
-      ['v19', N('Poufs galets bouclette', 'Kiezelpoefs in bouclé', 'Bouclé pebble poufs')],
+      ['v19', N('Poufs Galet en bouclette', 'Galet poefs in bouclé', 'Galet bouclé poufs')],
       ['v34', N('Canapé bouclette et table teck', 'Bouclé sofa en teaktafel', 'Bouclé sofa and teak table')],
       ['v21', N('Canapé d’angle terrasse', 'Hoeksofa terras', 'Terrace corner sofa')],
       ['v39', N('Table de jardin tressée', 'Gevlochten tuintafel', 'Woven garden table')],
