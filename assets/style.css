@@ -350,16 +350,30 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
 .agent-siege .lien-maj { align-self: flex-start; margin-top: auto; padding-top: 14px }
 
 /* Distinction Brussels Balthazar 2026 (accueil, 2026-11-10) */
-.distinction { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 6vw, 110px); align-items: center; padding: clamp(60px, 9vw, 140px) var(--marge); background: var(--sable) }
+.distinction { position: relative; overflow: hidden; background: var(--sable) }
+.evts-piste { display: flex; transition: transform .7s cubic-bezier(.2, .7, .2, 1); touch-action: pan-y }
+.evt { flex: 0 0 100%; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 6vw, 110px); align-items: center; padding: clamp(60px, 9vw, 140px) calc(var(--marge) + 40px) }
 .distinction-affiche { margin: 0; max-width: 440px; justify-self: end; width: 100% }
+.distinction-affiche.paysage { max-width: 620px }
+.evts-fleche { position: absolute; top: 50%; z-index: 2; display: grid; place-items: center; width: 56px; height: 56px; padding: 0; border: 1px solid rgba(18, 20, 19, .35); border-radius: 50%; background: rgba(255, 255, 255, .55); color: var(--noir); cursor: pointer; transform: translateY(-50%); transition: background-color .25s, border-color .25s }
+.evts-fleche:hover { background: #fff; border-color: var(--noir) }
+.evts-fleche:focus-visible { outline: 2px solid var(--noir); outline-offset: 3px }
+.evts-fleche[hidden] { display: none }
+.evts-fleche svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round }
+.evts-suiv { right: clamp(12px, 2.5vw, 40px) }
+.evts-prec { left: clamp(12px, 2.5vw, 40px) }
 .distinction-affiche img { display: block; width: 100%; height: auto; box-shadow: 0 30px 60px -36px rgba(18, 20, 19, .55) }
 .distinction-eyebrow { margin: 0 0 18px; text-transform: uppercase; letter-spacing: .14em; font-size: 12px; font-weight: 500; color: var(--teck) }
 .distinction h2 { margin: 0 0 22px; font-size: clamp(26px, 3vw, 46px); font-weight: 300; line-height: 1.15; max-width: 18ch; text-wrap: balance }
 .distinction-texte > p:not(.distinction-eyebrow) { max-width: 52ch; color: var(--gris); margin: 0 }
 .distinction-liens { display: flex; flex-wrap: wrap; gap: 18px 34px; margin-top: 34px }
 @media (max-width: 760px) {
-  .distinction { grid-template-columns: minmax(0, 1fr) }
+  .evt { grid-template-columns: minmax(0, 1fr); padding: 60px var(--marge) 110px }
   .distinction-affiche { justify-self: center; max-width: 320px }
+  .distinction-affiche.paysage { max-width: 100% }
+  .evts-fleche { top: auto; bottom: 34px; transform: none; width: 48px; height: 48px }
+  .evts-suiv { right: var(--marge) }
+  .evts-prec { left: var(--marge) }
 }
 
 /* Telechargements (2026-11-10) */

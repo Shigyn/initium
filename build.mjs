@@ -275,7 +275,7 @@ ${alternates}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${r}assets/style.css?v=18">
+<link rel="stylesheet" href="${r}assets/style.css?v=20">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 </head>
 <body class="${clair ? 'entete-clair' : ''}">
@@ -317,7 +317,7 @@ ${corps(r, lien)}
     ga4Id: ''
   };
 </script>
-<script src="${r}assets/site.js?v=3" defer></script>
+<script src="${r}assets/site.js?v=5" defer></script>
 ${apres}
 <script src="${r}mesure.js" defer></script>
 </body>
@@ -350,17 +350,33 @@ for (const lg of LANGUES) {
   <a class="fleche" href="#distinction" aria-label="${t.decouvrir}"><span></span></a>
 </section>
 
-<section class="distinction" id="distinction">
-  <figure class="distinction-affiche reveler">${img(r, 'n-affiche', 'Love at first sight, Laureate Brussels Balthazar 2026')}</figure>
-  <div class="distinction-texte reveler">
-    <p class="distinction-eyebrow">${X[lg].distEyebrow}</p>
-    <h2>${X[lg].distTitre}</h2>
-    <p>${X[lg].distTexte}</p>
-    <div class="distinction-liens">
-      <a class="lien-maj" href="${lien(lg, 'collection')}#olwen">${X[lg].decouvrirOlwen}</a>
-      <a class="lien-maj" href="${lien(lg, 'news')}#balthazar-2026">${X[lg].lireNews}</a>
+<section class="distinction" id="distinction" data-evenements>
+  <!-- Nicolas, 12/11 : une fleche a droite pour voir les autres evenements (les articles News suivants). -->
+  <div class="evts-piste" data-piste>
+    <div class="evt">
+      <figure class="distinction-affiche reveler">${img(r, 'n-affiche', 'Love at first sight, Laureate Brussels Balthazar 2026')}</figure>
+      <div class="distinction-texte reveler">
+        <p class="distinction-eyebrow">${X[lg].distEyebrow}</p>
+        <h2>${X[lg].distTitre}</h2>
+        <p>${X[lg].distTexte}</p>
+        <div class="distinction-liens">
+          <a class="lien-maj" href="${lien(lg, 'collection')}#olwen">${X[lg].decouvrirOlwen}</a>
+          <a class="lien-maj" href="${lien(lg, 'news')}#balthazar-2026">${X[lg].lireNews}</a>
+        </div>
+      </div>
     </div>
+    ${NEWS.filter((a) => a.id !== 'balthazar-2026').map((a) => `<div class="evt">
+      <figure class="distinction-affiche${PHOTOS[a.photos[0]].l > PHOTOS[a.photos[0]].h ? ' paysage' : ''}">${img(r, a.photos[0], a.titre[lg])}</figure>
+      <div class="distinction-texte">
+        <p class="distinction-eyebrow">${a.etiquette[lg]} · <time datetime="${a.date}">${dateLongue(a.date)}</time></p>
+        <h2>${a.titre[lg]}</h2>
+        <p>${a.chapo[lg]}</p>
+        <div class="distinction-liens"><a class="lien-maj" href="${lien(lg, 'news')}#${a.id}">${X[lg].lireNews}</a></div>
+      </div>
+    </div>`).join('\n    ')}
   </div>
+  ${NEWS.length > 1 ? `<button type="button" class="evts-fleche evts-prec" data-prec aria-label="${X[lg].evtPrec}" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button type="button" class="evts-fleche evts-suiv" data-suiv aria-label="${X[lg].evtSuiv}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>` : ''}
 </section>
 
 <section class="intro" id="intro">
@@ -707,7 +723,7 @@ fs.writeFileSync(path.join(ICI, 'gestion', 'index.html'), `<!DOCTYPE html>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=18"><link rel="stylesheet" href="../assets/gestion.css?v=2">
+<link rel="stylesheet" href="../assets/style.css?v=20"><link rel="stylesheet" href="../assets/gestion.css?v=2">
 </head><body class="gestion">
 <div id="app"></div>
 <script>window.LOCWEB_CONFIG = { supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co', supabaseAnonKey: 'sb_publishable_rpLrUo4Cqnfl8zSohDqO0A_Q5Vkj2Hk' };</script>

@@ -43,6 +43,32 @@
     }, 6000);
   }
 
+  /* Les evenements de l'accueil : la fleche de droite passe au suivant (et revient au premier a la fin), on peut aussi glisser au doigt. */
+  // Glissement en CSS (transform) : le defilement doux des navigateurs ne repond pas toujours.
+  document.querySelectorAll('[data-evenements]').forEach(function (s) {
+    var piste = s.querySelector('[data-piste]'), prec = s.querySelector('[data-prec]'), suiv = s.querySelector('[data-suiv]');
+    if (!piste || !prec || !suiv) return;
+    var diapos = piste.children, n = diapos.length, i = 0, x0 = null;
+    function aller(j) {
+      i = (j + n) % n;
+      piste.style.transform = 'translateX(' + (-100 * i) + '%)';
+      prec.hidden = i === 0;
+      // Les evenements caches ne se lisent pas et ne prennent pas le focus.
+      for (var k = 0; k < n; k++) { if (k === i) diapos[k].removeAttribute('inert'); else diapos[k].setAttribute('inert', ''); }
+      diapos[i].querySelectorAll('.reveler').forEach(function (el) { el.classList.add('vu'); });
+    }
+    prec.addEventListener('click', function () { aller(i - 1); });
+    suiv.addEventListener('click', function () { aller(i + 1); });
+    // Au doigt : glisser vers la gauche ou la droite.
+    piste.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    piste.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 50) aller(i + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+    aller(0);
+  });
+
   /* apparitions */
   var elements = document.querySelectorAll('.reveler');
   if ('IntersectionObserver' in window && !calme) {
