@@ -275,7 +275,7 @@ ${alternates}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${r}assets/style.css?v=17">
+<link rel="stylesheet" href="${r}assets/style.css?v=18">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 </head>
 <body class="${clair ? 'entete-clair' : ''}">
@@ -533,13 +533,13 @@ for (const lg of LANGUES) {
   }]);
 
   /* NEWS (Olivier, 10/11) : articles de _source/nouveautes.mjs, du plus recent au plus ancien */
-  const dateLongue = (d) => new Intl.DateTimeFormat({ fr: 'fr-BE', nl: 'nl-BE', en: 'en-GB' }[lg], { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(d + 'T12:00:00Z'));
+  const dateLongue = (d) => new Intl.DateTimeFormat({ fr: 'fr-BE', nl: 'nl-BE', en: 'en-GB' }[lg], d.length === 7 ? { month: 'long', year: 'numeric' } : { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date((d.length === 7 ? d + '-15' : d) + 'T12:00:00Z'));
   pages.push([lg, 'news', {
     titre: `${X[lg].news} — ${NOM}`,
     description: X[lg].newsIntro,
     clair: true,
     jsonld: NEWS.map((a) => ({ '@context': 'https://schema.org', '@type': 'NewsArticle', headline: a.titre[lg], datePublished: a.date, description: a.chapo[lg],
-      image: [...a.photos, ...(a.stand ? a.stand.photos : [])].map((p) => `${URL_SITE}photos/${p}.webp`), publisher: { '@type': 'Organization', name: NOM }, inLanguage: lg })),
+      image: [...a.photos, ...(a.galerie || [])].map((p) => `${URL_SITE}photos/${p}.webp`), publisher: { '@type': 'Organization', name: NOM }, inLanguage: lg })),
     corps: (r, lien) => `
 <section class="page-texte">
   <h1>${X[lg].news}</h1>
@@ -554,10 +554,7 @@ ${NEWS.map((a) => `<article class="article" id="${a.id}">
     ${a.id === 'balthazar-2026' ? `<a class="lien-maj" href="${lien(lg, 'collection')}#olwen">${X[lg].decouvrirOlwen}</a>` : ''}
   </div>
   <div class="article-photos">${a.photos.map((p, i) => `<figure class="${i === 0 ? 'article-une' : ''}">${img(r, p, i === 0 ? a.titre[lg] : '', { grand: i < 2 })}</figure>`).join('')}</div>
-  ${a.stand ? `<section class="article-stand">
-    <h3>${a.stand.titre[lg]}</h3>
-    <div class="article-stand-grille">${a.stand.photos.map((p, i) => `<figure class="${i === 0 ? 'stand-large' : ''}">${img(r, p, i === 0 ? a.stand.titre[lg] : '', { grand: i === 0 })}</figure>`).join('')}</div>
-  </section>` : ''}
+  ${a.galerie ? `<div class="article-galerie">${a.galerie.map((p) => `<figure>${img(r, p, '')}</figure>`).join('')}</div>` : ''}
 </article>`).join('\n')}`,
   }]);
 
@@ -710,7 +707,7 @@ fs.writeFileSync(path.join(ICI, 'gestion', 'index.html'), `<!DOCTYPE html>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=17"><link rel="stylesheet" href="../assets/gestion.css?v=2">
+<link rel="stylesheet" href="../assets/style.css?v=18"><link rel="stylesheet" href="../assets/gestion.css?v=2">
 </head><body class="gestion">
 <div id="app"></div>
 <script>window.LOCWEB_CONFIG = { supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co', supabaseAnonKey: 'sb_publishable_rpLrUo4Cqnfl8zSohDqO0A_Q5Vkj2Hk' };</script>

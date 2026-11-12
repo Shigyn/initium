@@ -57,7 +57,7 @@ export const FICHE = [
   ['construction', { fr: 'Construction : un confort durable', nl: 'Constructie: duurzaam comfort', en: 'Construction: lasting comfort' }],
 ];
 
-// Les articles, du plus recent au plus ancien.
+// Les articles, du plus recent au plus ancien. date : 'AAAA-MM-JJ', ou 'AAAA-MM' si le jour n'est pas connu.
 export const NEWS = [
   {
     id: 'balthazar-2026', date: '2026-11-10',
@@ -78,10 +78,27 @@ export const NEWS = [
       en: ['A wonderful recognition for the whole team, and for what we stand for: hybrid furniture, as comfortable outdoors as it is indoors.', 'Thank you to the jury, to the fair organisers and to everyone who came to discover our pieces.'],
     },
     photos: ['n-affiche', 'n-podium', 'n-trophee', 'n-podium-large', 'n-salle'],
-    // Photos du stand envoyees par Nicolas le 12/11 : la premiere en large, les autres en grille.
-    stand: {
-      titre: { fr: 'Notre stand au salon', nl: 'Onze stand op de beurs', en: 'Our stand at the fair' },
-      photos: ['n-stand-1', 'n-stand-2', 'n-stand-3', 'n-stand-4', 'n-stand-5', 'n-stand-6'],
+  },
+  {
+    // Nicolas, 12/11 : « participation au salon du meuble Heysel novembre 2026 », avec les photos du stand.
+    id: 'salon-meuble-2026', date: '2026-11',
+    etiquette: { fr: 'Salon', nl: 'Beurs', en: 'Fair' },
+    titre: {
+      fr: 'Participation au Salon du Meuble de Bruxelles',
+      nl: 'Deelname aan de Meubelbeurs Brussel',
+      en: 'At the Brussels Furniture Fair',
     },
+    chapo: {
+      fr: 'Initium³ était présent au Salon du Meuble de Bruxelles, au Heysel, en novembre 2026.',
+      nl: 'Initium³ was aanwezig op de Meubelbeurs Brussel, op de Heizel, in november 2026.',
+      en: 'Initium³ exhibited at the Brussels Furniture Fair, at Heysel, in November 2026.',
+    },
+    texte: {
+      fr: ['C’est sur ce salon que notre canapé Olwen a été distingué aux Brussels Balthazar 2026.'],
+      nl: ['Op deze beurs werd onze sofa Olwen bekroond op de Brussels Balthazar 2026.'],
+      en: ['It was at this fair that our Olwen sofa received an award at the Brussels Balthazar 2026.'],
+    },
+    photos: ['n-stand-1'],
+    galerie: ['n-stand-2', 'n-stand-3', 'n-stand-4', 'n-stand-5', 'n-stand-6'],
   },
 ];
