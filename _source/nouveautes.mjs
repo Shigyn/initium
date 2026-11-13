@@ -77,7 +77,7 @@ export const NEWS = [
       nl: ['Een mooie erkenning voor het hele team, en voor waar wij voor staan: hybride meubilair, even comfortabel buiten als binnen.', 'Dank aan de jury, aan de organisatoren van de beurs en aan iedereen die onze stukken kwam ontdekken.'],
       en: ['A wonderful recognition for the whole team, and for what we stand for: hybrid furniture, as comfortable outdoors as it is indoors.', 'Thank you to the jury, to the fair organisers and to everyone who came to discover our pieces.'],
     },
-    photos: ['n-affiche', 'n-podium', 'n-trophee', 'n-podium-large', 'n-salle'],
+    photos: ['n-affiche', 'n-podium', 'n-trophee', 'n-salle'], // n-podium-large retiree le 13/11 (Nicolas)
   },
   {
     // Nicolas, 12/11 : « participation au salon du meuble Heysel novembre 2026 », avec les photos du stand.
