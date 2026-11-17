@@ -52,6 +52,10 @@
   }
   function grille() {
     var l = produits.filter(function (p) { return !rubrique || p.rubrique === rubrique; });
+    // « Tout » : range par rubrique (un nouveau luminaire va avec les luminaires, pas a la fin).
+    var rubs = [];
+    produits.forEach(function (p) { if (rubs.indexOf(p.rubrique) === -1) rubs.push(p.rubrique); });
+    l = l.map(function (p, i) { return [p, i]; }).sort(function (a, b) { return rubs.indexOf(a[0].rubrique) - rubs.indexOf(b[0].rubrique) || a[1] - b[1]; }).map(function (x) { return x[0]; });
     zone.querySelector('[data-grille]').innerHTML = l.map(function (p) {
       return '<a class="col-carte" href="#p-' + esc(p.id) + '" data-fiche="' + esc(p.id) + '">' +
         '<span class="col-photo">' + (p.photos[0] ? '<img src="' + esc(p.photos[0]) + '" alt="' + esc(p.nom) + '" loading="lazy" decoding="async">' : '') + '</span>' +

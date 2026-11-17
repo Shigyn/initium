@@ -131,14 +131,21 @@
   function vueCatalogue() {
     var q = recherche.toLowerCase(), rs = rubriques();
     var l = donnees.produits.filter(function (p) { return (!rubriqueVue || (rubriqueVue === '__sans' ? !p.rubrique : p.rubrique === rubriqueVue)) && (!q || (p.nom + ' ' + p.reference + ' ' + p.details).toLowerCase().indexOf(q) !== -1); });
+    // Range par rubrique (comme le site), puis dans l'ordre choisi avec les fleches.
+    l = l.map(function (p, i) { return [p, i]; }).sort(function (a, b) {
+      var ra = rs.indexOf(a[0].rubrique), rb = rs.indexOf(b[0].rubrique);
+      return (ra < 0 ? 999 : ra) - (rb < 0 ? 999 : rb) || a[1] - b[1];
+    }).map(function (x) { return x[0]; });
     return '<div class="g-barre"><input type="search" class="pro-recherche" placeholder="Rechercher un produit…" value="' + esc(recherche) + '" data-recherche><button type="button" class="bouton" data-produit="">+ Nouveau produit</button></div>' +
       '<div class="g-rubriques"><button type="button" data-rub=""' + (rubriqueVue ? '' : ' class="on"') + '>Toutes (' + donnees.produits.length + ')</button>' +
         rs.map(function (r) { var n = donnees.produits.filter(function (p) { return p.rubrique === r; }).length; return '<button type="button" data-rub="' + esc(r) + '"' + (rubriqueVue === r ? ' class="on"' : '') + '>' + esc(r) + ' (' + n + ')</button>'; }).join('') +
         (donnees.produits.some(function (p) { return !p.rubrique; }) ? '<button type="button" data-rub="__sans"' + (rubriqueVue === '__sans' ? ' class="on"' : '') + '>Sans rubrique</button>' : '') + '</div>' +
       '<div class="g-produits">' + l.map(function (p) {
-        return '<button type="button" class="g-produit' + (p.visible ? '' : ' g-masque') + '" data-produit="' + p.id + '">' +
+        return '<div class="g-ligne"><button type="button" class="g-produit' + (p.visible ? '' : ' g-masque') + '" data-produit="' + p.id + '">' +
           '<span class="g-vignette">' + (p.urls[0] ? '<img src="' + esc(p.urls[0]) + '" alt="" loading="lazy">' : '') + '</span>' +
-          '<span class="g-produit-txt"><b>' + esc(p.nom) + '</b><small>' + (p.prix_public_cents != null ? euros(p.prix_public_cents) + ' · ' : '') + 'pro ' + euros(p.prix_pro_cents) + (p.visible ? '' : ' · masqué') + '</small></span></button>';
+          '<span class="g-produit-txt"><b>' + esc(p.nom) + '</b><small>' + (p.rubrique ? esc(p.rubrique) + ' · ' : '') + (p.prix_public_cents != null ? euros(p.prix_public_cents) + ' · ' : '') + 'pro ' + euros(p.prix_pro_cents) + (p.visible ? '' : ' · masqué') + '</small></span></button>' +
+          '<span class="g-fleches"><button type="button" data-deplacer="' + p.id + '" data-sens="-1" aria-label="Monter ' + esc(p.nom) + '" title="Monter dans sa rubrique">▲</button>' +
+          '<button type="button" data-deplacer="' + p.id + '" data-sens="1" aria-label="Descendre ' + esc(p.nom) + '" title="Descendre dans sa rubrique">▼</button></span></div>';
       }).join('') + '</div>';
   }
 
@@ -243,6 +250,11 @@
     if ((b = t.closest('[data-reactiver]'))) { appel('acces_reactiver', { id: b.getAttribute('data-reactiver') }).then(charger); return; }
     if (t.closest('[data-creer]')) { creerAcces(); return; }
     if ((b = t.closest('[data-rub]'))) { rubriqueVue = b.getAttribute('data-rub'); dessiner(); return; }
+    if ((b = t.closest('[data-deplacer]'))) {
+      b.disabled = true;
+      appel('produit_deplacer', { id: b.getAttribute('data-deplacer'), sens: +b.getAttribute('data-sens') }).then(charger).catch(function (x) { alert(x.message); b.disabled = false; });
+      return;
+    }
     if ((b = t.closest('[data-produit]'))) { editer(b.getAttribute('data-produit')); return; }
   });
   app.addEventListener('change', function (e) {

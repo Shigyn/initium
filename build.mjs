@@ -469,7 +469,7 @@ for (const lg of LANGUES) {
     description: t.collectionIntro,
     apres: `<script>window.IN_COLLECTION = ${JSON.stringify({ langue: lg, titre: t.univers.collection, badge: X[lg].badge, ...COLL[lg] })};</script>
 <script src="../${PREFIXE[lg] ? '../' : ''}assets/pro-mots.js?v=4" defer></script>
-<script src="../${PREFIXE[lg] ? '../' : ''}assets/collection.js?v=2" defer></script>`,
+<script src="../${PREFIXE[lg] ? '../' : ''}assets/collection.js?v=3" defer></script>`,
     corps: (r, lien) => `
 <section class="tete-univers">
   <div class="tete-univers-image">${img(r, 'v26', t.collectionTitre, { grand: true, eager: true })}</div>
@@ -727,11 +727,11 @@ fs.writeFileSync(path.join(ICI, 'gestion', 'index.html'), `<!DOCTYPE html>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=23"><link rel="stylesheet" href="../assets/gestion.css?v=2">
+<link rel="stylesheet" href="../assets/style.css?v=23"><link rel="stylesheet" href="../assets/gestion.css?v=3">
 </head><body class="gestion">
 <div id="app"></div>
 <script>window.LOCWEB_CONFIG = { supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co', supabaseAnonKey: 'sb_publishable_rpLrUo4Cqnfl8zSohDqO0A_Q5Vkj2Hk' };</script>
-<script src="../assets/gestion.js?v=9" defer></script>
+<script src="../assets/gestion.js?v=10" defer></script>
 </body></html>
 `);
 fs.writeFileSync(path.join(ICI, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /gestion/\n\nSitemap: ${URL_SITE}sitemap.xml\n`);

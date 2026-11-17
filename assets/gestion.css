@@ -38,6 +38,11 @@ body.gestion { background: var(--sable) }
 .g-produits { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)) }
 .g-produit { display: grid; grid-template-columns: 64px 1fr; gap: 12px; align-items: center; text-align: left; background: #fff; border: 1px solid transparent; padding: 10px; font: inherit; cursor: pointer }
 .g-produit:hover { border-color: var(--pierre) }
+.g-ligne { display: grid; grid-template-columns: 1fr auto; background: #fff }
+.g-fleches { display: grid; grid-template-rows: 1fr 1fr; border-left: 1px solid #f0ece5 }
+.g-fleches button { width: 38px; border: 0; background: none; color: var(--gris); font-size: 11px; cursor: pointer }
+.g-fleches button:hover { background: #f6f3ee; color: var(--noir) }
+.g-fleches button:disabled { opacity: .35; cursor: wait }
 .g-masque { opacity: .5 }
 .g-vignette { width: 64px; height: 64px; background: #fff; border: 1px solid #f0ece5; display: grid; place-items: center; overflow: hidden }
 .g-vignette img { width: 100%; height: 100%; object-fit: contain }
