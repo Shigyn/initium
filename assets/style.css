@@ -66,11 +66,11 @@ p { margin: 0 0 1.1em }
 .burger span { display: block; width: 30px; height: 1px; background: currentColor; transition: transform .5s var(--courbe) }
 .burger[aria-expanded="true"] span:first-child { transform: translateY(4px) rotate(45deg) }
 .burger[aria-expanded="true"] span:last-child { transform: translateY(-4px) rotate(-45deg) }
-.panneau { position: fixed; inset: 0; z-index: 40; background: var(--blanc); display: grid; place-content: center; gap: 44px; text-align: center }
+.panneau { position: fixed; inset: 0; z-index: 40; background: var(--blanc); display: grid; place-content: safe center; gap: clamp(24px, 5vh, 44px); text-align: center; padding: 110px 20px 40px; overflow-y: auto }
 .panneau[hidden] { display: none }
-.panneau-grands { display: grid; gap: 18px }
-.panneau-grands a { font-size: clamp(30px, 5vw, 56px); font-weight: 300; letter-spacing: .12em }
-.panneau-petits { display: grid; gap: 14px }
+.panneau-grands { display: grid; gap: clamp(8px, 1.8vh, 18px) }
+.panneau-grands a { font-size: clamp(24px, min(4vw, 5vh), 46px); font-weight: 300; letter-spacing: .12em }
+.panneau-petits { display: grid; gap: clamp(8px, 1.4vh, 14px) }
 .panneau-petits a { font-size: 14px; color: var(--gris) }
 body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shadow: none }
 @media (max-width: 860px) {
@@ -147,6 +147,8 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
 .tete-univers-image { position: absolute; inset: 0 }
 .tete-univers-image img { width: 100%; height: 100%; object-fit: cover }
 .tete-univers-voile { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, .35)) }
+/* Photo tres claire (le showroom, 17/11) : voile plus marque pour garder le menu et le titre lisibles. */
+.tete-univers-claire .tete-univers-voile { background: linear-gradient(180deg, rgba(0, 0, 0, .5), rgba(0, 0, 0, .12) 45%, rgba(0, 0, 0, .45)) }
 .tete-univers h1 { position: relative; padding: 0 var(--marge) clamp(44px, 6vw, 84px); font-size: clamp(32px, 4.6vw, 68px); font-weight: 300 }
 .univers-intro { padding: clamp(50px, 7vw, 100px) var(--marge) clamp(36px, 4vw, 60px) }
 .univers-intro p { max-width: 62ch; font-size: clamp(17px, 1.4vw, 20px); margin: 0 }
@@ -223,7 +225,7 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
 .pro-grille-produits { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); gap: clamp(28px, 3vw, 48px) var(--gouttiere) }
 .pro-fiche { display: grid; gap: 10px; align-content: start }
 .pro-photo { aspect-ratio: 4 / 3; background: #fff; display: grid; place-items: center; overflow: hidden; border: 1px solid #f0ece5 }
-.pro-photo img { width: 100%; height: 100%; object-fit: contain }
+.pro-photo img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain }
 .pro-vignettes { display: flex; gap: 6px; flex-wrap: wrap }
 .pro-vignettes button { width: 46px; height: 46px; padding: 0; border: 1px solid var(--pierre); background: #fff; cursor: pointer }
 .pro-vignettes button.on { border-color: var(--noir) }
@@ -294,7 +296,7 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
 .col-carte { position: relative; display: block; text-decoration: none; padding: 12px 40px 16px 12px; border: 1px solid #f1ede6; background: #fff; transition: border-color .5s var(--courbe), box-shadow .5s var(--courbe) }
 .col-carte:hover { border-color: var(--pierre); box-shadow: 0 14px 30px -24px rgba(18, 20, 19, .35) }
 .col-photo { display: grid; place-items: center; aspect-ratio: 1; margin-bottom: 14px; overflow: hidden; background: #fff }
-.col-photo img { width: 88%; height: 88%; object-fit: contain; transition: transform 1.2s var(--courbe) }
+.col-photo img { width: auto; height: auto; max-width: 88%; max-height: 88%; object-fit: contain; transition: transform 1.2s var(--courbe) }
 .col-carte:hover .col-photo img { transform: scale(1.05) }
 .col-nom { display: block; text-transform: uppercase; letter-spacing: .08em; font-size: 12.5px; font-weight: 500; line-height: 1.45 }
 .col-sous { display: block; margin-top: 4px; font-size: 13px; color: var(--gris) }
@@ -308,7 +310,7 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
 .col-fiche-corps { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) }
 .col-galerie { display: grid; gap: 12px; align-content: start; padding: clamp(20px, 3vw, 44px); border-right: 1px solid var(--pierre) }
 .col-galerie-grande { display: grid; place-items: center; aspect-ratio: 1 }
-.col-galerie-grande img { width: 100%; height: 100%; object-fit: contain }
+.col-galerie-grande img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain }
 .col-vignettes { display: flex; flex-wrap: wrap; gap: 8px }
 .col-vignettes button { width: 58px; height: 58px; padding: 0; border: 1px solid var(--pierre); background: #fff; cursor: pointer }
 .col-vignettes button[aria-pressed="true"] { border-color: var(--noir) }

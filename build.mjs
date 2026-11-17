@@ -275,7 +275,7 @@ ${alternates}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${r}assets/style.css?v=22">
+<link rel="stylesheet" href="${r}assets/style.css?v=23">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 </head>
 <body class="${clair ? 'entete-clair' : ''}">
@@ -496,8 +496,8 @@ for (const lg of LANGUES) {
     titre: `${t.showroomTitre} — ${NOM}`,
     description: t.showroomTexte,
     corps: (r, lien) => `
-<section class="tete-univers">
-  <div class="tete-univers-image">${img(r, 'v16', t.showroomTitre, { grand: true, eager: true })}</div>
+<section class="tete-univers tete-univers-claire">
+  <div class="tete-univers-image">${img(r, 'showroom', t.showroomTitre, { grand: true, eager: true })}</div>
   <div class="tete-univers-voile"></div>
   <h1>${t.showroomTitre}</h1>
 </section>
@@ -727,7 +727,7 @@ fs.writeFileSync(path.join(ICI, 'gestion', 'index.html'), `<!DOCTYPE html>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=22"><link rel="stylesheet" href="../assets/gestion.css?v=2">
+<link rel="stylesheet" href="../assets/style.css?v=23"><link rel="stylesheet" href="../assets/gestion.css?v=2">
 </head><body class="gestion">
 <div id="app"></div>
 <script>window.LOCWEB_CONFIG = { supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co', supabaseAnonKey: 'sb_publishable_rpLrUo4Cqnfl8zSohDqO0A_Q5Vkj2Hk' };</script>
