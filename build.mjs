@@ -275,7 +275,7 @@ ${alternates}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${r}assets/style.css?v=23">
+<link rel="stylesheet" href="${r}assets/style.css?v=24">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 </head>
 <body class="${clair ? 'entete-clair' : ''}">
@@ -358,7 +358,7 @@ for (const lg of LANGUES) {
   </div>
   <div class="evts-piste" data-piste>
     <div class="evt">
-      <figure class="distinction-affiche reveler">${img(r, 'n-affiche', 'Love at first sight, Laureate Brussels Balthazar 2026')}</figure>
+      <figure class="distinction-affiche${PHOTOS['n-affiche'].l > PHOTOS['n-affiche'].h ? ' paysage' : ''} reveler">${img(r, 'n-affiche', 'Nominees Balthazar 2026, Love at first sight, Initium, stand 4-203')}</figure>
       <div class="distinction-texte reveler">
         <p class="distinction-eyebrow">${X[lg].distEyebrow}</p>
         <h3>${X[lg].distTitre}</h3>
@@ -573,7 +573,7 @@ ${NEWS.map((a) => `<article class="article" id="${a.id}">
     ${a.texte[lg].map((p) => `<p>${p}</p>`).join('\n    ')}
     ${a.id === 'balthazar-2026' ? `<a class="lien-maj" href="${lien(lg, 'collection')}#olwen">${X[lg].decouvrirOlwen}</a>` : ''}
   </div>
-  <div class="article-photos">${a.photos.map((p, i) => `<figure class="${i === 0 ? 'article-une' : ''}">${img(r, p, i === 0 ? a.titre[lg] : '', { grand: i < 2 })}</figure>`).join('')}</div>
+  <div class="article-photos${PHOTOS[a.photos[0]].l > PHOTOS[a.photos[0]].h ? ' une-paysage' : ''}">${a.photos.map((p, i) => `<figure class="${i === 0 ? 'article-une' : ''}">${img(r, p, i === 0 ? a.titre[lg] : '', { grand: i < 2 })}</figure>`).join('')}</div>
   ${a.galerie ? `<div class="article-galerie">${a.galerie.map((p) => `<figure>${img(r, p, '')}</figure>`).join('')}</div>` : ''}
 </article>`).join('\n')}`,
   }]);
@@ -727,7 +727,7 @@ fs.writeFileSync(path.join(ICI, 'gestion', 'index.html'), `<!DOCTYPE html>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=23"><link rel="stylesheet" href="../assets/gestion.css?v=3">
+<link rel="stylesheet" href="../assets/style.css?v=24"><link rel="stylesheet" href="../assets/gestion.css?v=3">
 </head><body class="gestion">
 <div id="app"></div>
 <script>window.LOCWEB_CONFIG = { supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co', supabaseAnonKey: 'sb_publishable_rpLrUo4Cqnfl8zSohDqO0A_Q5Vkj2Hk' };</script>

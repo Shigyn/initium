@@ -413,6 +413,9 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
 .article-photos .article-une { aspect-ratio: auto; background: none }
 .article-photos .article-une img { height: auto; object-fit: contain }
 .article-photos .article-une:only-child { grid-column: 1 / -1 }
+/* Premiere photo en paysage (bandeau Balthazar, 20/11) : sur toute la largeur, les autres en dessous sur 3 colonnes. */
+.article-photos.une-paysage { grid-template-columns: repeat(3, minmax(0, 1fr)) }
+.article-photos.une-paysage .article-une { grid-column: 1 / -1 }
 .article-galerie { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(10px, 1.4vw, 20px) }
 .article-galerie figure { margin: 0; aspect-ratio: 3 / 4; overflow: hidden; background: var(--sable) }
 .article-galerie img { width: 100%; height: 100%; object-fit: cover; display: block }
