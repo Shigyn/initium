@@ -23,6 +23,7 @@ const ICI = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)
 // Domaine nu en adresse principale (31/10) : le certificat GitHub pour www n'a jamais ete delivre.
 const URL_SITE = 'https://initium3.com/';
 const NOM = 'Initium³';
+const TEL = '+32 483 71 26 85', TEL_LIEN = '+32483712685', EMAIL = 'initium3outdoor@gmail.com';
 const PHOTOS = JSON.parse(fs.readFileSync(path.join(ICI, '_source', 'photos.json'), 'utf8'));
 const LANGUES = ['fr', 'nl', 'en'];
 const PREFIXE = { fr: '', nl: 'nl/', en: 'en/' };
@@ -85,7 +86,7 @@ const T = {
     activites: ['Architecte', 'Décorateur', 'Revendeur', 'Hôtel, restaurant', 'Autre'], message: 'Message', envoyer: 'Envoyer la demande',
     formOk: 'Merci, votre message est bien envoyé. Nous revenons vers vous rapidement.', formErreur: 'Le message n’a pas pu partir. Réessayez dans un instant.',
     contactTitre: 'Parlons de votre projet', contactTexte: 'Une pièce vous intéresse, vous aménagez une terrasse, un hôtel ou un restaurant : écrivez-nous, nous revenons vers vous rapidement.',
-    vousEtes: 'Vous êtes', particulier: 'Particulier', professionnel: 'Professionnel', suivre: 'Suivre Initium³ sur Facebook',
+    vousEtes: 'Vous êtes', particulier: 'Particulier', professionnel: 'Professionnel', suivre: 'Suivre Initium³ sur Facebook', direct: 'Nous joindre directement',
     infosPiece: 'Bonjour, je souhaite des informations sur : ',
   },
   nl: {
@@ -122,7 +123,7 @@ const T = {
     activites: ['Architect', 'Decorateur', 'Verdeler', 'Hotel, restaurant', 'Andere'], message: 'Bericht', envoyer: 'Aanvraag versturen',
     formOk: 'Bedankt, uw bericht is verstuurd. Wij nemen snel contact met u op.', formErreur: 'Het bericht kon niet worden verstuurd. Probeer het zo meteen opnieuw.',
     contactTitre: 'Laten we over uw project praten', contactTexte: 'Heeft u interesse in een stuk, richt u een terras, hotel of restaurant in? Schrijf ons, wij nemen snel contact met u op.',
-    vousEtes: 'U bent', particulier: 'Particulier', professionnel: 'Professional', suivre: 'Volg Initium³ op Facebook',
+    vousEtes: 'U bent', particulier: 'Particulier', professionnel: 'Professional', suivre: 'Volg Initium³ op Facebook', direct: 'Rechtstreeks contact',
     infosPiece: 'Goedendag, ik wens informatie over: ',
   },
   en: {
@@ -159,7 +160,7 @@ const T = {
     activites: ['Architect', 'Interior designer', 'Reseller', 'Hotel, restaurant', 'Other'], message: 'Message', envoyer: 'Send request',
     formOk: 'Thank you, your message has been sent. We will get back to you shortly.', formErreur: 'Your message could not be sent. Please try again in a moment.',
     contactTitre: 'Let’s talk about your project', contactTexte: 'Interested in a piece, furnishing a terrace, a hotel or a restaurant? Write to us and we will get back to you quickly.',
-    vousEtes: 'You are', particulier: 'Private customer', professionnel: 'Professional', suivre: 'Follow Initium³ on Facebook',
+    vousEtes: 'You are', particulier: 'Private customer', professionnel: 'Professional', suivre: 'Follow Initium³ on Facebook', direct: 'Reach us directly',
     infosPiece: 'Hello, I would like information about: ',
   },
 };
@@ -275,7 +276,7 @@ ${alternates}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${r}assets/style.css?v=24">
+<link rel="stylesheet" href="${r}assets/style.css?v=25">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 </head>
 <body class="${clair ? 'entete-clair' : ''}">
@@ -342,7 +343,7 @@ for (const lg of LANGUES) {
     description: t.descSite,
     jsonld: [{ '@context': 'https://schema.org', '@type': 'FurnitureStore', name: NOM, alternateName: ['Initium3', 'Outlet Design In Out'],
       url: URL_SITE + PREFIXE[lg], image: `${URL_SITE}photos/v03.webp`, areaServed: 'BE', award: 'Brussels Balthazar 2026, 3e place, catégorie Love at first sight (canapé Olwen)',
-      address: { '@type': 'PostalAddress', streetAddress: 'Bergensesteenweg 456', postalCode: '1600', addressLocality: 'Sint-Pieters-Leeuw', addressCountry: 'BE' }, openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '11:00', closes: '18:00' }], sameAs: ['https://www.facebook.com/profile.php?id=61589969791042'] }],
+      address: { '@type': 'PostalAddress', streetAddress: 'Bergensesteenweg 456', postalCode: '1600', addressLocality: 'Sint-Pieters-Leeuw', addressCountry: 'BE' }, telephone: TEL_LIEN, email: EMAIL, openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '11:00', closes: '18:00' }], sameAs: ['https://www.facebook.com/profile.php?id=61589969791042'] }],
     corps: (r, lien) => `
 <section class="ouverture" data-ouverture>
   ${['v03', 'v24', 'v16', 'v01'].map((id, i) => `<div class="diapo${i === 0 ? ' active' : ''}">${img(r, id, '', { grand: true, eager: i === 0 })}</div>`).join('')}
@@ -695,7 +696,11 @@ document.querySelectorAll('[data-filtre]').forEach(function (b) {
   <a class="lien-maj" href="https://www.facebook.com/profile.php?id=61589969791042" rel="noopener">${t.suivre}</a>
 </section>
 <section class="pro-grille">
-  <div></div>
+  <div class="contact-direct">
+    <p class="contact-titre">${t.direct}</p>
+    <a class="contact-raccourci" href="tel:${TEL_LIEN}"><span class="contact-icone" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.6 3.5h3l1.5 4.2-2 1.3a11 11 0 0 0 5.9 5.9l1.3-2 4.2 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z"/></svg></span><span><small>${t.telephone}</small>${TEL}</span></a>
+    <a class="contact-raccourci" href="mailto:${EMAIL}"><span class="contact-icone" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="1.5"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg></span><span><small>${t.email}</small>${EMAIL}</span></a>
+  </div>
   <form class="formulaire" data-contact data-prefixe="${esc(t.infosPiece)}" data-ok="${esc(t.formOk)}" data-erreur="${esc(t.formErreur)}">
     <div class="deux">
       <label>${t.nom}<input name="nom" autocomplete="name" required></label>
@@ -727,7 +732,7 @@ fs.writeFileSync(path.join(ICI, 'gestion', 'index.html'), `<!DOCTYPE html>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=24"><link rel="stylesheet" href="../assets/gestion.css?v=3">
+<link rel="stylesheet" href="../assets/style.css?v=25"><link rel="stylesheet" href="../assets/gestion.css?v=3">
 </head><body class="gestion">
 <div id="app"></div>
 <script>window.LOCWEB_CONFIG = { supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co', supabaseAnonKey: 'sb_publishable_rpLrUo4Cqnfl8zSohDqO0A_Q5Vkj2Hk' };</script>

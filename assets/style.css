@@ -429,3 +429,13 @@ body.menu-ouvert .entete { color: var(--noir); background: transparent; box-shad
 @media (max-width: 1240px) { .nav-univers { display: none } }
 @media (min-width: 1241px) and (max-width: 1480px) { .nav-univers { gap: 24px } .nav-univers a { font-size: 12.5px; letter-spacing: .1em } }
 .dl-tete .lien-maj { white-space: normal; line-height: 1.6 }
+
+/* Contact : raccourcis telephone et e-mail */
+.contact-direct { display: grid; gap: 14px; align-content: start }
+.contact-titre { text-transform: uppercase; letter-spacing: .12em; font-size: 12px; font-weight: 500; color: var(--gris); margin: 0 0 4px }
+.contact-raccourci { display: flex; align-items: center; gap: 14px; color: var(--noir); text-decoration: none; font-size: clamp(16px, 1.3vw, 18px); overflow-wrap: anywhere }
+.contact-raccourci small { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--gris) }
+.contact-icone { flex: none; width: 42px; height: 42px; border: 1px solid currentColor; border-radius: 50%; display: grid; place-items: center; color: var(--teck); transition: background .2s, color .2s }
+.contact-icone svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round }
+.contact-raccourci:hover .contact-icone, .contact-raccourci:focus-visible .contact-icone { background: var(--teck); color: #fff; border-color: var(--teck) }
+.contact-raccourci:hover > span:last-child { color: var(--teck) }
